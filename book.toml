@@ -1,0 +1,6 @@
+[book]
+title = "The EMF RFC Book"
+
+[output.html]
+no-section-label = true
+git-repository-url = "https://github.com/fimoengine/emf-rfcs"
