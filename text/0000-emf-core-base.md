@@ -704,7 +704,7 @@ emf_cbase_module_handle_result_t module_get_exported_interface_handle(
 // internal module management
 emf_cbase_module_handle_t module_create_module_handle()
 emf_cbase_module_result_t module_remove_module_handle(
-        emf_cbase_module_handle_t module_handle);
+        emf_cbase_module_handle_t module_handle)
 emf_cbase_module_result_t module_link_module(
         emf_cbase_module_handle_t module_handle,
         emf_cbase_module_loader_handle_t loader_handle,
@@ -742,8 +742,406 @@ emf_cbase_module_info_ptr_result_t module_get_module_info(emf_cbase_module_handl
 emf_cbase_module_interface_result_t module_get_interface(
         emf_cbase_module_handle_t module_handle,
         const emf_cbase_interface_descriptor_t* interface_descriptor)
-
 ```
+
+#### Module api functions
+
+##### Module api loader management
+
+> ```c
+> emf_cbase_module_loader_handle_result_t module_register_loader(
+>       const emf_cbase_module_loader_interface_t* loader_interface,
+>       const emf_cbase_module_type_t* module_type)
+> ```
+>
+> - Effects: Registers a new module loader.
+    Module types starting with `__` are reserved for future use.
+> - Mandates: `loader_interface != NULL && module_type != NULL`.
+> - Failure: The function fails if `module_type` already exists.
+> - Returns: Handle on success, error otherwise.
+
+---
+
+> ```c
+> emf_cbase_module_result_t module_unregister_loader(
+>       emf_cbase_module_loader_handle_t loader_handle)
+> ```
+>
+> - Effects: Unregisters an existing module loader.
+    Unregistering a module loader also unloads the modules it loaded.
+> - Mandates: `loader_interface != NULL && module_type != NULL`.
+> - Failure: The function fails if `loader_handle` is invalid.
+> - Returns: Error on failure.
+
+---
+
+> ```c
+> emf_cbase_module_loader_interface_result_t module_get_loader_interface(
+>       emf_cbase_module_loader_handle_t loader_handle)
+> ```
+>
+> - Effects: Fetches the interface of a module loader.
+> - Failure: The function fails if `loader_handle` is invalid.
+> - Returns: Interface on success, error otherwise.
+
+---
+
+> ```c
+> emf_cbase_module_loader_handle_result_t module_get_loader_handle_from_type(
+>       const emf_cbase_module_type_t* module_type)
+> ```
+>
+> - Effects: Fetches the handle of the loader associated with a module type.
+> - Mandates: `module_type != NULL`.
+> - Failure: The function fails if `module_type` does not exist.
+> - Returns: Handle on success, error otherwise.
+
+---
+
+> ```c
+> emf_cbase_module_loader_handle_result_t module_get_loader_handle_from_module(
+>       emf_cbase_module_handle_t module_handle)
+> ```
+>
+> - Effects: Fetches the handle of the loader linked with the module handle.
+> - Failure: The function fails if `module_handle` is invalid.
+> - Returns: Handle on success, error otherwise.
+
+##### Module api queries
+
+> ```c
+> size_t module_get_num_modules()
+> ```
+>
+> - Effects: Fetches the number of loaded modules.
+> - Returns: Number of modules.
+
+---
+
+> ```c
+> size_t module_get_num_loaders()
+> ```
+>
+> - Effects: Fetches the number of loaders.
+> - Returns: Number of module loaders.
+
+---
+
+> ```c
+> size_t module_get_num_exported_interfaces()
+> ```
+>
+> - Effects: Fetches the number of exported interfaces.
+> - Returns: Number of exported interfaces.
+
+---
+
+> ```c
+> emf_cbase_bool_t module_module_exists(emf_cbase_module_handle_t module_handle)
+> ```
+>
+> - Effects: Checks if a module exists.
+> - Returns: `emf_cbase_bool_true` if it exists, `emf_cbase_bool_false` otherwise.
+
+---
+
+> ```c
+> emf_cbase_bool_t module_type_exists(const emf_cbase_module_type_t* module_type)
+> ```
+>
+> - Effects: Checks if a module type exists.
+> - Mandates: `module_type != NULL`.
+> - Returns: `emf_cbase_bool_true` if it exists, `emf_cbase_bool_false` otherwise.
+
+---
+
+> ```c
+> emf_cbase_bool_t module_exported_interface_exists(
+>       const emf_cbase_interface_descriptor_t* interface)
+> ```
+>
+> - Effects: Checks whether an exported interface exists.
+> - Mandates: `interface != NULL`.
+> - Returns: `emf_cbase_bool_true` if it exists, `emf_cbase_bool_false` otherwise.
+
+---
+
+> ```c
+> emf_cbase_module_size_result_t module_get_modules(
+>       emf_cbase_module_info_span_t* buffer)
+> ```
+>
+> - Effects: Copies the available module infos into a buffer.
+> - Failure: Fails if `buffer->length < module_get_num_modules()`.
+> - Mandates: `buffer != NULL && buffer->data != NULL`.
+> - Returns: Number if written module infos on success, error otherwise.
+
+---
+
+> ```c
+> emf_cbase_module_size_result_t module_get_module_types(
+>       emf_cbase_module_type_span_t* buffer)
+> ```
+>
+> - Effects: Copies the available module types into a buffer.
+> - Failure: Fails if `buffer->length < module_get_num_loaders()`.
+> - Mandates: `buffer != NULL && buffer->data != NULL`.
+> - Returns: Number if written module types on success, error otherwise.
+
+---
+
+> ```c
+> emf_cbase_module_size_result_t module_get_exported_interfaces(
+>       emf_cbase_interface_descriptor_span_t* buffer)
+> ```
+>
+> - Effects: Copies the descriptors of the exported interfaces into a buffer.
+> - Failure: Fails if `buffer->length < module_get_num_exported_interfaces()`.
+> - Mandates: `buffer != NULL && buffer->data != NULL`.
+> - Returns: Number if written descriptors on success, error otherwise.
+
+---
+
+> ```c
+> emf_cbase_module_handle_result_t module_get_exported_interface_handle(
+>       const emf_cbase_interface_descriptor_t* interface)
+> ```
+>
+> - Effects: Fetches the module handle of the exported interface.
+> - Failure: Fails if `interface` does not exist.
+> - Mandates: `interface != NULL`.
+> - Returns: Module handle on success, error otherwise.
+
+##### Module api internal module management
+
+> ```c
+> emf_cbase_module_handle_t module_create_module_handle()
+> ```
+>
+> - Effects: Creates a new unlinked module handle.
+> - Remarks: The handle must be linked before use.
+> - Returns: Module handle.
+
+---
+
+> ```c
+> emf_cbase_module_result_t module_remove_module_handle(
+>       emf_cbase_module_handle_t module_handle)
+> ```
+>
+> - Effects: Removes an existing module handle.
+> - Failure: Fails if `module_handle` is invalid.
+> - Remarks: Removing the handle does not unload the module.
+> - Returns: Error on failure.
+
+---
+
+> ```c
+> emf_cbase_module_result_t module_link_module(
+>       emf_cbase_module_handle_t module_handle,
+>       emf_cbase_module_loader_handle_t loader_handle,
+>       emf_cbase_internal_module_handle_t loader_module_handle)
+> ```
+>
+> - Effects: Links a module handle to an internal module handle.
+> - Failure: Fails if `module_handle` or`loader_handle` are invalid.
+> - Remarks: Incorrect usage can lead to dangling handles or use-after-free errors.
+> - Returns: Error on failure.
+
+---
+
+> ```c
+> emf_cbase_internal_module_handle_result_t module_get_internal_module_handle(
+>       emf_cbase_module_handle_t module_handle)
+> ```
+>
+> - Effects: Fetches the internal handle linked with the module handle.
+> - Failure: Fails if `module_handle` is invalid.
+> - Returns: Internal handle on success, error otherwise.
+
+##### Module api module management
+
+> ```c
+> emf_cbase_module_handle_result_t module_add_module(
+>       emf_cbase_module_loader_handle_t loader_handle,
+>       const emf_cbase_os_path_char_t* module_path)
+> ```
+>
+> - Effects: Adds a new module.
+> - Failure: Fails if `loader_handle` or `module_path` is invalid or
+    the type of the module can not be loaded with the loader.
+> - Returns: Module handle on success, error otherwise.
+
+---
+
+> ```c
+> emf_cbase_module_result_t module_remove_module(emf_cbase_module_handle_t module_handle)
+> ```
+>
+> - Effects: Removes a module.
+> - Failure: Fails if `module_handle` is invalid or the module is not in an unloaded state.
+> - Returns: Error on failure.
+
+---
+
+> ```c
+> emf_cbase_module_result_t module_load(emf_cbase_module_handle_t module_handle)
+> ```
+>
+> - Effects: Loads a module.
+> - Failure: Fails if `module_handle` is invalid, the load dependencies of the
+    module are not exported or the module is not in an unloaded state.
+> - Returns: Error on failure.
+
+---
+
+> ```c
+> emf_cbase_module_result_t module_unload(emf_cbase_module_handle_t module_handle)
+> ```
+>
+> - Effects: Unloads a module.
+> - Failure: Fails if `module_handle` is invalid or the module is in an unloaded or ready state.
+> - Returns: Error on failure.
+
+---
+
+> ```c
+> emf_cbase_module_result_t module_initialize(emf_cbase_module_handle_t module_handle)
+> ```
+>
+> - Effects: Initializes a module.
+> - Failure: Fails if `module_handle` is invalid, the runtime dependencies of the module are not
+    exported or the module is not in a loaded state.
+> - Returns: Error on failure.
+
+---
+
+> ```c
+> emf_cbase_module_result_t module_terminate(emf_cbase_module_handle_t module_handle)
+> ```
+>
+> - Effects: Terminates a module. Terminating a module also removes the interfaces it exported.
+    The modules that depend on the module are terminated. If they list the module as a load dependency,
+    they are also unloaded.
+> - Failure: Fails if `module_handle` is invalid or the module is not in a ready state.
+> - Returns: Error on failure.
+
+---
+
+> ```c
+> emf_cbase_module_result_t module_add_dependency(
+>       emf_cbase_module_handle_t module_handle,
+>       const emf_cbase_interface_descriptor_t* interface_descriptor)
+> ```
+>
+> - Effects: Registers a new runtime dependency of the module.
+> - Failure: Fails if `module_handle` is invalid.
+> - Mandates: `interface_descriptor != NULL`.
+> - Returns: Error on failure.
+
+---
+
+> ```c
+> emf_cbase_module_result_t module_remove_dependency(
+>       emf_cbase_module_handle_t module_handle,
+>       const emf_cbase_interface_descriptor_t* interface_descriptor)
+> ```
+>
+> - Effects: Removes an existing runtime dependency from the module.
+> - Failure: Fails if `module_handle` is invalid.
+> - Mandates: `interface_descriptor != NULL`.
+> - Returns: Error on failure.
+
+---
+
+> ```c
+> emf_cbase_module_result_t module_export_interface(
+>       emf_cbase_module_handle_t module_handle,
+>       const emf_cbase_interface_descriptor_t* interface_descriptor)
+> ```
+>
+> - Effects: Exports an interface of a module.
+> - Failure: Fails if `module_handle` is invalid, `interface_descriptor` is already exported,
+    `interface_descriptor` is not contained in the module or the module is not yet initialized.
+> - Mandates: `interface_descriptor != NULL`.
+> - Returns: Error on failure.
+
+---
+
+> ```c
+> emf_cbase_interface_descriptor_const_span_result_t module_get_load_dependencies(
+>       emf_cbase_module_handle_t module_handle)
+> ```
+>
+> - Effects: Fetches the load dependencies of a module.
+> - Failure: Fails if `module_handle` is invalid.
+> - Returns: Load dependencies on success, error otherwise.
+
+---
+
+> ```c
+> emf_cbase_interface_descriptor_const_span_result_t module_get_runtime_dependencies(
+>       emf_cbase_module_handle_t module_handle)
+> ```
+>
+> - Effects: Fetches the runtime dependencies of a module.
+> - Failure: Fails if `module_handle` is invalid or the module is not yet loaded.
+> - Returns: Runtime dependencies on success, error otherwise.
+
+---
+
+> ```c
+> emf_cbase_interface_descriptor_const_span_result_t module_get_exportable_interfaces(
+>       emf_cbase_module_handle_t module_handle)
+> ```
+>
+> - Effects: Fetches the exportable interfaces of a module.
+> - Failure: Fails if `module_handle` is invalid or the module is not yet loaded.
+> - Returns: Exportable interfaces on success, error otherwise.
+
+---
+
+> ```c
+> emf_cbase_module_status_result_t module_fetch_status(emf_cbase_module_handle_t module_handle)
+> ```
+>
+> - Effects: Fetches the load status of a module.
+> - Failure: Fails if `module_handle` is invalid.
+> - Returns: Module status on success, error otherwise.
+
+---
+
+> ```c
+> emf_cbase_os_path_char_result_t module_get_module_path(emf_cbase_module_handle_t module_handle)
+> ```
+>
+> - Effects: Fetches the path a module was loaded from.
+> - Failure: Fails if `module_handle` is invalid or the module is not yet loaded.
+> - Returns: Module path on success, error otherwise.
+
+---
+
+> ```c
+> emf_cbase_module_info_ptr_result_t module_get_module_info(emf_cbase_module_handle_t module_handle)
+> ```
+>
+> - Effects: Fetches the module info from a module.
+> - Failure: Fails if `module_handle` is invalid or the module is not yet loaded.
+> - Returns: Module info on success, error otherwise.
+
+---
+
+> ```c
+> emf_cbase_module_interface_result_t module_get_interface(
+>       emf_cbase_module_handle_t module_handle,
+>       const emf_cbase_interface_descriptor_t* interface_descriptor)
+> ```
+>
+> - Effects: Fetches an interface from a module.
+> - Failure: Fails if `module_handle` is invalid, the module is not in a ready state
+    or the interface is not contained in the module.
+> - Mandates: `interface_descriptor != NULL`.
+> - Returns: Interface on success, error otherwise.
 
 ### Version api
 
