@@ -230,32 +230,32 @@ embedding an `Activation Context manifest` into the library on Windows.
 
 const emf_cbase_os_path_char_t* library_path = "./example_lib.so";
 
-base_interf->sys_lock(base_handle);
+base_interf->sys_lock_fn(base_handle);
 
 emf_cbase_library_handle_result_t library_handle_res = 
-        base_interf->library_load(base_handle, EMF_CBASE_NATIVE_LIBRARY_TYPE_NAME, library_path);
+        base_interf->library_load_fn(base_handle, EMF_CBASE_NATIVE_LIBRARY_TYPE_NAME, library_path);
 if (library_handle_res.has_error) {
-    base_interf->sys_panic(base_handle, "Unable to load the `./example_lib.so` library.");
+    base_interf->sys_panic_fn(base_handle, "Unable to load the `./example_lib.so` library.");
 }
 
 emf_cbase_library_handle_t library_handle = library_handle_res.result;
 
 emf_cbase_library_fn_symbol_result_t fn_sym_res = 
-        base_interf->library_get_function_symbol(base_handle, library_handle, "example_fn");
+        base_interf->library_get_function_symbol_fn(base_handle, library_handle, "example_fn");
 if (fn_sym_res.has_error) {
-    base_interf->sys_panic(base_handle, "Unable to load the `example_fn` function from the library.");
+    base_interf->sys_panic_fn(base_handle, "Unable to load the `example_fn` function from the library.");
 }
 
 emf_cbase_library_fn_symbol_t fn_sym = fn_sym_res.result;
 void (*fn)(int, int) = (void(*)(int, int))fn_sym.symbol;
 (*fn)(5, 7);
 
-emf_cbase_library_result_t result = base_interf->library_unload(base_handle, library_handle);
+emf_cbase_library_result_t result = base_interf->library_unload_fn(base_handle, library_handle);
 if (result.has_error) {
-    base_interf->sys_panic(base_handle, "Unable to unload the `./example_lib.so` library.");
+    base_interf->sys_panic_fn(base_handle, "Unable to unload the `./example_lib.so` library.");
 }
 
-base_interf->sys_unlock(base_handle);
+base_interf->sys_unlock_fn(base_handle);
 ```
 
 #### Library api overview
@@ -681,7 +681,7 @@ the [versioning-specification RFC](0004-versioning-specification.md).
 /// `base_interf` is a structure containing the `emf-core-base` interface.
 /// `base_handle` is a handle to the `emf-core-base` module.
 
-emf_cbase_version_t v1 = base_interf->version_new_short(base_handle, 1, 2, 3);
+emf_cbase_version_t v1 = base_interf->version_new_short_fn(base_handle, 1, 2, 3);
 
 const char* v2_string = "1.2.3-beta.5+54845652";
 emf_cbase_version_const_string_buffer_t v2_string_buff = {
@@ -689,18 +689,18 @@ emf_cbase_version_const_string_buffer_t v2_string_buff = {
     .length = strlen(v2_string)
 };
 emf_cbase_version_result_t v2_res = 
-        base_interf->version_from_string(base_handle, &v2_string_buff);
+        base_interf->version_from_string_fn(base_handle, &v2_string_buff);
 if (v2_res.has_error) {
-    base_interf->sys_lock(base_handle);
-    base_interf->sys_panic(base_handle, "Could not construct version from string.");
-    base_interf->sys_unlock(base_handle);
+    base_interf->sys_lock_fn(base_handle);
+    base_interf->sys_panic_fn(base_handle, "Could not construct version from string.");
+    base_interf->sys_unlock_fn(base_handle);
 }
 emf_cbase_version_t v2 = v2_res.result;
 
-if (base_interf->version_compare_weak(base_handle, &v1, &v2) != 0) {
-    base_interf->sys_lock(base_handle);
-    base_interf->sys_panic(base_handle, "Should not happen.");
-    base_interf->sys_unlock(base_handle);
+if (base_interf->version_compare_weak_fn(base_handle, &v1, &v2) != 0) {
+    base_interf->sys_lock_fn(base_handle);
+    base_interf->sys_panic_fn(base_handle, "Should not happen.");
+    base_interf->sys_unlock_fn(base_handle);
 }
 ```
 
