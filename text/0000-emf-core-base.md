@@ -2293,17 +2293,17 @@ For the sake of brevity, we will introduce the following macros:
 >     emf_cbase_module_loader_t* module_loader;
 >     emf_cbase_module_loader_interface_add_module_fn_t add_module_fn;
 >     emf_cbase_module_loader_interface_remove_module_fn_t remove_module_fn;
->     emf_cbase_module_loader_interface_fetch_status_fn_t fetch_status_fn;
 >     emf_cbase_module_loader_interface_load_fn_t load_fn;
 >     emf_cbase_module_loader_interface_unload_fn_t unload_fn;
 >     emf_cbase_module_loader_interface_initialize_fn_t initialize_fn;
 >     emf_cbase_module_loader_interface_terminate_fn_t terminate_fn;
->     emf_cbase_module_loader_interface_get_module_info_fn_t get_module_info_fn;
->     emf_cbase_module_loader_interface_get_exportable_interfaces_fn_t get_exportable_interfaces_fn;
->     emf_cbase_module_loader_interface_get_runtime_dependencies_fn_t get_runtime_dependencies_fn;
+>     emf_cbase_module_loader_interface_fetch_status_fn_t fetch_status_fn;
 >     emf_cbase_module_loader_interface_get_interface_fn_t get_interface_fn;
->     emf_cbase_module_loader_interface_get_load_dependencies_fn_t get_load_dependencies_fn;
+>     emf_cbase_module_loader_interface_get_module_info_fn_t get_module_info_fn;
 >     emf_cbase_module_loader_interface_get_module_path_fn_t get_module_path_fn;
+>     emf_cbase_module_loader_interface_get_load_dependencies_fn_t get_load_dependencies_fn;
+>     emf_cbase_module_loader_interface_get_runtime_dependencies_fn_t get_runtime_dependencies_fn;
+>     emf_cbase_module_loader_interface_get_exportable_interfaces_fn_t get_exportable_interfaces_fn;
 >     emf_cbase_module_loader_interface_get_internal_interface_fn_t get_internal_interface_fn;
 > } emf_cbase_module_loader_interface_t;
 > ```
@@ -2439,11 +2439,11 @@ For the sake of brevity, we will introduce the following macros:
 >     emf_cbase_native_module_interface_unload_fn_t unload_fn;
 >     emf_cbase_native_module_interface_initialize_fn_t initialize_fn;
 >     emf_cbase_native_module_interface_terminate_fn_t terminate_fn;
->     emf_cbase_native_module_interface_get_module_info_fn_t get_module_info_fn;
->     emf_cbase_native_module_interface_get_exportable_interfaces_fn_t get_exportable_interfaces_fn;
->     emf_cbase_native_module_interface_get_runtime_dependencies_fn_t get_runtime_dependencies_fn;
 >     emf_cbase_native_module_interface_get_interface_fn_t get_interface_fn;
+>     emf_cbase_native_module_interface_get_module_info_fn_t get_module_info_fn;
 >     emf_cbase_native_module_interface_get_load_dependencies_fn_t get_load_dependencies_fn;
+>     emf_cbase_native_module_interface_get_runtime_dependencies_fn_t get_runtime_dependencies_fn;
+>     emf_cbase_native_module_interface_get_exportable_interfaces_fn_t get_exportable_interfaces_fn;
 > } emf_cbase_native_module_interface_t;
 > ```
 >
@@ -2832,6 +2832,10 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_add_dependency_fn_t
 
 > ```c
+> BASE_FN_T(emf_cbase_module_add_dependency_fn_t,
+>       emf_cbase_module_result_t,
+>       emf_cbase_module_handle_t module_handle,
+>       const emf_cbase_interface_descriptor_t* interface_descriptor)
 > ```
 
 ---
@@ -2839,6 +2843,10 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_add_module_fn_t
 
 > ```c
+> BASE_FN_T(emf_cbase_module_add_module_fn_t,
+>       emf_cbase_module_handle_result_t,
+>       emf_cbase_module_loader_handle_t loader_handle,
+>       const emf_cbase_os_path_char_t* module_path)
 > ```
 
 ---
@@ -2846,6 +2854,9 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_create_module_handle_fn_t
 
 > ```c
+> BASE_FN_T(emf_cbase_module_create_module_handle_fn_t,
+>       emf_cbase_module_handle_t,
+>       void)
 > ```
 
 ---
@@ -2853,6 +2864,10 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_export_interface_fn_t
 
 > ```c
+> BASE_FN_T(emf_cbase_module_export_interface_fn_t,
+>       emf_cbase_module_result_t,
+>       emf_cbase_module_handle_t module_handle,
+>       const emf_cbase_interface_descriptor_t* interface_descriptor)
 > ```
 
 ---
@@ -2860,6 +2875,9 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_exported_interface_exists_fn_t
 
 > ```c
+> BASE_FN_T(emf_cbase_module_exported_interface_exists_fn_t,
+>       emf_cbase_bool_t,
+>       const emf_cbase_interface_descriptor_t* interface)
 > ```
 
 ---
@@ -2867,6 +2885,9 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_fetch_status_fn_t
 
 > ```c
+> BASE_FN_T(emf_cbase_module_fetch_status_fn_t,
+>       emf_cbase_module_status_result_t,
+>       emf_cbase_module_handle_t module_handle)
 > ```
 
 ---
@@ -2874,6 +2895,9 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_get_exportable_interfaces_fn_t
 
 > ```c
+> BASE_FN_T(emf_cbase_module_get_exportable_interfaces_fn_t,
+>       emf_cbase_interface_descriptor_const_span_result_t,
+>       emf_cbase_module_handle_t module_handle)
 > ```
 
 ---
@@ -2881,6 +2905,9 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_get_exported_interface_handle_fn_t
 
 > ```c
+> BASE_FN_T(emf_cbase_module_get_exported_interface_handle_fn_t,
+>       emf_cbase_module_handle_result_t,
+>       const emf_cbase_interface_descriptor_t* interface)
 > ```
 
 ---
@@ -2888,6 +2915,9 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_get_exported_interfaces_fn_t
 
 > ```c
+> BASE_FN_T(emf_cbase_module_get_exported_interfaces_fn_t,
+>       emf_cbase_module_size_result_t,
+>       emf_cbase_interface_descriptor_span_t* buffer)
 > ```
 
 ---
@@ -2895,6 +2925,10 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_get_interface_fn_t
 
 > ```c
+> BASE_FN_T(emf_cbase_module_get_interface_fn_t,
+>       emf_cbase_module_interface_result_t,
+>       emf_cbase_module_handle_t module_handle,
+>       const emf_cbase_interface_descriptor_t* interface_descriptor)
 > ```
 
 ---
@@ -2902,6 +2936,9 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_get_internal_module_handle_fn_t
 
 > ```c
+> BASE_FN_T(emf_cbase_module_get_internal_module_handle_fn_t,
+>       emf_cbase_internal_module_handle_result_t,
+>       emf_cbase_module_handle_t module_handle)
 > ```
 
 ---
@@ -2909,6 +2946,9 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_get_load_dependencies_fn_t
 
 > ```c
+> BASE_FN_T(emf_cbase_module_get_load_dependencies_fn_t,
+>       emf_cbase_interface_descriptor_const_span_result_t,
+>       emf_cbase_module_handle_t module_handle)
 > ```
 
 ---
@@ -2916,6 +2956,9 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_get_loader_handle_from_module_fn_t
 
 > ```c
+> BASE_FN_T(emf_cbase_module_get_loader_handle_from_module_fn_t,
+>       emf_cbase_module_loader_handle_result_t,
+>       emf_cbase_module_handle_t module_handle)
 > ```
 
 ---
@@ -2923,6 +2966,9 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_get_loader_handle_from_type_fn_t
 
 > ```c
+> BASE_FN_T(emf_cbase_module_get_loader_handle_from_type_fn_t,
+>       emf_cbase_module_loader_handle_result_t,
+>       const emf_cbase_module_type_t* module_type)
 > ```
 
 ---
@@ -2930,6 +2976,9 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_get_loader_interface_fn_t
 
 > ```c
+> BASE_FN_T(emf_cbase_module_get_loader_interface_fn_t,
+>       emf_cbase_module_loader_interface_result_t,
+>       emf_cbase_module_loader_handle_t loader_handle)
 > ```
 
 ---
@@ -2937,6 +2986,9 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_get_module_info_fn_t
 
 > ```c
+> BASE_FN_T(emf_cbase_module_get_module_info_fn_t,
+>       emf_cbase_module_info_ptr_result_t,
+>       emf_cbase_module_handle_t module_handle)
 > ```
 
 ---
@@ -2944,6 +2996,9 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_get_module_path_fn_t
 
 > ```c
+> BASE_FN_T(emf_cbase_module_get_module_path_fn_t,
+>       emf_cbase_os_path_char_result_t,
+>       emf_cbase_module_handle_t module_handle)
 > ```
 
 ---
@@ -2951,6 +3006,9 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_get_module_types_fn_t
 
 > ```c
+> BASE_FN_T(emf_cbase_module_get_module_types_fn_t,
+>       emf_cbase_module_size_result_t,
+>       emf_cbase_module_type_span_t* buffer)
 > ```
 
 ---
@@ -2958,6 +3016,9 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_get_modules_fn_t
 
 > ```c
+> BASE_FN_T(emf_cbase_module_get_modules_fn_t,
+>       emf_cbase_module_size_result_t,
+>       emf_cbase_module_info_span_t* buffer)
 > ```
 
 ---
@@ -2965,6 +3026,7 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_get_num_exported_interfaces_fn_t
 
 > ```c
+> BASE_FN_T(emf_cbase_module_get_num_exported_interfaces_fn_t, size_t, void)
 > ```
 
 ---
@@ -2972,6 +3034,7 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_get_num_loaders_fn_t
 
 > ```c
+> BASE_FN_T(emf_cbase_module_get_num_loaders_fn_t, size_t, void)
 > ```
 
 ---
@@ -2979,6 +3042,7 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_get_num_modules_fn_t
 
 > ```c
+> BASE_FN_T(emf_cbase_module_get_num_modules_fn_t, size_t, void)
 > ```
 
 ---
@@ -2986,6 +3050,9 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_get_runtime_dependencies_fn_t
 
 > ```c
+> BASE_FN_T(emf_cbase_module_get_runtime_dependencies_fn_t,
+>       emf_cbase_interface_descriptor_const_span_result_t,
+>       emf_cbase_module_handle_t module_handle)
 > ```
 
 ---
@@ -2993,6 +3060,9 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_initialize_fn_t
 
 > ```c
+> BASE_FN_T(emf_cbase_module_initialize_fn_t,
+>       emf_cbase_module_result_t,
+>       emf_cbase_module_handle_t module_handle)
 > ```
 
 ---
@@ -3000,6 +3070,11 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_link_module_fn_t
 
 > ```c
+> BASE_FN_T(emf_cbase_module_link_module_fn_t,
+>       emf_cbase_module_result_t,
+>       emf_cbase_module_handle_t module_handle,
+>       emf_cbase_module_loader_handle_t loader_handle,
+>       emf_cbase_internal_module_handle_t loader_module_handle)
 > ```
 
 ---
@@ -3007,6 +3082,9 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_load_fn_t
 
 > ```c
+> BASE_FN_T(emf_cbase_module_load_fn_t,
+>       emf_cbase_module_result_t,
+>       emf_cbase_module_handle_t module_handle)
 > ```
 
 ---
@@ -3014,6 +3092,10 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_loader_interface_add_module_fn_t
 
 > ```c
+> FN_T(emf_cbase_module_loader_interface_add_module_fn_t,
+>       emf_cbase_internal_module_handle_result_t,
+>       emf_cbase_module_loader_t* module_loader, 
+>       const emf_cbase_os_path_char_t* module_path)
 > ```
 
 ---
@@ -3021,6 +3103,10 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_loader_interface_fetch_status_fn_t
 
 > ```c
+> FN_T(emf_cbase_module_loader_interface_fetch_status_fn_t,
+>       emf_cbase_module_status_result_t,
+>       emf_cbase_module_loader_t* module_loader,
+>       emf_cbase_internal_module_handle_t module_handle)
 > ```
 
 ---
@@ -3028,6 +3114,10 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_loader_interface_get_exportable_interfaces_fn_t
 
 > ```c
+> FN_T(emf_cbase_module_loader_interface_get_exportable_interfaces_fn_t,
+>       emf_cbase_interface_descriptor_const_span_result_t,
+>       emf_cbase_module_loader_t* module_loader,
+>       emf_cbase_internal_module_handle_t module_handle)
 > ```
 
 ---
@@ -3035,6 +3125,11 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_loader_interface_get_interface_fn_t
 
 > ```c
+> FN_T(emf_cbase_module_loader_interface_get_interface_fn_t,
+>       emf_cbase_module_interface_result_t,
+>       emf_cbase_module_loader_t* module_loader, 
+>       emf_cbase_internal_module_handle_t module_handle,
+>       const emf_cbase_interface_descriptor_t* interface_descriptor)
 > ```
 
 ---
@@ -3042,6 +3137,9 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_loader_interface_get_internal_interface_fn_t
 
 > ```c
+> FN_T(emf_cbase_module_loader_interface_get_internal_interface_fn_t,
+>       const void*,
+>       emf_cbase_module_loader_t* module_loader)
 > ```
 
 ---
@@ -3049,6 +3147,10 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_loader_interface_get_load_dependencies_fn_t
 
 > ```c
+> FN_T(emf_cbase_module_loader_interface_get_load_dependencies_fn_t,
+>       emf_cbase_interface_descriptor_const_span_result_t,
+>       emf_cbase_module_loader_t* module_loader, 
+>       emf_cbase_internal_module_handle_t module_handle)
 > ```
 
 ---
@@ -3056,6 +3158,10 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_loader_interface_get_module_info_fn_t
 
 > ```c
+> FN_T(emf_cbase_module_loader_interface_get_module_info_fn_t,
+>       emf_cbase_module_info_ptr_result_t,
+>       emf_cbase_module_loader_t* module_loader,
+>       emf_cbase_internal_module_handle_t module_handle)
 > ```
 
 ---
@@ -3063,6 +3169,10 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_loader_interface_get_module_path_fn_t
 
 > ```c
+> FN_T(emf_cbase_module_loader_interface_get_module_path_fn_t,
+>       emf_cbase_os_path_char_result_t,
+>       emf_cbase_module_loader_t* module_loader, 
+>       emf_cbase_internal_module_handle_t module_handle)
 > ```
 
 ---
@@ -3070,6 +3180,10 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_loader_interface_get_runtime_dependencies_fn_t
 
 > ```c
+> FN_T(emf_cbase_module_loader_interface_get_runtime_dependencies_fn_t,
+>       emf_cbase_interface_descriptor_const_span_result_t,
+>       emf_cbase_module_loader_t* module_loader, 
+>       emf_cbase_internal_module_handle_t module_handle)
 > ```
 
 ---
@@ -3077,6 +3191,10 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_loader_interface_initialize_fn_t
 
 > ```c
+> FN_T(emf_cbase_module_loader_interface_initialize_fn_t,
+>       emf_cbase_module_result_t,
+>       emf_cbase_module_loader_t* module_loader, 
+>       emf_cbase_internal_module_handle_t module_handle)
 > ```
 
 ---
@@ -3084,6 +3202,10 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_loader_interface_load_fn_t
 
 > ```c
+> FN_T(emf_cbase_module_loader_interface_load_fn_t,
+>       emf_cbase_module_result_t,
+>       emf_cbase_module_loader_t* module_loader, 
+>       emf_cbase_internal_module_handle_t module_handle)
 > ```
 
 ---
@@ -3091,6 +3213,10 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_loader_interface_remove_module_fn_t
 
 > ```c
+> FN_T(emf_cbase_module_loader_interface_remove_module_fn_t,
+>       emf_cbase_module_result_t,
+>       emf_cbase_module_loader_t* module_loader, 
+>       emf_cbase_internal_module_handle_t module_handle)
 > ```
 
 ---
@@ -3098,6 +3224,10 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_loader_interface_terminate_fn_t
 
 > ```c
+> FN_T(emf_cbase_module_loader_interface_terminate_fn_t,
+>       emf_cbase_module_result_t,
+>       emf_cbase_module_loader_t* module_loader, 
+>       emf_cbase_internal_module_handle_t module_handle)
 > ```
 
 ---
@@ -3105,6 +3235,10 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_loader_interface_unload_fn_t
 
 > ```c
+> FN_T(emf_cbase_module_loader_interface_unload_fn_t,
+>       emf_cbase_module_result_t,
+>       emf_cbase_module_loader_t* module_loader, 
+>       emf_cbase_internal_module_handle_t module_handle)
 > ```
 
 ---
@@ -3112,6 +3246,9 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_module_exists_fn_t
 
 > ```c
+> BASE_FN_T(emf_cbase_module_module_exists_fn_t,
+>       emf_cbase_bool_t,
+>       emf_cbase_module_handle_t module_handle)
 > ```
 
 ---
@@ -3119,6 +3256,10 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_register_loader_fn_t
 
 > ```c
+> BASE_FN_T(emf_cbase_module_register_loader_fn_t,
+>       emf_cbase_module_loader_handle_result_t,
+>       const emf_cbase_module_loader_interface_t* loader_interface,
+>       const emf_cbase_module_type_t* module_type)
 > ```
 
 ---
@@ -3126,6 +3267,10 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_remove_dependency_fn_t
 
 > ```c
+> BASE_FN_T(emf_cbase_module_remove_dependency_fn_t,
+>       emf_cbase_module_result_t,
+>       emf_cbase_module_handle_t module_handle,
+>       const emf_cbase_interface_descriptor_t* interface_descriptor)
 > ```
 
 ---
@@ -3133,6 +3278,9 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_remove_module_fn_t
 
 > ```c
+> BASE_FN_T(emf_cbase_module_remove_module_fn_t,
+>       emf_cbase_module_result_t,
+>       emf_cbase_module_handle_t module_handle)
 > ```
 
 ---
@@ -3140,6 +3288,9 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_remove_module_handle_fn_t
 
 > ```c
+> BASE_FN_T(emf_cbase_module_remove_module_handle_fn_t,
+>       emf_cbase_module_result_t,
+>       emf_cbase_module_handle_t module_handle)
 > ```
 
 ---
@@ -3147,6 +3298,9 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_terminate_fn_t
 
 > ```c
+> BASE_FN_T(emf_cbase_module_terminate_fn_t,
+>       emf_cbase_module_result_t,
+>       emf_cbase_module_handle_t module_handle)
 > ```
 
 ---
@@ -3154,6 +3308,9 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_type_exists_fn_t
 
 > ```c
+> BASE_FN_T(emf_cbase_module_type_exists_fn_t,
+>       emf_cbase_bool_t,
+>       const emf_cbase_module_type_t* module_type)
 > ```
 
 ---
@@ -3161,6 +3318,9 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_unload_fn_t
 
 > ```c
+> BASE_FN_T(emf_cbase_module_unload_fn_t,
+>       emf_cbase_module_result_t,
+>       emf_cbase_module_handle_t module_handle)
 > ```
 
 ---
@@ -3168,6 +3328,9 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_module_unregister_loader_fn_t
 
 > ```c
+> BASE_FN_T(emf_cbase_module_unregister_loader_fn_t,
+>       emf_cbase_module_result_t,
+>       emf_cbase_module_loader_handle_t loader_handle)
 > ```
 
 ---
@@ -3196,6 +3359,9 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_native_module_interface_get_exportable_interfaces_fn_t
 
 > ```c
+> FN_T(emf_cbase_native_module_interface_get_exportable_interfaces_fn_t,
+>       emf_cbase_interface_descriptor_const_span_result_t,
+>       emf_cbase_native_module_t* module)
 > ```
 
 ---
@@ -3203,6 +3369,10 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_native_module_interface_get_interface_fn_t
 
 > ```c
+> FN_T(emf_cbase_native_module_interface_get_interface_fn_t,
+>       emf_cbase_module_interface_result_t,
+>       emf_cbase_native_module_t* module,
+>       const emf_cbase_interface_descriptor_t* interface_descriptor)
 > ```
 
 ---
@@ -3210,6 +3380,8 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_native_module_interface_get_load_dependencies_fn_t
 
 > ```c
+> FN_T(emf_cbase_native_module_interface_get_load_dependencies_fn_t,
+>       emf_cbase_interface_descriptor_const_span_t, void)
 > ```
 
 ---
@@ -3217,6 +3389,9 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_native_module_interface_get_module_info_fn_t
 
 > ```c
+> FN_T(emf_cbase_native_module_interface_get_module_info_fn_t,
+>       emf_cbase_module_info_ptr_result_t,
+>       emf_cbase_native_module_t* module)
 > ```
 
 ---
@@ -3224,6 +3399,9 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_native_module_interface_get_runtime_dependencies_fn_t
 
 > ```c
+> FN_T(emf_cbase_native_module_interface_get_runtime_dependencies_fn_t,
+>       emf_cbase_interface_descriptor_const_span_result_t,
+>       emf_cbase_native_module_t* module)
 > ```
 
 ---
@@ -3231,6 +3409,9 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_native_module_interface_initialize_fn_t
 
 > ```c
+> FN_T(emf_cbase_native_module_interface_initialize_fn_t,
+>       emf_cbase_module_result_t,
+>       emf_cbase_native_module_t* module)
 > ```
 
 ---
@@ -3238,6 +3419,12 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_native_module_interface_load_fn_t
 
 > ```c
+> FN_T(emf_cbase_native_module_interface_load_fn_t,
+>       emf_cbase_native_module_ptr_result_t,
+>       emf_cbase_module_handle_t module_handle,
+>       emf_cbase_t* base_module,
+>       emf_cbase_sys_has_function_fn_t has_function_fn,
+>       emf_cbase_sys_get_function_fn_t get_function_fn)
 > ```
 
 ---
@@ -3245,6 +3432,9 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_native_module_interface_terminate_fn_t
 
 > ```c
+> FN_T(emf_cbase_native_module_interface_terminate_fn_t,
+>       emf_cbase_module_result_t,
+>       emf_cbase_native_module_t* module)
 > ```
 
 ---
@@ -3252,6 +3442,9 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_native_module_interface_unload_fn_t
 
 > ```c
+> FN_T(emf_cbase_native_module_interface_unload_fn_t,
+>       emf_cbase_module_result_t,
+>       emf_cbase_native_module_t* module)
 > ```
 
 ---
@@ -3259,6 +3452,10 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_native_module_loader_interface_get_native_module_fn_t
 
 > ```c
+> FN_T(emf_cbase_native_module_loader_interface_get_native_module_fn_t,
+>       emf_cbase_native_module_ptr_result_t,
+>       emf_cbase_module_loader_t* module_loader,
+>       emf_cbase_internal_module_handle_t module_handle)
 > ```
 
 ---
