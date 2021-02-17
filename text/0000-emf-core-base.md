@@ -507,7 +507,166 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 
 [module-api]: #module-api
 
-TBA
+The module api is built on top of the library api and specifies the loading and unloading of modules. A module is a
+collection libraries and resources, that together form an independent unit. Similarly to the library api, the loading
+and unloading of modules is implemented by module loaders, which are associated to one module type.
+
+#### Module loaders
+
+Module loaders implement the actual loading and unloading of modules. Custom module loaders can be added by constructing
+an `emf_cbase_module_loader_interface_t` and calling the `module_register_loader()` function.
+
+#### Module types
+
+The type of a module identifies a module loader capable of loading a specific module. A module type is represented by
+an `emf_cbase_module_type_t`.
+
+#### Module filesystem structure
+
+```text
+module/
+├── module.json
+└── ...
+```
+
+A module is a simple directory containing all the required resources. The internal structure of the module is defined by
+the respective module loader. The only requirement is the existence of the module.json file at the root of the module.
+This file is the module manifest and specifies that the directory is indeed a module.
+
+##### Module manifest
+
+The module manifest identifies a module and specifies how a module can be loaded. To allow for backwards (and forwards)
+compatibility, the version of the manifest schema is saved in the manifest with the key `"schema"`.
+
+###### Module manifest schema `"0"`
+
+The version `"0"` introduces several required and optional fields:
+
+- `"name"`: A `string` describing the name of the module. Has a maximum length of 32 ASCII characters. Is required.
+- `"version"`: A `<version>` describing the required `emf-core-base` interface version. Is required.
+- `"module_type"`: A `string` describing the `module type` of the module. Has a maximum length of 64 ASCII characters.
+  Is required.
+- `"module_version"`: A `string` describing the version of the module. Can be any string, but the usage of SemVer is
+  encouraged. Has a maximum length of 32 ASCII characters. Is required.
+- `"load_deps"`: An `array` of `<interface_descriptors>` describing the load dependencies.
+- `"runtime_deps"`: An `array` of `<interface_descriptors>` describing the runtime dependencies.
+- `"exports"`: An `array` of `<interface_descriptors>` describing the exportable interfaces.
+
+The definition of the custom types can be found below:
+
+- `<interface_descriptor>`: The descriptor of an interface.
+  - `name`: A `string` describing the name of the interface. Has a maximum length of 32 ASCII characters. Is required.
+  - `version`: A `<version>` describing the version of the interface. Is required.
+  - `extensions`: An `array` of strings describing the extensions of the interface. Each extension has a maximum length
+    of 32 ASCII characters.
+
+- `<version>`: The `string` representation of a version. See the
+  [versioning-specification RFC](0004-versioning-specification.md).
+  
+Example:
+
+```json
+{
+    "schema": 0,
+    "version": "1.0.0",
+    "name": "jobs",
+    "module_type": "emf::core_base::native",
+    "module_version": "0.1.5-rc.7-a",
+    "load_deps": [{
+        "name": "memory",
+        "version": "0.1.0"
+    }],
+    "runtime_deps": [{
+        "name": "logging",
+        "version": "1.0.0"
+    }],
+    "exports": [{
+        "name": "jobs_interface",
+        "version": "1.0.0-beta",
+        "extensions": [
+            "schedulers",
+            "fibers"
+        ]
+    }]
+}
+```
+
+#### Predefined module loaders
+
+Some module loaders are always present and can not be removed at runtime.
+
+##### Native module loader
+
+The native module loader is built on top of the native library loader and is able to load modules consisting of native
+libraries. It is reachable with the `EMF_CBASE_MODULE_LOADER_DEFAULT_HANDLE` handle. The same restrictions of the native
+library loader apply to the native module loader. The native module loader requires the presence of a native module
+manifest file named `native_module.json` at the root of the module.
+
+##### Native module manifest
+
+The native module manifest specifies which library implements the module. To allow for backwards (and forwards)
+compatibility, the version of the manifest schema is saved in the manifest with the key `"schema"`.
+
+###### Native module manifest schema `"0"`
+
+The schema `"0"` specifies one field:
+
+- `library_path`: A `string` describing the relative path to the library. Is required.
+
+Example:
+
+```json
+{
+    "schema": "0",
+    "library_path": "./lib/jobs.so"
+}
+```
+
+##### Native module interface
+
+Once the module library has been loaded by the native library loader, the native module loader searches for a symbol
+with the name `emf_cbase_native_module_interface` (see `EMF_CBASE_NATIVE_MODULE_INTERFACE_SYMBOL_NAME`) and the
+type `emf_cbase_native_module_interface_t`.
+
+#### Module api example
+
+```c
+/// `base_interf` is a structure containing the `emf-core-base` interface.
+/// `base_handle` is a handle to the `emf-core-base` module.
+
+base_interf->sys_lock_fn(base_handle);
+
+const emf_cbase_os_path_char_t* module_path = "./jobs_module";
+emf_cbase_module_handle_result_t module_handle_res = 
+    base_interf->module_add_module_fn(base_handle, EMF_CBASE_MODULE_LOADER_DEFAULT_HANDLE, module_path);
+if (module_handle_res.has_error) {
+    base_interf->sys_panic_fn(base_handle, "Unable to load the `./jobs_module` module.");
+}
+emf_cbase_module_handle_t module_handle = module_handle_res.result;
+
+emf_cbase_module_result_t result;
+result = base_interf->module_load_fn(base_handle, module_handle);
+if (result.has_error) {
+    base_interf->sys_panic_fn(base_handle, "Unable to load the `./jobs_module` module.");
+}
+
+result = base_interf->module_initialize_fn(base_handle, module_handle);
+if (result.has_error) {
+    base_interf->sys_panic_fn(base_handle, "Unable to initialize the `./jobs_module` module.");
+}
+
+emf_cbase_interface_descriptor_t interface_descriptor = {
+    .name = { .data = "jobs_interface", .length = 14 },
+    .version = base_interf->version_new_short_fn(base_handle, 1, 0, 0),
+    .extensions = { .data = NULL, length = 0 }
+}
+result = base_interf->module_export_interface_fn(base_handle, module_handle, &interface_descriptor);
+if (result.has_error) {
+    base_interf->sys_panic_fn(base_handle, "Unable to export `jobs_interface` from the `./jobs_module` module.");
+}
+
+base_interf->sys_unlock_fn(base_handle);
+```
 
 ### Version api
 
