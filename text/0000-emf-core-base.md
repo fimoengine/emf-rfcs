@@ -100,6 +100,8 @@ void sys_set_sync_handler(const emf_cbase_sync_handler_interface_t* sync_handler
 
 ##### Sys api termination
 
+###### sys_shutdown
+
 > ```c
 > _Noreturn void sys_shutdown()
 > ```
@@ -108,6 +110,8 @@ void sys_set_sync_handler(const emf_cbase_sync_handler_interface_t* sync_handler
 
 ---
 
+###### sys_panic
+
 > ```c
 > _Noreturn void sys_panic(const char* error)
 > ```
@@ -115,6 +119,8 @@ void sys_set_sync_handler(const emf_cbase_sync_handler_interface_t* sync_handler
 > - Effects: Execution of the program is stopped abruptly. The error may be logged.
 
 ##### Sys api feature request
+
+###### sys_has_function
 
 > ```c
 > emf_cbase_bool_t sys_has_function(emf_cbase_fn_ptr_id_t fn_id)
@@ -125,6 +131,8 @@ void sys_set_sync_handler(const emf_cbase_sync_handler_interface_t* sync_handler
 
 ---
 
+###### sys_get_function
+
 > ```c
 > emf_cbase_sys_fn_optional_t sys_get_function(emf_cbase_fn_ptr_id_t fn_id)
 > ```
@@ -132,6 +140,8 @@ void sys_set_sync_handler(const emf_cbase_sync_handler_interface_t* sync_handler
 > - Returns: Function pointer to the requested function.
 
 ##### Sys api synchronization
+
+###### sys_lock
 
 > ```c
 > void sys_lock()
@@ -143,6 +153,8 @@ void sys_set_sync_handler(const emf_cbase_sync_handler_interface_t* sync_handler
 
 ---
 
+###### sys_try_lock
+
 > ```c
 > emf_cbase_bool_t sys_try_lock()
 > ```
@@ -153,6 +165,8 @@ void sys_set_sync_handler(const emf_cbase_sync_handler_interface_t* sync_handler
 
 ---
 
+###### sys_unlock
+
 > ```c
 > void sys_unlock()
 > ```
@@ -160,6 +174,8 @@ void sys_set_sync_handler(const emf_cbase_sync_handler_interface_t* sync_handler
 > - Effects: Unlocks the interface.
 
 ##### Sys api manual synchronization
+
+###### sys_get_sync_handler
 
 > ```c
 > const emf_cbase_sync_handler_interface_t* sys_get_sync_handler()
@@ -169,6 +185,8 @@ void sys_set_sync_handler(const emf_cbase_sync_handler_interface_t* sync_handler
 > - Returns: Pointer to the active synchronization handler.
 
 ---
+
+###### sys_set_sync_handler
 
 > ```c
 > void sys_set_sync_handler(const emf_cbase_sync_handler_interface_t* sync_handler)
@@ -308,6 +326,8 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 
 ##### Library api loader management
 
+###### library_register_loader
+
 > ```c
 > emf_cbase_library_loader_handle_result_t library_register_loader(
 >       const emf_cbase_library_loader_interface_t* loader_interface, 
@@ -321,6 +341,8 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 
 ---
 
+###### library_unregister_loader
+
 > ```c
 > emf_cbase_library_result_t library_unregister_loader(emf_cbase_library_loader_handle_t loader_handle)
 > ```
@@ -330,6 +352,8 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 > - Returns: Error on failure.
 
 ---
+
+###### library_get_loader_interface
 
 > ```c
 > emf_cbase_library_loader_interface_result_t library_get_loader_interface(
@@ -341,6 +365,8 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 > - Returns: Interface on success, error otherwise.
 
 ---
+
+###### library_get_loader_handle_from_type
 
 > ```c
 > emf_cbase_library_loader_handle_result_t library_get_loader_handle_from_type(
@@ -354,6 +380,8 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 
 ---
 
+###### library_get_loader_handle_from_library
+
 > ```c
 > emf_cbase_library_loader_handle_result_t library_get_loader_handle_from_library(
 >       emf_cbase_library_handle_t library_handle)
@@ -365,6 +393,8 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 
 ##### Library api queries
 
+###### library_get_num_loaders
+
 > ```c
 > size_t library_get_num_loaders()
 > ```
@@ -373,6 +403,8 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 > - Returns: Number of registered loaders.
 
 ---
+
+###### library_library_exists
 
 > ```c
 > emf_cbase_bool_t library_library_exists(emf_cbase_library_handle_t library_handle)
@@ -383,6 +415,8 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 
 ---
 
+###### library_type_exists
+
 > ```c
 > emf_cbase_bool_t library_type_exists(const emf_cbase_library_type_t* library_type)
 > ```
@@ -392,6 +426,8 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 > - Returns: `emf_cbase_bool_true` if the type is exists, `emf_cbase_bool_false` otherwise.
 
 ---
+
+###### library_get_library_types
 
 > ```c
 > emf_cbase_library_size_result_t library_get_library_types(emf_cbase_library_type_span_t* buffer)
@@ -404,6 +440,8 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 
 ##### Library api internal library management
 
+###### library_create_library_handle
+
 > ```c
 > emf_cbase_library_handle_t library_create_library_handle()
 > ```
@@ -413,6 +451,8 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 > - Returns: Library handle.
 
 ---
+
+###### library_remove_library_handle
 
 > ```c
 > emf_cbase_library_result_t library_remove_library_handle(emf_cbase_library_handle_t library_handle)
@@ -424,6 +464,8 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 > - Returns: Error on failure.
 
 ---
+
+###### library_link_library
 
 > ```c
 > emf_cbase_library_result_t library_link_library(
@@ -440,6 +482,8 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 
 ---
 
+###### library_get_internal_library_handle
+
 > ```c
 > emf_cbase_internal_library_handle_result_t library_get_internal_library_handle(
 >       emf_cbase_library_handle_t library_handle)
@@ -450,6 +494,8 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 > - Returns: Handle on success, error otherwise.
 
 ##### Library api library management
+
+###### library_load
 
 > ```c
 > emf_cbase_library_handle_result_t library_load(
@@ -465,6 +511,8 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 
 ---
 
+###### library_unload
+
 > ```c
 > emf_cbase_library_result_t library_unload(emf_cbase_library_handle_t library_handle)
 > ```
@@ -474,6 +522,8 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 > - Returns: Error on failure.
 
 ---
+
+###### library_get_data_symbol
 
 > ```c
 > emf_cbase_library_data_symbol_result_t library_get_data_symbol(
@@ -489,6 +539,8 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 > - Returns: Symbol on success, error otherwise.
 
 ---
+
+###### library_get_function_symbol
 
 > ```c
 > emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
@@ -748,6 +800,8 @@ emf_cbase_module_interface_result_t module_get_interface(
 
 ##### Module api loader management
 
+###### module_register_loader
+
 > ```c
 > emf_cbase_module_loader_handle_result_t module_register_loader(
 >       const emf_cbase_module_loader_interface_t* loader_interface,
@@ -762,6 +816,8 @@ emf_cbase_module_interface_result_t module_get_interface(
 
 ---
 
+###### module_unregister_loader
+
 > ```c
 > emf_cbase_module_result_t module_unregister_loader(
 >       emf_cbase_module_loader_handle_t loader_handle)
@@ -775,6 +831,8 @@ emf_cbase_module_interface_result_t module_get_interface(
 
 ---
 
+###### module_get_loader_interface
+
 > ```c
 > emf_cbase_module_loader_interface_result_t module_get_loader_interface(
 >       emf_cbase_module_loader_handle_t loader_handle)
@@ -785,6 +843,8 @@ emf_cbase_module_interface_result_t module_get_interface(
 > - Returns: Interface on success, error otherwise.
 
 ---
+
+###### module_get_loader_handle_from_type
 
 > ```c
 > emf_cbase_module_loader_handle_result_t module_get_loader_handle_from_type(
@@ -798,6 +858,8 @@ emf_cbase_module_interface_result_t module_get_interface(
 
 ---
 
+###### module_get_loader_handle_from_module
+
 > ```c
 > emf_cbase_module_loader_handle_result_t module_get_loader_handle_from_module(
 >       emf_cbase_module_handle_t module_handle)
@@ -809,6 +871,8 @@ emf_cbase_module_interface_result_t module_get_interface(
 
 ##### Module api queries
 
+###### module_get_num_modules
+
 > ```c
 > size_t module_get_num_modules()
 > ```
@@ -817,6 +881,8 @@ emf_cbase_module_interface_result_t module_get_interface(
 > - Returns: Number of modules.
 
 ---
+
+###### module_get_num_loaders
 
 > ```c
 > size_t module_get_num_loaders()
@@ -827,6 +893,8 @@ emf_cbase_module_interface_result_t module_get_interface(
 
 ---
 
+###### module_get_num_exported_interfaces
+
 > ```c
 > size_t module_get_num_exported_interfaces()
 > ```
@@ -835,6 +903,8 @@ emf_cbase_module_interface_result_t module_get_interface(
 > - Returns: Number of exported interfaces.
 
 ---
+
+###### module_module_exists
 
 > ```c
 > emf_cbase_bool_t module_module_exists(emf_cbase_module_handle_t module_handle)
@@ -845,6 +915,8 @@ emf_cbase_module_interface_result_t module_get_interface(
 
 ---
 
+###### module_type_exists
+
 > ```c
 > emf_cbase_bool_t module_type_exists(const emf_cbase_module_type_t* module_type)
 > ```
@@ -854,6 +926,8 @@ emf_cbase_module_interface_result_t module_get_interface(
 > - Returns: `emf_cbase_bool_true` if it exists, `emf_cbase_bool_false` otherwise.
 
 ---
+
+###### module_exported_interface_exists
 
 > ```c
 > emf_cbase_bool_t module_exported_interface_exists(
@@ -866,17 +940,21 @@ emf_cbase_module_interface_result_t module_get_interface(
 
 ---
 
+###### module_get_modules
+
 > ```c
 > emf_cbase_module_size_result_t module_get_modules(
 >       emf_cbase_module_info_span_t* buffer)
 > ```
 >
-> - Effects: Copies the available module infos into a buffer.
+> - Effects: Copies the available module info into a buffer.
 > - Failure: Fails if `buffer->length < module_get_num_modules()`.
 > - Mandates: `buffer != NULL && buffer->data != NULL`.
-> - Returns: Number if written module infos on success, error otherwise.
+> - Returns: Number if written module info on success, error otherwise.
 
 ---
+
+###### module_get_module_types
 
 > ```c
 > emf_cbase_module_size_result_t module_get_module_types(
@@ -890,6 +968,8 @@ emf_cbase_module_interface_result_t module_get_interface(
 
 ---
 
+###### module_get_exported_interfaces
+
 > ```c
 > emf_cbase_module_size_result_t module_get_exported_interfaces(
 >       emf_cbase_interface_descriptor_span_t* buffer)
@@ -901,6 +981,8 @@ emf_cbase_module_interface_result_t module_get_interface(
 > - Returns: Number if written descriptors on success, error otherwise.
 
 ---
+
+###### module_get_exported_interface_handle
 
 > ```c
 > emf_cbase_module_handle_result_t module_get_exported_interface_handle(
@@ -914,6 +996,8 @@ emf_cbase_module_interface_result_t module_get_interface(
 
 ##### Module api internal module management
 
+###### module_create_module_handle
+
 > ```c
 > emf_cbase_module_handle_t module_create_module_handle()
 > ```
@@ -923,6 +1007,8 @@ emf_cbase_module_interface_result_t module_get_interface(
 > - Returns: Module handle.
 
 ---
+
+###### module_remove_module_handle
 
 > ```c
 > emf_cbase_module_result_t module_remove_module_handle(
@@ -935,6 +1021,8 @@ emf_cbase_module_interface_result_t module_get_interface(
 > - Returns: Error on failure.
 
 ---
+
+###### module_link_module
 
 > ```c
 > emf_cbase_module_result_t module_link_module(
@@ -950,6 +1038,8 @@ emf_cbase_module_interface_result_t module_get_interface(
 
 ---
 
+###### module_get_internal_module_handle
+
 > ```c
 > emf_cbase_internal_module_handle_result_t module_get_internal_module_handle(
 >       emf_cbase_module_handle_t module_handle)
@@ -960,6 +1050,8 @@ emf_cbase_module_interface_result_t module_get_interface(
 > - Returns: Internal handle on success, error otherwise.
 
 ##### Module api module management
+
+###### module_add_module
 
 > ```c
 > emf_cbase_module_handle_result_t module_add_module(
@@ -974,6 +1066,8 @@ emf_cbase_module_interface_result_t module_get_interface(
 
 ---
 
+###### module_remove_module
+
 > ```c
 > emf_cbase_module_result_t module_remove_module(emf_cbase_module_handle_t module_handle)
 > ```
@@ -983,6 +1077,8 @@ emf_cbase_module_interface_result_t module_get_interface(
 > - Returns: Error on failure.
 
 ---
+
+###### module_load
 
 > ```c
 > emf_cbase_module_result_t module_load(emf_cbase_module_handle_t module_handle)
@@ -995,6 +1091,8 @@ emf_cbase_module_interface_result_t module_get_interface(
 
 ---
 
+###### module_unload
+
 > ```c
 > emf_cbase_module_result_t module_unload(emf_cbase_module_handle_t module_handle)
 > ```
@@ -1004,6 +1102,8 @@ emf_cbase_module_interface_result_t module_get_interface(
 > - Returns: Error on failure.
 
 ---
+
+###### module_initialize
 
 > ```c
 > emf_cbase_module_result_t module_initialize(emf_cbase_module_handle_t module_handle)
@@ -1016,6 +1116,8 @@ emf_cbase_module_interface_result_t module_get_interface(
 
 ---
 
+###### module_terminate
+
 > ```c
 > emf_cbase_module_result_t module_terminate(emf_cbase_module_handle_t module_handle)
 > ```
@@ -1027,6 +1129,8 @@ emf_cbase_module_interface_result_t module_get_interface(
 > - Returns: Error on failure.
 
 ---
+
+###### module_add_dependency
 
 > ```c
 > emf_cbase_module_result_t module_add_dependency(
@@ -1041,6 +1145,8 @@ emf_cbase_module_interface_result_t module_get_interface(
 
 ---
 
+###### module_remove_dependency
+
 > ```c
 > emf_cbase_module_result_t module_remove_dependency(
 >       emf_cbase_module_handle_t module_handle,
@@ -1053,6 +1159,8 @@ emf_cbase_module_interface_result_t module_get_interface(
 > - Returns: Error on failure.
 
 ---
+
+###### module_export_interface
 
 > ```c
 > emf_cbase_module_result_t module_export_interface(
@@ -1068,6 +1176,8 @@ emf_cbase_module_interface_result_t module_get_interface(
 
 ---
 
+###### module_get_load_dependencies
+
 > ```c
 > emf_cbase_interface_descriptor_const_span_result_t module_get_load_dependencies(
 >       emf_cbase_module_handle_t module_handle)
@@ -1078,6 +1188,8 @@ emf_cbase_module_interface_result_t module_get_interface(
 > - Returns: Load dependencies on success, error otherwise.
 
 ---
+
+###### module_get_runtime_dependencies
 
 > ```c
 > emf_cbase_interface_descriptor_const_span_result_t module_get_runtime_dependencies(
@@ -1090,6 +1202,8 @@ emf_cbase_module_interface_result_t module_get_interface(
 
 ---
 
+###### module_get_exportable_interfaces
+
 > ```c
 > emf_cbase_interface_descriptor_const_span_result_t module_get_exportable_interfaces(
 >       emf_cbase_module_handle_t module_handle)
@@ -1101,6 +1215,8 @@ emf_cbase_module_interface_result_t module_get_interface(
 
 ---
 
+###### module_fetch_status
+
 > ```c
 > emf_cbase_module_status_result_t module_fetch_status(emf_cbase_module_handle_t module_handle)
 > ```
@@ -1110,6 +1226,8 @@ emf_cbase_module_interface_result_t module_get_interface(
 > - Returns: Module status on success, error otherwise.
 
 ---
+
+###### module_get_module_path
 
 > ```c
 > emf_cbase_os_path_char_result_t module_get_module_path(emf_cbase_module_handle_t module_handle)
@@ -1121,6 +1239,8 @@ emf_cbase_module_interface_result_t module_get_interface(
 
 ---
 
+###### module_get_module_info
+
 > ```c
 > emf_cbase_module_info_ptr_result_t module_get_module_info(emf_cbase_module_handle_t module_handle)
 > ```
@@ -1130,6 +1250,8 @@ emf_cbase_module_interface_result_t module_get_interface(
 > - Returns: Module info on success, error otherwise.
 
 ---
+
+###### module_get_interface
 
 > ```c
 > emf_cbase_module_interface_result_t module_get_interface(
@@ -1228,6 +1350,8 @@ emf_cbase_bool_t version_is_compatible(const emf_cbase_version_t* lhs, const emf
 
 ##### Version api construction
 
+###### version_new_short
+
 > ```c
 > emf_cbase_version_t version_new_short(
 >       int32_t major, 
@@ -1240,6 +1364,8 @@ emf_cbase_bool_t version_is_compatible(const emf_cbase_version_t* lhs, const emf
 > - Returns: Constructed version.
 
 ---
+
+###### version_new_long
 
 > ```c
 > emf_cbase_version_t version_new_long(
@@ -1257,6 +1383,8 @@ emf_cbase_bool_t version_is_compatible(const emf_cbase_version_t* lhs, const emf
 
 ---
 
+###### version_new_full
+
 > ```c
 > emf_cbase_version_t version_new_full(
 >       int32_t major, 
@@ -1273,6 +1401,8 @@ emf_cbase_bool_t version_is_compatible(const emf_cbase_version_t* lhs, const emf
 
 ---
 
+###### version_from_string
+
 > ```c
 > emf_cbase_version_result_t version_from_string(const emf_cbase_version_const_string_buffer_t* version_string)
 > ```
@@ -1284,6 +1414,8 @@ emf_cbase_bool_t version_is_compatible(const emf_cbase_version_t* lhs, const emf
 
 ##### Version api strings
 
+###### version_string_length_short
+
 > ```c
 > size_t version_string_length_short(const emf_cbase_version_t* version)
 > ```
@@ -1293,6 +1425,8 @@ emf_cbase_bool_t version_is_compatible(const emf_cbase_version_t* lhs, const emf
 > - Returns: Length of the string.
 
 ---
+
+###### version_string_length_long
 
 > ```c
 > size_t version_string_length_long(const emf_cbase_version_t* version)
@@ -1304,6 +1438,8 @@ emf_cbase_bool_t version_is_compatible(const emf_cbase_version_t* lhs, const emf
 
 ---
 
+###### version_string_length_full
+
 > ```c
 > size_t version_string_length_full(const emf_cbase_version_t* version)
 > ```
@@ -1313,6 +1449,8 @@ emf_cbase_bool_t version_is_compatible(const emf_cbase_version_t* lhs, const emf
 > - Returns: Length of the string.
 
 ---
+
+###### version_as_string_short
 
 > ```c
 > emf_cbase_version_size_result_t version_as_string_short(
@@ -1327,6 +1465,8 @@ emf_cbase_bool_t version_is_compatible(const emf_cbase_version_t* lhs, const emf
 
 ---
 
+###### version_as_string_long
+
 > ```c
 > emf_cbase_version_size_result_t version_as_string_long(
 >       const emf_cbase_version_t* version,
@@ -1340,6 +1480,8 @@ emf_cbase_bool_t version_is_compatible(const emf_cbase_version_t* lhs, const emf
 
 ---
 
+###### version_as_string_full
+
 > ```c
 > emf_cbase_version_size_result_t version_as_string_full(
 >       const emf_cbase_version_t* version,
@@ -1352,6 +1494,8 @@ emf_cbase_bool_t version_is_compatible(const emf_cbase_version_t* lhs, const emf
 > - Returns: Number of written characters on success, error otherwise.
 
 ---
+
+###### version_string_is_valid
 
 > ```c
 > emf_cbase_bool_t version_string_is_valid(const emf_cbase_version_const_string_buffer_t* version_string)
