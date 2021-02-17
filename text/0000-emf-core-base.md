@@ -22,8 +22,8 @@ look at the plethora of existing game engines.
 
 [guide-level-explanation]: #guide-level-explanation
 
-This RFC proposes an interface, which poses as a backbone for a loosely coupled game engine. This interface named **
-emf-core-base** specifies the lifecycle and the basic capabilities of a conforming engine.
+This RFC proposes an interface, which poses as a backbone for a loosely coupled game engine. This interface named 
+**emf-core-base** specifies the lifecycle and the basic capabilities of a conforming engine.
 
 It consists of several apis:
 
@@ -735,6 +735,17 @@ emf_cbase_bool_t version_is_compatible(const emf_cbase_version_t* lhs, const emf
 
 For the sake of brevity, we will introduce the following macros:
 
+#### BASE_FN_T
+
+> ```c
+> #define BASE_FN_T(NAME, RET_T, ...) \  
+>   typedef RET_T(*NAME)(emf_cbase_t*, __VA_ARGS__);
+> ```
+>
+> - Description: A pointer to an interface function.
+
+---
+
 #### BUFFER_T
 
 > ```c
@@ -746,6 +757,17 @@ For the sake of brevity, we will introduce the following macros:
 > ```
 >
 > - Description: A buffer with a fixed length.
+
+---
+
+#### FN_T
+
+> ```c
+> #define FN_T(NAME, RET_T, ...) \  
+>   typedef RET_T(*NAME)(__VA_ARGS__);
+> ```
+>
+> - Description: A pointer to a function.
 
 ---
 
@@ -913,7 +935,7 @@ For the sake of brevity, we will introduce the following macros:
 > #endif
 > ```
 >
-> - Description: Character used by the os to represent a path.
+> - Description: Character used by the OS to represent a path.
 
 ---
 
@@ -930,7 +952,7 @@ For the sake of brevity, we will introduce the following macros:
 > } emf_cbase_bool_t;
 > ```
 >
-> - Description: An enum describing a boolean value.
+> - Description: An enum describing a Boolean value.
 >
 > | Name                     | Value | Description  |
 > | ------------------------ | ----- | ------------ |
@@ -1274,8 +1296,8 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_library_loader_interface_result_t
 
 > ```c
-> emf_cbase_library_loader_interface_result_t,
->     const emf_cbase_library_loader_interface_t*, emf_cbase_library_error_t
+> RESULT_T(emf_cbase_library_loader_interface_result_t,
+>     const emf_cbase_library_loader_interface_t*, emf_cbase_library_error_t)
 > ```
 >
 > - Description: A struct containing either an `const emf_cbase_library_loader_interface_t*` or an `emf_cbase_library_error_t`.
@@ -1313,9 +1335,9 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_internal_library_handle_t
 
 > ```c
-> typedef struct emf_cbase_library_loader_library_handle_t {
+> typedef struct emf_cbase_internal_library_handle_t {
 >     intptr_t id;
-> } emf_cbase_library_loader_library_handle_t;
+> } emf_cbase_internal_library_handle_t;
 > ```
 >
 > - Description: Internal handle to a library.
@@ -1412,7 +1434,7 @@ For the sake of brevity, we will introduce the following macros:
 > SPAN_T(emf_cbase_module_info_span_t, emf_cbase_module_info_t)
 > ```
 >
-> - Description: Span of module infos.
+> - Description: Span of module info.
 
 ---
 
@@ -1702,7 +1724,7 @@ For the sake of brevity, we will introduce the following macros:
 > typedef struct emf_cbase_sync_handler_t emf_cbase_sync_handler_t;
 > ```
 >
-> - Description: Opaque structure representing a synchronisation handler.
+> - Description: Opaque structure representing a synchronization handler.
 
 ---
 
@@ -1798,11 +1820,950 @@ For the sake of brevity, we will introduce the following macros:
 > } emf_sync_handler_interface_t;
 > ```
 >
-> - Description: Interface of a synchronisation handler.
+> - Description: Interface of a synchronization handler.
 
 ### Types
 
 [types]: #types
+
+#### emf_cbase_fn_t
+
+> ```c
+> FN_T(emf_cbase_fn_t, void, void)
+> ```
+
+---
+
+#### emf_cbase_library_create_library_handle_fn_t
+
+> ```c
+> BASE_FN_T(emf_cbase_library_create_library_handle_fn_t, emf_cbase_library_handle_t)
+> ```
+
+---
+
+#### emf_cbase_library_get_data_symbol_fn_t
+
+> ```c
+> BASE_FN_T(emf_cbase_library_get_data_symbol_fn_t, emf_cbase_library_data_symbol_result_t, 
+>       emf_cbase_library_handle_t library_handle, const char* symbol_name)
+> ```
+
+---
+
+#### emf_cbase_library_get_function_symbol_fn_t
+
+> ```c
+> BASE_FN_T(emf_cbase_library_get_function_symbol_fn_t, emf_cbase_library_fn_symbol_result_t, 
+>       emf_cbase_library_handle_t library_handle, const char* symbol_name)
+> ```
+
+---
+
+#### emf_cbase_library_get_internal_library_handle_fn_t
+
+> ```c
+> BASE_FN_T(emf_cbase_library_get_internal_library_handle_fn_t, 
+>       emf_cbase_internal_library_handle_result_t, emf_cbase_library_handle_t library_handle)
+> ```
+
+---
+
+#### emf_cbase_library_get_library_types_fn_t
+
+> ```c
+> BASE_FN_T(emf_cbase_library_get_library_types_fn_t, 
+>       emf_cbase_library_size_result_t, emf_cbase_library_type_span_t* buffer)
+> ```
+
+---
+
+#### emf_cbase_library_get_loader_handle_from_library_fn_t
+
+> ```c
+> BASE_FN_T(emf_cbase_library_get_loader_handle_from_library_fn_t,
+>       emf_cbase_library_loader_handle_result_t, emf_cbase_library_handle_t library_handle)
+> ```
+
+---
+
+#### emf_cbase_library_get_loader_handle_from_type_fn_t
+
+> ```c
+> BASE_FN_T(emf_cbase_library_get_loader_handle_from_type_fn_t,
+>       emf_cbase_library_loader_handle_result_t, const emf_cbase_library_type_t* library_type)
+> ```
+
+---
+
+#### emf_cbase_library_get_loader_interface_fn_t
+
+> ```c
+> BASE_FN_T(emf_cbase_library_get_loader_interface_fn_t,
+>       emf_cbase_library_loader_interface_result_t, emf_cbase_library_loader_handle_t loader_handle)
+> ```
+
+---
+
+#### emf_cbase_library_get_num_loaders_fn_t
+
+> ```c
+> BASE_FN_T(emf_cbase_library_get_num_loaders_fn_t, size_t, void)
+> ```
+
+---
+
+#### emf_cbase_library_library_exists_fn_t
+
+> ```c
+> BASE_FN_T(emf_cbase_library_library_exists_fn_t, emf_cbase_bool_t, emf_cbase_library_handle_t library_handle)
+> ```
+
+---
+
+#### emf_cbase_library_link_library_fn_t
+
+> ```c
+> BASE_FN_T(emf_cbase_library_link_library_fn_t,
+>       emf_cbase_library_result_t,
+>       emf_cbase_library_handle_t library_handle, 
+>       emf_cbase_library_loader_handle_t loader_handle,
+>       emf_cbase_internal_library_handle_t internal_handle)
+> ```
+
+---
+
+#### emf_cbase_library_load_fn_t
+
+> ```c
+> BASE_FN_T(emf_cbase_library_load_fn_t, 
+>       emf_cbase_library_handle_result_t,
+>       emf_cbase_library_loader_handle_t loader_handle, 
+>       const emf_cbase_os_path_char_t* library_path)
+> ```
+
+---
+
+#### emf_cbase_library_loader_interface_get_data_symbol_fn_t
+
+> ```c
+> FN_T(emf_cbase_library_loader_interface_get_data_symbol_fn_t,
+>       emf_cbase_library_data_symbol_result_t,
+>       emf_cbase_library_loader_t* library_loader,
+>       emf_cbase_internal_library_handle_t library_handle,
+>       const char* symbol_name)
+> ```
+
+---
+
+#### emf_cbase_library_loader_interface_get_function_symbol_fn_t
+
+> ```c
+> FN_T(emf_cbase_library_loader_interface_get_function_symbol_fn_t,
+>       emf_cbase_library_fn_symbol_result_t,
+>       emf_cbase_library_loader_t* library_loader,
+>       emf_cbase_internal_library_handle_t library_handle,
+>       const char* symbol_name)
+> ```
+
+---
+
+#### emf_cbase_library_loader_interface_get_internal_interface_fn_t
+
+> ```c
+> FN_T(emf_cbase_library_loader_interface_get_internal_interface_fn_t,
+>       const void*,
+>        emf_cbase_library_loader_t* library_loader)
+> ```
+
+---
+
+#### emf_cbase_library_loader_interface_load_fn_t
+
+> ```c
+> FN_T(emf_cbase_library_loader_interface_load_fn_t,
+>       emf_cbase_internal_library_handle_result_t,
+>       emf_cbase_library_loader_t* library_loader,
+>       const emf_cbase_os_path_char_t* library_path)
+> ```
+
+---
+
+#### emf_cbase_library_loader_interface_unload_fn_t
+
+> ```c
+> FN_T(emf_cbase_library_loader_interface_unload_fn_t, 
+>       emf_cbase_library_result_t,
+>       emf_cbase_library_loader_t* library_loader,
+>       emf_cbase_internal_library_handle_t library_handle)
+> ```
+
+---
+
+#### emf_cbase_library_register_loader_fn_t
+
+> ```c
+> BASE_FN_T(emf_cbase_library_register_loader_fn_t,
+>       emf_cbase_library_loader_handle_result_t,
+>       const emf_cbase_library_loader_interface_t* loader_interface, 
+>       const emf_cbase_library_type_t* library_type)
+> ```
+
+---
+
+#### emf_cbase_library_remove_library_handle_fn_t
+
+> ```c
+> BASE_FN_T(emf_cbase_library_remove_library_handle_fn_t,
+>       emf_cbase_library_result_t,
+>       emf_cbase_library_handle_t library_handle)
+> ```
+
+---
+
+#### emf_cbase_library_type_exists_fn_t
+
+> ```c
+> BASE_FN_T(emf_cbase_library_type_exists_fn_t, 
+>       emf_cbase_bool_t,
+>       emf_cbase_library_handle_t library_handle)
+> ```
+
+---
+
+#### emf_cbase_library_unload_fn_t
+
+> ```c
+> BASE_FN_T(emf_cbase_library_unload_fn_t,
+>       emf_cbase_library_result_t,
+>       emf_cbase_library_handle_t library_handle)
+> ```
+
+---
+
+#### emf_cbase_library_unregister_loader_fn_t
+
+> ```c
+> BASE_FN_T(emf_cbase_library_unregister_loader_fn_t,
+>       emf_cbase_library_result_t,
+>       emf_cbase_library_loader_handle_t loader_handle)
+> ```
+
+---
+
+#### emf_cbase_module_add_dependency_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_add_module_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_create_module_handle_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_export_interface_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_exported_interface_exists_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_fetch_status_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_get_exportable_interfaces_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_get_exported_interface_handle_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_get_exported_interfaces_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_get_interface_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_get_internal_module_handle_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_get_load_dependencies_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_get_loader_handle_from_module_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_get_loader_handle_from_type_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_get_loader_interface_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_get_module_info_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_get_module_path_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_get_module_types_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_get_modules_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_get_num_exported_interfaces_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_get_num_loaders_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_get_num_modules_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_get_runtime_dependencies_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_initialize_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_link_module_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_load_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_loader_interface_add_module_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_loader_interface_fetch_status_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_loader_interface_get_exportable_interfaces_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_loader_interface_get_interface_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_loader_interface_get_internal_interface_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_loader_interface_get_load_dependencies_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_loader_interface_get_module_info_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_loader_interface_get_module_path_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_loader_interface_get_runtime_dependencies_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_loader_interface_initialize_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_loader_interface_load_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_loader_interface_remove_module_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_loader_interface_terminate_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_loader_interface_unload_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_module_exists_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_register_loader_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_remove_dependency_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_remove_module_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_remove_module_handle_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_terminate_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_type_exists_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_unload_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_module_unregister_loader_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_native_library_loader_interface_load_ext_fn_t
+
+> ```c
+> #if defined(Win32) || defined(_WIN32)
+> FN_T(emf_cbase_native_library_loader_interface_load_ext_fn_t,
+>       emf_cbase_internal_library_handle_result_t,
+>       emf_cbase_library_loader_t*, library_loader,
+>       const emf_cbase_os_path_char_t* library_path,
+>       void* h_file,
+>       uint32_t flags)
+> #else
+> FN_T(emf_cbase_native_library_loader_interface_load_ext_fn_t,
+>       emf_cbase_internal_library_handle_result_t,
+>       emf_cbase_library_loader_t*, library_loader,
+>       const emf_cbase_os_path_char_t* library_path,
+>       int flags)
+> #endif // defined(Win32) || defined(_WIN32)
+> ```
+
+---
+
+#### emf_cbase_native_module_interface_get_exportable_interfaces_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_native_module_interface_get_interface_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_native_module_interface_get_load_dependencies_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_native_module_interface_get_module_info_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_native_module_interface_get_runtime_dependencies_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_native_module_interface_initialize_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_native_module_interface_load_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_native_module_interface_terminate_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_native_module_interface_unload_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_native_module_loader_interface_get_native_module_fn_t
+
+> ```c
+> ```
+
+---
+
+#### emf_cbase_os_path_char_t
+
+> ```c
+> typedef EMF_CBASE_OS_PATH_CHAR emf_cbase_os_path_char_t;
+> ```
+
+---
+
+#### emf_cbase_sync_handler_lock_fn_t
+
+> ```c
+> FN_T(emf_cbase_sync_handler_lock_fn_t, void, 
+>       emf_cbase_sync_handler_t* sync_handler)
+> ```
+
+---
+
+#### emf_cbase_sync_handler_try_lock_fn_t
+
+> ```c
+> FN_T(emf_cbase_sync_handler_try_lock_fn_t, emf_cbase_bool_t, 
+>       emf_cbase_sync_handler_t* sync_handler)
+> ```
+
+---
+
+#### emf_cbase_sync_handler_unlock_fn_t
+
+> ```c
+> FN_T(emf_cbase_sync_handler_unlock_fn_t, void, 
+>       emf_cbase_sync_handler_t* sync_handler)
+> ```
+
+---
+
+#### emf_cbase_sys_get_function_fn_t
+
+> ```c
+> BASE_FN_T(emf_cbase_sys_get_function_fn_t,
+>       emf_cbase_sys_fn_optional_t,
+>       emf_cbase_fn_ptr_id_t fn_id)
+> ```
+
+---
+
+#### emf_cbase_sys_get_sync_handler_fn_t
+
+> ```c
+> BASE_FN_T(emf_cbase_sys_get_sync_handler_fn_t,
+>       const emf_cbase_sync_handler_interface_t*,
+>       void)
+> ```
+
+---
+
+#### emf_cbase_sys_has_function_fn_t
+
+> ```c
+> BASE_FN_T(emf_cbase_sys_has_function_fn_t, 
+>       emf_cbase_bool_t,
+>       emf_cbase_fn_ptr_id_t fn_id)
+> ```
+
+---
+
+#### emf_cbase_sys_lock_fn_t
+
+> ```c
+> BASE_FN_T(emf_cbase_sys_lock_fn_t, void, void)
+> ```
+
+---
+
+#### emf_cbase_sys_panic_fn_t
+
+> ```c
+> BASE_FN_T(emf_cbase_sys_panic_fn_t, void, void)
+> ```
+
+---
+
+#### emf_cbase_sys_set_sync_handler_fn_t
+
+> ```c
+> BASE_FN_T(emf_cbase_sys_set_sync_handler_fn_t, void, 
+>       const emf_cbase_sync_handler_interface_t* sync_handler)
+> ```
+
+---
+
+#### emf_cbase_sys_shutdown_fn_t
+
+> ```c
+> BASE_FN_T(emf_cbase_sys_shutdown_fn_t, void, void)
+> ```
+
+---
+
+#### emf_cbase_sys_try_lock_fn_t
+
+> ```c
+> BASE_FN_T(emf_cbase_sys_try_lock_fn_t, emf_cbase_bool_t, void)
+> ```
+
+---
+
+#### emf_cbase_sys_unlock_fn_t
+
+> ```c
+> BASE_FN_T(emf_cbase_sys_unlock_fn_t, void, void)
+> ```
+
+---
+
+#### emf_cbase_version_as_string_full_fn_t
+
+> ```c
+> BASE_FN_T(emf_cbase_version_as_string_full_fn_t,
+>       emf_cbase_version_size_result_t,
+>       const emf_cbase_version_t* version,
+>       emf_cbase_version_string_buffer_t* buffer)
+> ```
+
+---
+
+#### emf_cbase_version_as_string_long_fn_t
+
+> ```c
+> BASE_FN_T(emf_cbase_version_as_string_long_fn_t,
+>       emf_cbase_version_size_result_t,
+>       const emf_cbase_version_t* version,
+>       emf_cbase_version_string_buffer_t* buffer)
+> ```
+
+---
+
+#### emf_cbase_version_as_string_short_fn_t
+
+> ```c
+> BASE_FN_T(emf_cbase_version_as_string_short_fn_t,
+>       emf_cbase_version_size_result_t,
+>       const emf_cbase_version_t* version,
+>       emf_cbase_version_string_buffer_t* buffer)
+> ```
+
+---
+
+#### emf_cbase_version_compare_fn_t
+
+> ```c
+> BASE_FN_T(emf_cbase_version_compare_fn_t,
+>       int32_t,
+>       const emf_cbase_version_t* lhs,
+>       const emf_cbase_version_t* rhs)
+> ```
+
+---
+
+#### emf_cbase_version_compare_strong_fn_t
+
+> ```c
+> BASE_FN_T(emf_cbase_version_compare_strong_fn_t,
+>       int32_t,
+>       const emf_cbase_version_t* lhs,
+>       const emf_cbase_version_t* rhs)
+> ```
+
+---
+
+#### emf_cbase_version_compare_weak_fn_t
+
+> ```c
+> BASE_FN_T(emf_cbase_version_compare_weak_fn_t,
+>       int32_t,
+>       const emf_cbase_version_t* lhs,
+>       const emf_cbase_version_t* rhs)
+> ```
+
+---
+
+#### emf_cbase_version_from_string_fn_t
+
+> ```c
+> BASE_FN_T(emf_cbase_version_from_string_fn_t,
+>       emf_cbase_version_result_t,
+>       const emf_cbase_version_const_string_buffer_t* version_string)
+> ```
+
+---
+
+#### emf_cbase_version_is_compatible_fn_t
+
+> ```c
+> BASE_FN_T(emf_cbase_version_is_compatible_fn_t,
+>       emf_cbase_bool_t,
+>       const emf_cbase_version_t* lhs,
+>       const emf_cbase_version_t* rhs)
+> ```
+
+---
+
+#### emf_cbase_version_new_full_fn_t
+
+> ```c
+> BASE_FN_T(emf_cbase_version_new_full_fn_t,
+>       emf_cbase_version_t,
+>       int32_t major, 
+>       int32_t minor,
+>       int32_t patch,
+>       emf_cbase_version_release_t release_type,
+>       int8_t release_number,
+>       int64_t build)
+> ```
+
+---
+
+#### emf_cbase_version_new_long_fn_t
+
+> ```c
+> BASE_FN_T(emf_cbase_version_new_long_fn_t,
+>       emf_cbase_version_t,
+>       int32_t major, 
+>       int32_t minor,
+>       int32_t patch,
+>       emf_cbase_version_release_t release_type,
+>       int8_t release_number)
+> ```
+
+---
+
+#### emf_cbase_version_new_short_fn_t
+
+> ```c
+> BASE_FN_T(emf_cbase_version_new_short_fn_t,
+>       emf_cbase_version_t,
+>       int32_t major, 
+>       int32_t minor,
+>       int32_t patch)
+> ```
+
+---
+
+#### emf_cbase_version_string_is_valid_fn_t
+
+> ```c
+> BASE_FN_T(emf_cbase_version_string_is_valid_fn_t,
+>       emf_cbase_bool_t,
+>       const emf_cbase_version_const_string_buffer_t* version_string)
+> ```
+
+---
+
+#### emf_cbase_version_string_length_full_fn_t
+
+> ```c
+> BASE_FN_T(emf_cbase_version_string_length_full_fn_t,
+>       size_t,
+>       const emf_cbase_version_t* version)
+> ```
+
+---
+
+#### emf_cbase_version_string_length_long_fn_t
+
+> ```c
+> BASE_FN_T(emf_cbase_version_string_length_long_fn_t,
+>       size_t,
+>       const emf_cbase_version_t* version)
+> ```
+
+---
+
+#### emf_cbase_version_string_length_short_fn_t
+
+> ```c
+> BASE_FN_T(emf_cbase_version_string_length_short_fn_t,
+>       size_t,
+>       const emf_cbase_version_t* version)
+> ```
 
 ## Headers
 
