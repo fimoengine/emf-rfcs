@@ -79,21 +79,21 @@ The sys api controls the synchronization and termination of the engine.
 
 ```c
 // termination
-_Noreturn void sys_shutdown();
-_Noreturn void sys_panic(const char* error);
+_Noreturn void sys_shutdown()
+_Noreturn void sys_panic(const char* error)
 
 // feature request
-emf_cbase_bool_t sys_has_function(emf_cbase_fn_ptr_id_t fn_id);
-emf_cbase_sys_fn_optional_t sys_get_function(emf_cbase_fn_ptr_id_t fn_id);
+emf_cbase_bool_t sys_has_function(emf_cbase_fn_ptr_id_t fn_id)
+emf_cbase_sys_fn_optional_t sys_get_function(emf_cbase_fn_ptr_id_t fn_id)
 
 // synchronisation
-void sys_lock();
-emf_cbase_bool_t sys_try_lock();
-void sys_unlock();
+void sys_lock()
+emf_cbase_bool_t sys_try_lock()
+void sys_unlock()
 
 // manual synchronisation
-const emf_cbase_sync_handler_interface_t* sys_get_sync_handler();
-void sys_set_sync_handler(const emf_cbase_sync_handler_interface_t* sync_handler);
+const emf_cbase_sync_handler_interface_t* sys_get_sync_handler()
+void sys_set_sync_handler(const emf_cbase_sync_handler_interface_t* sync_handler)
 ```
 
 #### Sys api functions
@@ -101,7 +101,7 @@ void sys_set_sync_handler(const emf_cbase_sync_handler_interface_t* sync_handler
 ##### Sys api termination
 
 > ```c
-> _Noreturn void sys_shutdown();
+> _Noreturn void sys_shutdown()
 > ```
 >
 > - Effects: Sends a termination signal.
@@ -109,7 +109,7 @@ void sys_set_sync_handler(const emf_cbase_sync_handler_interface_t* sync_handler
 ---
 
 > ```c
-> _Noreturn void sys_panic(const char* error);
+> _Noreturn void sys_panic(const char* error)
 > ```
 >
 > - Effects: Execution of the program is stopped abruptly. The error may be logged.
@@ -117,7 +117,7 @@ void sys_set_sync_handler(const emf_cbase_sync_handler_interface_t* sync_handler
 ##### Sys api feature request
 
 > ```c
-> emf_cbase_bool_t sys_has_function(emf_cbase_fn_ptr_id_t fn_id);
+> emf_cbase_bool_t sys_has_function(emf_cbase_fn_ptr_id_t fn_id)
 > ```
 >
 > - Effects: Checks if a function is implemented.
@@ -126,7 +126,7 @@ void sys_set_sync_handler(const emf_cbase_sync_handler_interface_t* sync_handler
 ---
 
 > ```c
-> emf_cbase_sys_fn_optional_t sys_get_function(emf_cbase_fn_ptr_id_t fn_id);
+> emf_cbase_sys_fn_optional_t sys_get_function(emf_cbase_fn_ptr_id_t fn_id)
 > ```
 >
 > - Returns: Function pointer to the requested function.
@@ -134,7 +134,7 @@ void sys_set_sync_handler(const emf_cbase_sync_handler_interface_t* sync_handler
 ##### Sys api synchronization
 
 > ```c
-> void sys_lock();
+> void sys_lock()
 > ```
 >
 > - Effects: Locks the interface.
@@ -144,7 +144,7 @@ void sys_set_sync_handler(const emf_cbase_sync_handler_interface_t* sync_handler
 ---
 
 > ```c
-> emf_cbase_bool_t sys_try_lock();
+> emf_cbase_bool_t sys_try_lock()
 > ```
 >
 > - Effects: Tries to lock the interface.
@@ -154,7 +154,7 @@ void sys_set_sync_handler(const emf_cbase_sync_handler_interface_t* sync_handler
 ---
 
 > ```c
-> void sys_unlock();
+> void sys_unlock()
 > ```
 >
 > - Effects: Unlocks the interface.
@@ -162,7 +162,7 @@ void sys_set_sync_handler(const emf_cbase_sync_handler_interface_t* sync_handler
 ##### Sys api manual synchronization
 
 > ```c
-> const emf_cbase_sync_handler_interface_t* sys_get_sync_handler();
+> const emf_cbase_sync_handler_interface_t* sys_get_sync_handler()
 > ```
 >
 > - Ensures: The result of this call will never be `NULL`.
@@ -171,7 +171,7 @@ void sys_set_sync_handler(const emf_cbase_sync_handler_interface_t* sync_handler
 ---
 
 > ```c
-> void sys_set_sync_handler(const emf_cbase_sync_handler_interface_t* sync_handler);
+> void sys_set_sync_handler(const emf_cbase_sync_handler_interface_t* sync_handler)
 > ```
 >
 > - Effects: Sets a new synchronization handler.
@@ -264,44 +264,44 @@ base_interf->sys_unlock_fn(base_handle);
 // loader management
 emf_cbase_library_loader_handle_result_t library_register_loader(
         const emf_cbase_library_loader_interface_t* loader_interface, 
-        const emf_cbase_library_type_t* library_type);
+        const emf_cbase_library_type_t* library_type)
 emf_cbase_library_result_t library_unregister_loader(
-        emf_cbase_library_loader_handle_t loader_handle);
+        emf_cbase_library_loader_handle_t loader_handle)
 emf_cbase_library_loader_interface_result_t library_get_loader_interface(
-        emf_cbase_library_loader_handle_t loader_handle);
+        emf_cbase_library_loader_handle_t loader_handle)
 emf_cbase_library_loader_handle_result_t library_get_loader_handle_from_type(
-        const emf_cbase_library_type_t* library_type);
+        const emf_cbase_library_type_t* library_type)
 emf_cbase_library_loader_handle_result_t library_get_loader_handle_from_library(
-        emf_cbase_library_handle_t library_handle);
+        emf_cbase_library_handle_t library_handle)
 
 // queries
-size_t library_get_num_loaders();
-emf_cbase_bool_t library_library_exists(emf_cbase_library_handle_t library_handle);
-emf_cbase_bool_t library_type_exists(const emf_cbase_library_type_t* library_type);
-emf_cbase_library_size_result_t library_get_library_types(emf_cbase_library_type_span_t* buffer);
+size_t library_get_num_loaders()
+emf_cbase_bool_t library_library_exists(emf_cbase_library_handle_t library_handle)
+emf_cbase_bool_t library_type_exists(const emf_cbase_library_type_t* library_type)
+emf_cbase_library_size_result_t library_get_library_types(emf_cbase_library_type_span_t* buffer)
 
 // internal library management
-emf_cbase_library_handle_t library_create_library_handle();
+emf_cbase_library_handle_t library_create_library_handle()
 emf_cbase_library_result_t library_remove_library_handle(
-        emf_cbase_library_handle_t library_handle);
+        emf_cbase_library_handle_t library_handle)
 emf_cbase_library_result_t library_link_library(
         emf_cbase_library_handle_t library_handle, 
         emf_cbase_library_loader_handle_t loader_handle,
-        emf_cbase_internal_library_handle_t internal_handle);
+        emf_cbase_internal_library_handle_t internal_handle)
 emf_cbase_internal_library_handle_result_t library_get_internal_library_handle(
-        emf_cbase_library_handle_t library_handle);
+        emf_cbase_library_handle_t library_handle)
 
 // library management
 emf_cbase_library_handle_result_t library_load(
         emf_cbase_library_loader_handle_t loader_handle, 
-        const emf_cbase_os_path_char_t* library_path);
-emf_cbase_library_result_t library_unload(emf_cbase_library_handle_t library_handle);
+        const emf_cbase_os_path_char_t* library_path)
+emf_cbase_library_result_t library_unload(emf_cbase_library_handle_t library_handle)
 emf_cbase_library_data_symbol_result_t library_get_data_symbol(
         emf_cbase_library_handle_t library_handle, 
-        const char* symbol_name);
+        const char* symbol_name)
 emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
         emf_cbase_library_handle_t library_handle, 
-        const char* symbol_name);
+        const char* symbol_name)
 ```
 
 #### Library api functions
@@ -311,7 +311,7 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 > ```c
 > emf_cbase_library_loader_handle_result_t library_register_loader(
 >       const emf_cbase_library_loader_interface_t* loader_interface, 
->       const emf_cbase_library_type_t* library_type);
+>       const emf_cbase_library_type_t* library_type)
 > ```
 >
 > - Effects: Registers a new loader. The loader can load libraries of the type `library_type`.
@@ -322,7 +322,7 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 ---
 
 > ```c
-> emf_cbase_library_result_t library_unregister_loader(emf_cbase_library_loader_handle_t loader_handle);
+> emf_cbase_library_result_t library_unregister_loader(emf_cbase_library_loader_handle_t loader_handle)
 > ```
 >
 > - Effects: Unregisters an existing loader.
@@ -333,7 +333,7 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 
 > ```c
 > emf_cbase_library_loader_interface_result_t library_get_loader_interface(
->       emf_cbase_library_loader_handle_t loader_handle);
+>       emf_cbase_library_loader_handle_t loader_handle)
 > ```
 >
 > - Effects: Fetches the interface of a library loader.
@@ -344,7 +344,7 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 
 > ```c
 > emf_cbase_library_loader_handle_result_t library_get_loader_handle_from_type(
->       const emf_cbase_library_type_t* library_type);
+>       const emf_cbase_library_type_t* library_type)
 > ```
 >
 > - Effects: Fetches the loader handle associated with the library type.
@@ -356,7 +356,7 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 
 > ```c
 > emf_cbase_library_loader_handle_result_t library_get_loader_handle_from_library(
->       emf_cbase_library_handle_t library_handle);
+>       emf_cbase_library_handle_t library_handle)
 > ```
 >
 > - Effects: Fetches the loader handle linked with the library handle.
@@ -366,7 +366,7 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 ##### Library api queries
 
 > ```c
-> size_t library_get_num_loaders();
+> size_t library_get_num_loaders()
 > ```
 >
 > - Effects: Fetches the number of registered loaders.
@@ -375,7 +375,7 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 ---
 
 > ```c
-> emf_cbase_bool_t library_library_exists(emf_cbase_library_handle_t library_handle);
+> emf_cbase_bool_t library_library_exists(emf_cbase_library_handle_t library_handle)
 > ```
 >
 > - Effects: Checks if a the library handle is valid.
@@ -384,7 +384,7 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 ---
 
 > ```c
-> emf_cbase_bool_t library_type_exists(const emf_cbase_library_type_t* library_type);
+> emf_cbase_bool_t library_type_exists(const emf_cbase_library_type_t* library_type)
 > ```
 >
 > - Effects: Checks if a library type exists.
@@ -394,7 +394,7 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 ---
 
 > ```c
-> emf_cbase_library_size_result_t library_get_library_types(emf_cbase_library_type_span_t* buffer);
+> emf_cbase_library_size_result_t library_get_library_types(emf_cbase_library_type_span_t* buffer)
 > ```
 >
 > - Effects: Copies the strings of the registered library types into a buffer.
@@ -405,7 +405,7 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 ##### Library api internal library management
 
 > ```c
-> emf_cbase_library_handle_t library_create_library_handle();
+> emf_cbase_library_handle_t library_create_library_handle()
 > ```
 >
 > - Effects: Creates a new unlinked library handle.
@@ -415,7 +415,7 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 ---
 
 > ```c
-> emf_cbase_library_result_t library_remove_library_handle(emf_cbase_library_handle_t library_handle);
+> emf_cbase_library_result_t library_remove_library_handle(emf_cbase_library_handle_t library_handle)
 > ```
 >
 > - Effects: Removes an existing library handle.
@@ -429,7 +429,7 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 > emf_cbase_library_result_t library_link_library(
 >       emf_cbase_library_handle_t library_handle, 
 >       emf_cbase_library_loader_handle_t loader_handle,
->       emf_cbase_internal_library_handle_t internal_handle);
+>       emf_cbase_internal_library_handle_t internal_handle)
 > ```
 >
 > - Effects: Links a library handle to an internal library handle.
@@ -442,7 +442,7 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 
 > ```c
 > emf_cbase_internal_library_handle_result_t library_get_internal_library_handle(
->       emf_cbase_library_handle_t library_handle);
+>       emf_cbase_library_handle_t library_handle)
 > ```
 >
 > - Effects: Fetches the internal handle linked with the library handle.
@@ -454,7 +454,7 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 > ```c
 > emf_cbase_library_handle_result_t library_load(
 >       emf_cbase_library_loader_handle_t loader_handle, 
->       const emf_cbase_os_path_char_t* library_path);
+>       const emf_cbase_os_path_char_t* library_path)
 > ```
 >
 > - Effects: Loads a library. The resulting handle is unique.
@@ -466,7 +466,7 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 ---
 
 > ```c
-> emf_cbase_library_result_t library_unload(emf_cbase_library_handle_t library_handle);
+> emf_cbase_library_result_t library_unload(emf_cbase_library_handle_t library_handle)
 > ```
 >
 > - Effects: Unloads a library.
@@ -478,7 +478,7 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 > ```c
 > emf_cbase_library_data_symbol_result_t library_get_data_symbol(
 >       emf_cbase_library_handle_t library_handle, 
->       const char* symbol_name);
+>       const char* symbol_name)
 > ```
 >
 > - Effects: Fetches a data symbol from a library.
@@ -493,7 +493,7 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 > ```c
 > emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 >       emf_cbase_library_handle_t library_handle, 
->       const char* symbol_name);
+>       const char* symbol_name)
 > ```
 >
 > - Effects: Fetches a function symbol from a library.
@@ -668,6 +668,83 @@ if (result.has_error) {
 base_interf->sys_unlock_fn(base_handle);
 ```
 
+#### Module api overview
+
+```c
+// loader management
+emf_cbase_module_loader_handle_result_t module_register_loader(
+        const emf_cbase_module_loader_interface_t* loader_interface,
+        const emf_cbase_module_type_t* module_type)
+emf_cbase_module_result_t module_unregister_loader(
+        emf_cbase_module_loader_handle_t loader_handle)
+emf_cbase_module_loader_interface_result_t module_get_loader_interface(
+        emf_cbase_module_loader_handle_t loader_handle)
+emf_cbase_module_loader_handle_result_t module_get_loader_handle_from_type(
+        const emf_cbase_module_type_t* module_type)
+emf_cbase_module_loader_handle_result_t module_get_loader_handle_from_module(
+        emf_cbase_module_handle_t module_handle)
+
+// queries
+size_t module_get_num_modules()
+size_t module_get_num_loaders()
+size_t module_get_num_exported_interfaces()
+emf_cbase_bool_t module_module_exists(emf_cbase_module_handle_t module_handle)
+emf_cbase_bool_t module_type_exists(const emf_cbase_module_type_t* module_type)
+emf_cbase_bool_t module_exported_interface_exists(
+        const emf_cbase_interface_descriptor_t* interface)
+emf_cbase_module_size_result_t module_get_modules(
+        emf_cbase_module_info_span_t* buffer)
+emf_cbase_module_size_result_t module_get_module_types(
+        emf_cbase_module_type_span_t* buffer)
+emf_cbase_module_size_result_t module_get_exported_interfaces(
+        emf_cbase_interface_descriptor_span_t* buffer)
+emf_cbase_module_handle_result_t module_get_exported_interface_handle(
+        const emf_cbase_interface_descriptor_t* interface)
+
+// internal module management
+emf_cbase_module_handle_t module_create_module_handle()
+emf_cbase_module_result_t module_remove_module_handle(
+        emf_cbase_module_handle_t module_handle);
+emf_cbase_module_result_t module_link_module(
+        emf_cbase_module_handle_t module_handle,
+        emf_cbase_module_loader_handle_t loader_handle,
+        emf_cbase_internal_module_handle_t loader_module_handle)
+emf_cbase_internal_module_handle_result_t module_get_internal_module_handle(
+        emf_cbase_module_handle_t module_handle)
+
+// module management
+emf_cbase_module_handle_result_t module_add_module(
+        emf_cbase_module_loader_handle_t loader_handle,
+        const emf_cbase_os_path_char_t* module_path)
+emf_cbase_module_result_t module_remove_module(emf_cbase_module_handle_t module_handle)
+emf_cbase_module_result_t module_load(emf_cbase_module_handle_t module_handle)
+emf_cbase_module_result_t module_unload(emf_cbase_module_handle_t module_handle)
+emf_cbase_module_result_t module_initialize(emf_cbase_module_handle_t module_handle)
+emf_cbase_module_result_t module_terminate(emf_cbase_module_handle_t module_handle)
+emf_cbase_module_result_t module_add_dependency(
+        emf_cbase_module_handle_t module_handle,
+        const emf_cbase_interface_descriptor_t* interface_descriptor)
+emf_cbase_module_result_t module_remove_dependency(
+        emf_cbase_module_handle_t module_handle,
+        const emf_cbase_interface_descriptor_t* interface_descriptor)
+emf_cbase_module_result_t module_export_interface(
+        emf_cbase_module_handle_t module_handle,
+        const emf_cbase_interface_descriptor_t* interface_descriptor)
+emf_cbase_interface_descriptor_const_span_result_t module_get_load_dependencies(
+        emf_cbase_module_handle_t module_handle)
+emf_cbase_interface_descriptor_const_span_result_t module_get_runtime_dependencies(
+        emf_cbase_module_handle_t module_handle)
+emf_cbase_interface_descriptor_const_span_result_t module_get_exportable_interfaces(
+        emf_cbase_module_handle_t module_handle)
+emf_cbase_module_status_result_t module_fetch_status(emf_cbase_module_handle_t module_handle)
+emf_cbase_os_path_char_result_t module_get_module_path(emf_cbase_module_handle_t module_handle)
+emf_cbase_module_info_ptr_result_t module_get_module_info(emf_cbase_module_handle_t module_handle)
+emf_cbase_module_interface_result_t module_get_interface(
+        emf_cbase_module_handle_t module_handle,
+        const emf_cbase_interface_descriptor_t* interface_descriptor)
+
+```
+
 ### Version api
 
 [version-api]: #version-api
@@ -711,42 +788,42 @@ if (base_interf->version_compare_weak_fn(base_handle, &v1, &v2) != 0) {
 emf_cbase_version_t version_new_short(
         int32_t major, 
         int32_t minor,
-        int32_t patch);
+        int32_t patch)
 emf_cbase_version_t version_new_long(
         int32_t major, 
         int32_t minor,
         int32_t patch, 
         emf_cbase_version_release_t release_type, 
-        int8_t release_number);
+        int8_t release_number)
 emf_cbase_version_t version_new_full(
         int32_t major, 
         int32_t minor,
         int32_t patch, 
         emf_cbase_version_release_t release_type, 
         int8_t release_number, 
-        int64_t build);
-emf_cbase_version_result_t version_from_string(const emf_cbase_version_const_string_buffer_t* version_string);
+        int64_t build)
+emf_cbase_version_result_t version_from_string(const emf_cbase_version_const_string_buffer_t* version_string)
 
 // strings
-size_t version_string_length_short(const emf_cbase_version_t* version);
-size_t version_string_length_long(const emf_cbase_version_t* version);
-size_t version_string_length_full(const emf_cbase_version_t* version);
+size_t version_string_length_short(const emf_cbase_version_t* version)
+size_t version_string_length_long(const emf_cbase_version_t* version)
+size_t version_string_length_full(const emf_cbase_version_t* version)
 emf_cbase_version_size_result_t version_as_string_short(
         const emf_cbase_version_t* version,
-        emf_cbase_version_string_buffer_t* buffer);
+        emf_cbase_version_string_buffer_t* buffer)
 emf_cbase_version_size_result_t version_as_string_long(
         const emf_cbase_version_t* version,
-        emf_cbase_version_string_buffer_t* buffer);
+        emf_cbase_version_string_buffer_t* buffer)
 emf_cbase_version_size_result_t version_as_string_full(
         const emf_cbase_version_t* version,
-        emf_cbase_version_string_buffer_t* buffer);
-emf_cbase_bool_t version_string_is_valid(const emf_cbase_version_const_string_buffer_t* version_string);
+        emf_cbase_version_string_buffer_t* buffer)
+emf_cbase_bool_t version_string_is_valid(const emf_cbase_version_const_string_buffer_t* version_string)
 
 // comparisons
-int32_t version_compare(const emf_cbase_version_t* lhs, const emf_cbase_version_t* rhs);
-int32_t version_compare_weak(const emf_cbase_version_t* lhs, const emf_cbase_version_t* rhs);
-int32_t version_compare_strong(const emf_cbase_version_t* lhs, const emf_cbase_version_t* rhs);
-emf_cbase_bool_t version_is_compatible(const emf_cbase_version_t* lhs, const emf_cbase_version_t* rhs);
+int32_t version_compare(const emf_cbase_version_t* lhs, const emf_cbase_version_t* rhs)
+int32_t version_compare_weak(const emf_cbase_version_t* lhs, const emf_cbase_version_t* rhs)
+int32_t version_compare_strong(const emf_cbase_version_t* lhs, const emf_cbase_version_t* rhs)
+emf_cbase_bool_t version_is_compatible(const emf_cbase_version_t* lhs, const emf_cbase_version_t* rhs)
 ```
 
 #### Version api functions
@@ -757,7 +834,7 @@ emf_cbase_bool_t version_is_compatible(const emf_cbase_version_t* lhs, const emf
 > emf_cbase_version_t version_new_short(
 >       int32_t major, 
 >       int32_t minor,
->       int32_t patch);
+>       int32_t patch)
 > ```
 >
 > - Effects: Constructs a new version.
@@ -772,7 +849,7 @@ emf_cbase_bool_t version_is_compatible(const emf_cbase_version_t* lhs, const emf
 >       int32_t minor,
 >       int32_t patch, 
 >       emf_cbase_version_release_t release_type, 
->       int8_t release_number);
+>       int8_t release_number)
 > ```
 >
 > - Effects: Constructs a new version.
@@ -789,7 +866,7 @@ emf_cbase_bool_t version_is_compatible(const emf_cbase_version_t* lhs, const emf
 >       int32_t patch, 
 >       emf_cbase_version_release_t release_type, 
 >       int8_t release_number, 
->       int64_t build);
+>       int64_t build)
 > ```
 >
 > - Effects: Constructs a new version.
@@ -799,7 +876,7 @@ emf_cbase_bool_t version_is_compatible(const emf_cbase_version_t* lhs, const emf
 ---
 
 > ```c
-> emf_cbase_version_result_t version_from_string(const emf_cbase_version_const_string_buffer_t* version_string);
+> emf_cbase_version_result_t version_from_string(const emf_cbase_version_const_string_buffer_t* version_string)
 > ```
 >
 > - Effects: Constructs a version from a string.
@@ -810,7 +887,7 @@ emf_cbase_bool_t version_is_compatible(const emf_cbase_version_t* lhs, const emf
 ##### Version api strings
 
 > ```c
-> size_t version_string_length_short(const emf_cbase_version_t* version);
+> size_t version_string_length_short(const emf_cbase_version_t* version)
 > ```
 >
 > - Effects: Computes the length of the short version string.
@@ -820,7 +897,7 @@ emf_cbase_bool_t version_is_compatible(const emf_cbase_version_t* lhs, const emf
 ---
 
 > ```c
-> size_t version_string_length_long(const emf_cbase_version_t* version);
+> size_t version_string_length_long(const emf_cbase_version_t* version)
 > ```
 >
 > - Effects: Computes the length of the long version string.
@@ -830,7 +907,7 @@ emf_cbase_bool_t version_is_compatible(const emf_cbase_version_t* lhs, const emf
 ---
 
 > ```c
-> size_t version_string_length_full(const emf_cbase_version_t* version);
+> size_t version_string_length_full(const emf_cbase_version_t* version)
 > ```
 >
 > - Effects: Computes the length of the full version string.
@@ -842,7 +919,7 @@ emf_cbase_bool_t version_is_compatible(const emf_cbase_version_t* lhs, const emf
 > ```c
 > emf_cbase_version_size_result_t version_as_string_short(
 >       const emf_cbase_version_t* version,
->       emf_cbase_version_string_buffer_t* buffer);
+>       emf_cbase_version_string_buffer_t* buffer)
 > ```
 >
 > - Effects: Represents the version as a short string.
@@ -855,7 +932,7 @@ emf_cbase_bool_t version_is_compatible(const emf_cbase_version_t* lhs, const emf
 > ```c
 > emf_cbase_version_size_result_t version_as_string_long(
 >       const emf_cbase_version_t* version,
->       emf_cbase_version_string_buffer_t* buffer);
+>       emf_cbase_version_string_buffer_t* buffer)
 > ```
 >
 > - Effects: Represents the version as a long string.
@@ -868,7 +945,7 @@ emf_cbase_bool_t version_is_compatible(const emf_cbase_version_t* lhs, const emf
 > ```c
 > emf_cbase_version_size_result_t version_as_string_full(
 >       const emf_cbase_version_t* version,
->       emf_cbase_version_string_buffer_t* buffer);
+>       emf_cbase_version_string_buffer_t* buffer)
 > ```
 >
 > - Effects: Represents the version as a full string.
@@ -879,7 +956,7 @@ emf_cbase_bool_t version_is_compatible(const emf_cbase_version_t* lhs, const emf
 ---
 
 > ```c
-> emf_cbase_bool_t version_string_is_valid(const emf_cbase_version_const_string_buffer_t* version_string);
+> emf_cbase_bool_t version_string_is_valid(const emf_cbase_version_const_string_buffer_t* version_string)
 > ```
 >
 > - Effects: Checks whether the version string is valid.
@@ -1717,9 +1794,9 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_internal_module_handle_t
 
 > ```c
-> typedef struct emf_cbase_module_loader_module_handle_t {
+> typedef struct emf_cbase_internal_module_handle_t {
 >     intptr_t id;
-> } emf_cbase_module_loader_module_handle_t;
+> } emf_cbase_internal_module_handle_t;
 > ```
 >
 > - Description: Internal module handle used by module loaders.
