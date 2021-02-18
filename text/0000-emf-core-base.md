@@ -4386,6 +4386,79 @@ BASE_FN_T(emf_cbase_library_get_function_symbol_fn_t, emf_cbase_library_fn_symbo
 
 ### Synopsis `emf_cbase_version_t.h`
 
+```c
+#include <stddef.h>
+#include <stdint.h>
+
+#include <emf_core_base/emf_cbase_bool_t.h>
+
+typedef enum emf_cbase_version_error_t : int32_t {
+    emf_cbase_version_error_invalid_string = 0,
+    emf_cbase_version_error_buffer_overflow = 1,
+} emf_cbase_version_error_t;
+
+typedef enum emf_cbase_version_release_t : int8_t {
+    emf_cbase_version_release_stable = 0,
+    emf_cbase_version_release_unstable = 1,
+    emf_cbase_version_release_beta = 2,
+} emf_cbase_version_release_t;
+
+typedef struct emf_cbase_version_t {
+    int32_t major;
+    int32_t minor;
+    int32_t patch;
+    int64_t build_number;
+    int8_t release_number;
+    emf_cbase_version_release_t release_type;
+} emf_cbase_version_t;
+
+SPAN_T(emf_cbase_version_string_buffer_t, char)
+SPAN_T(emf_cbase_version_const_string_buffer_t, const char)
+RESULT_T(emf_cbase_version_size_result_t, size_t, emf_cbase_version_error_t)
+RESULT_T(emf_cbase_version_result_t, emf_cbase_version_t, emf_cbase_version_error_t)
+
+// version api
+// construction
+BASE_FN_T(emf_cbase_version_new_short_fn_t, emf_cbase_version_t,
+        int32_t major, int32_t minor, int32_t patch)
+BASE_FN_T(emf_cbase_version_new_long_fn_t, emf_cbase_version_t,
+        int32_t major, int32_t minor, int32_t patch, 
+        emf_cbase_version_release_t release_type, 
+        int8_t release_number)
+BASE_FN_T(emf_cbase_version_new_full_fn_t, emf_cbase_version_t,
+        int32_t major, int32_t minor, int32_t patch,
+        emf_cbase_version_release_t release_type,
+        int8_t release_number, int64_t build)
+BASE_FN_T(emf_cbase_version_from_string_fn_t, emf_cbase_version_result_t,
+        const emf_cbase_version_const_string_buffer_t* version_string)
+
+// strings
+BASE_FN_T(emf_cbase_version_string_length_short_fn_t, size_t,
+        const emf_cbase_version_t* version)
+BASE_FN_T(emf_cbase_version_string_length_long_fn_t, size_t,
+        const emf_cbase_version_t* version)
+BASE_FN_T(emf_cbase_version_string_length_full_fn_t, size_t,
+        const emf_cbase_version_t* version)
+BASE_FN_T(emf_cbase_version_as_string_short_fn_t, emf_cbase_version_size_result_t,
+        const emf_cbase_version_t* version, emf_cbase_version_string_buffer_t* buffer)
+BASE_FN_T(emf_cbase_version_as_string_long_fn_t, emf_cbase_version_size_result_t,
+        const emf_cbase_version_t* version, emf_cbase_version_string_buffer_t* buffer)
+BASE_FN_T(emf_cbase_version_as_string_full_fn_t, emf_cbase_version_size_result_t,
+        const emf_cbase_version_t* version, emf_cbase_version_string_buffer_t* buffer)
+BASE_FN_T(emf_cbase_version_string_is_valid_fn_t, emf_cbase_bool_t,
+        const emf_cbase_version_const_string_buffer_t* version_string)
+
+// comparisions
+BASE_FN_T(emf_cbase_version_compare_fn_t, int32_t,
+        const emf_cbase_version_t* lhs, const emf_cbase_version_t* rhs)
+BASE_FN_T(emf_cbase_version_compare_weak_fn_t, int32_t,
+        const emf_cbase_version_t* lhs, const emf_cbase_version_t* rhs)
+BASE_FN_T(emf_cbase_version_compare_strong_fn_t, int32_t,
+        const emf_cbase_version_t* lhs, const emf_cbase_version_t* rhs)
+BASE_FN_T(emf_cbase_version_is_compatible_fn_t, emf_cbase_bool_t,
+        const emf_cbase_version_t* lhs, const emf_cbase_version_t* rhs)
+```
+
 ### Synopsis `emf_cbase_version.h`
 
 ```c
