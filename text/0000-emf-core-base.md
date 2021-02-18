@@ -82,16 +82,16 @@ The sys api controls the synchronization and termination of the engine.
 _Noreturn void sys_shutdown()
 _Noreturn void sys_panic(const char* error)
 
-// feature request
+// queries
 emf_cbase_bool_t sys_has_function(emf_cbase_fn_ptr_id_t fn_id)
 emf_cbase_sys_fn_optional_t sys_get_function(emf_cbase_fn_ptr_id_t fn_id)
 
-// synchronisation
+// synchronization
 void sys_lock()
 emf_cbase_bool_t sys_try_lock()
 void sys_unlock()
 
-// manual synchronisation
+// manual synchronization
 const emf_cbase_sync_handler_interface_t* sys_get_sync_handler()
 void sys_set_sync_handler(const emf_cbase_sync_handler_interface_t* sync_handler)
 ```
@@ -118,7 +118,7 @@ void sys_set_sync_handler(const emf_cbase_sync_handler_interface_t* sync_handler
 >
 > - Effects: Execution of the program is stopped abruptly. The error may be logged.
 
-##### Sys api feature request
+##### Sys api queries
 
 ###### sys_has_function
 
@@ -4023,9 +4023,9 @@ emf_core_base/
         ├── emf_cbase_bool_t.h
         ├── emf_cbase_fn_ptr_id_t.h
         ├── emf_cbase_interface_t.h
-        ├── emf_cbase_library_t.h
-        ├── emf_cbase_module_t.h
-        ├── emf_cbase_sys_t.h
+        ├── emf_cbase_library.h
+        ├── emf_cbase_module.h
+        ├── emf_cbase_sys.h
         ├── emf_cbase_version_t.h
         └── emf_cbase_version.h
 ```
@@ -4225,7 +4225,7 @@ typedef struct emf_cbase_interface_t {
 } emf_cbase_interface_t;
 ```
 
-### Synopsis `emf_cbase_library_t.h`
+### Synopsis `emf_cbase_library.h`
 
 ```c
 #include <stddef.h>
@@ -4380,9 +4380,52 @@ BASE_FN_T(emf_cbase_library_get_function_symbol_fn_t, emf_cbase_library_fn_symbo
         emf_cbase_library_handle_t library_handle, const char* symbol_name)
 ```
 
-### Synopsis `emf_cbase_module_t.h`
+### Synopsis `emf_cbase_module.h`
 
-### Synopsis `emf_cbase_sys_t.h`
+### Synopsis `emf_cbase_sys.h`
+
+```c
+#include <stdint.h>
+
+#include <emf_core_base/emf_cbase_bool_t.h>
+#include <emf_core_base/emf_cbase_fn_ptr_id_t.h>
+
+FN_T(emf_cbase_fn_t, void, void)
+OPTIONAL_T(emf_cbase_sys_fn_optional_t, emf_cbase_fn_t)
+
+// sync handler interface
+typedef struct emf_cbase_sync_handler_t emf_cbase_sync_handler_t;
+
+FN_T(emf_cbase_sync_handler_lock_fn_t, void, emf_cbase_sync_handler_t* sync_handler)
+FN_T(emf_cbase_sync_handler_try_lock_fn_t, emf_cbase_bool_t, emf_cbase_sync_handler_t* sync_handler)
+FN_T(emf_cbase_sync_handler_unlock_fn_t, void, emf_cbase_sync_handler_t* sync_handler)
+
+typedef struct emf_sync_handler_interface_t {
+    emf_cbase_sync_handler_t* sync_handler;
+    emf_cbase_sync_handler_lock_fn_t lock_fn;
+    emf_cbase_sync_handler_try_lock_fn_t try_lock_fn;
+    emf_cbase_sync_handler_unlock_fn_t unlock_fn;
+} emf_sync_handler_interface_t;
+
+// sys api
+// termination
+BASE_FN_T(emf_cbase_sys_shutdown_fn_t, void, void)
+BASE_FN_T(emf_cbase_sys_panic_fn_t, void, void)
+
+// queries
+BASE_FN_T(emf_cbase_sys_has_function_fn_t, emf_cbase_bool_t, emf_cbase_fn_ptr_id_t fn_id)
+BASE_FN_T(emf_cbase_sys_get_function_fn_t, emf_cbase_sys_fn_optional_t, emf_cbase_fn_ptr_id_t fn_id)
+
+// synchronization
+BASE_FN_T(emf_cbase_sys_lock_fn_t, void, void)
+BASE_FN_T(emf_cbase_sys_try_lock_fn_t, emf_cbase_bool_t, void)
+BASE_FN_T(emf_cbase_sys_unlock_fn_t, void, void)
+
+// manual synchronization
+BASE_FN_T(emf_cbase_sys_get_sync_handler_fn_t, const emf_cbase_sync_handler_interface_t*, void)
+BASE_FN_T(emf_cbase_sys_set_sync_handler_fn_t, void, 
+        const emf_cbase_sync_handler_interface_t* sync_handler)
+```
 
 ### Synopsis `emf_cbase_version_t.h`
 
