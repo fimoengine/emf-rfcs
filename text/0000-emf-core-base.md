@@ -3965,7 +3965,7 @@ emf_core_base/
 ### Synopsis `emf_cbase_bool_t.h`
 
 ```c
-#include <cstdint>
+#include <stdint.h>
 
 typedef enum emf_cbase_bool_t : int8_t {
     emf_cbase_bool_false = 0,
@@ -3976,7 +3976,7 @@ typedef enum emf_cbase_bool_t : int8_t {
 ### Synopsis `emf_cbase_fn_ptr_id_t.h`
 
 ```c
-#include <cstdint>
+#include <stdint.h>
 
 typedef enum emf_cbase_fn_ptr_id_t : int32_t {
     emf_cbase_fn_ptr_id_sys_shutdown = 1,
@@ -4160,8 +4160,8 @@ typedef struct emf_cbase_interface_t {
 ### Synopsis `emf_cbase_library_t.h`
 
 ```c
-#include <cstddef>
-#include <cstdint>
+#include <stddef.h>
+#include <stdint.h>
 
 #include <emf_core_base/emf_cbase_bool_t.h>
 
