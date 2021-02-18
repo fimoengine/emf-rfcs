@@ -1735,6 +1735,74 @@ For the sake of brevity, we will introduce the following macros:
 
 ---
 
+#### EMF_CBASE_VERSION_BUILD
+
+> ```c
+> #define EMF_CBASE_VERSION_BUILD 0
+> ```
+>
+> - Description: Build number of the `emf-core-base` interface.
+
+---
+
+#### EMF_CBASE_VERSION_MAJOR
+
+> ```c
+> #define EMF_CBASE_VERSION_MAJOR 0
+> ```
+>
+> - Description: Major number of the `emf-core-base` interface.
+
+---
+
+#### EMF_CBASE_VERSION_MINOR
+
+> ```c
+> #define EMF_CBASE_VERSION_MINOR 1
+> ```
+>
+> - Description: Major number of the `emf-core-base` interface.
+
+---
+
+#### EMF_CBASE_VERSION_PATCH
+
+> ```c
+> #define EMF_CBASE_VERSION_PATCH 0
+> ```
+>
+> - Description: Patch number of the `emf-core-base` interface.
+
+---
+
+#### EMF_CBASE_VERSION_RELEASE_NUMBER
+
+> ```c
+> #define EMF_CBASE_VERSION_RELEASE_NUMBER 0
+> ```
+>
+> - Description: Release number of the `emf-core-base` interface.
+
+---
+
+#### EMF_CBASE_VERSION_STRING
+
+> ```c
+> #define EMF_CBASE_VERSION_STRING 0
+> ```
+>
+> - Description: Release type number of the `emf-core-base` interface.
+
+---
+
+#### EMF_CBASE_VERSION_RELEASE_TYPE
+
+> ```c
+> #define EMF_CBASE_VERSION_RELEASE_TYPE "0.1.0"
+> ```
+>
+> - Description: Version string of the `emf-core-base` interface.
+
 ### Enums
 
 [enums]: #enums
@@ -4319,6 +4387,17 @@ BASE_FN_T(emf_cbase_library_get_function_symbol_fn_t, emf_cbase_library_fn_symbo
 ### Synopsis `emf_cbase_version_t.h`
 
 ### Synopsis `emf_cbase_version.h`
+
+```c
+#define EMF_CBASE_VERSION_MAJOR 0
+#define EMF_CBASE_VERSION_MINOR 1
+#define EMF_CBASE_VERSION_PATCH 0
+#define EMF_CBASE_VERSION_RELEASE_TYPE 0
+#define EMF_CBASE_VERSION_RELEASE_NUMBER 0
+#define EMF_CBASE_VERSION_BUILD 0
+
+#define EMF_CBASE_VERSION_STRING "0.1.0"
+```
 
 ## Glossary
 
