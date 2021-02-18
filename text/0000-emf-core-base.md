@@ -4160,6 +4160,11 @@ typedef struct emf_cbase_interface_t {
 ### Synopsis `emf_cbase_library_t.h`
 
 ```c
+#include <cstddef>
+#include <cstdint>
+
+#include <emf_core_base/emf_cbase_bool_t.h>
+
 #define EMF_CBASE_LIBRARY_LOADER_TYPE_MAX_LENGTH 64
 
 #define EMF_CBASE_NATIVE_LIBRARY_TYPE_NAME "emf::core_base::native"
