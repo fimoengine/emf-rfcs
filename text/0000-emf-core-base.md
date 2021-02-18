@@ -4448,7 +4448,7 @@ BASE_FN_T(emf_cbase_version_as_string_full_fn_t, emf_cbase_version_size_result_t
 BASE_FN_T(emf_cbase_version_string_is_valid_fn_t, emf_cbase_bool_t,
         const emf_cbase_version_const_string_buffer_t* version_string)
 
-// comparisions
+// comparisons
 BASE_FN_T(emf_cbase_version_compare_fn_t, int32_t,
         const emf_cbase_version_t* lhs, const emf_cbase_version_t* rhs)
 BASE_FN_T(emf_cbase_version_compare_weak_fn_t, int32_t,
