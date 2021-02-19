@@ -36,9 +36,8 @@ It consists of several apis:
 
 [reference-level-explanation]: #reference-level-explanation
 
-The **emf-core-base** interface specifies a number of apis and conventions to be implemented by a conforming engine. The
-interface constitutes a module in itself. To specify the interface, we will make use of the C language, as it serves as
-a lingua franca for many other languages.
+The **emf-core-base** interface specifies a number of apis and conventions to be implemented by a conforming engine. To
+specify the interface, we will make use of the C language, as it serves as a lingua franca for many other languages.
 
 The relevant sections of the specification can be found in the following table:
 
@@ -53,13 +52,13 @@ The relevant sections of the specification can be found in the following table:
   - [Library api](#library-api)
   - [Module api](#module-api)
   - [Version api](#version-api)
+- [Implementation](#implementation)
 - [Reference](#reference)
   - [Constants](#constants)
   - [Enums](#enums)
   - [Structs](#structs)
   - [Types](#types)
 - [Headers](#headers)
-- [Glossary](#glossary)
 
 ## Api
 
@@ -84,7 +83,7 @@ _Noreturn void sys_panic(const char* error)
 
 // queries
 emf_cbase_bool_t sys_has_function(emf_cbase_fn_ptr_id_t fn_id)
-emf_cbase_sys_fn_optional_t sys_get_function(emf_cbase_fn_ptr_id_t fn_id)
+emf_cbase_fn_optional_t sys_get_function(emf_cbase_fn_ptr_id_t fn_id)
 
 // synchronization
 void sys_lock()
@@ -134,7 +133,7 @@ void sys_set_sync_handler(const emf_cbase_sync_handler_interface_t* sync_handler
 ###### sys_get_function
 
 > ```c
-> emf_cbase_sys_fn_optional_t sys_get_function(emf_cbase_fn_ptr_id_t fn_id)
+> emf_cbase_fn_optional_t sys_get_function(emf_cbase_fn_ptr_id_t fn_id)
 > ```
 >
 > - Returns: Function pointer to the requested function.
@@ -1271,6 +1270,7 @@ emf_cbase_module_interface_result_t module_get_interface(
 
 The version api implements the versioning scheme specified in
 the [versioning-specification RFC](0004-versioning-specification.md).
+The functions of the version api don't require any synchronization.
 
 #### Version api example
 
@@ -1504,6 +1504,107 @@ emf_cbase_bool_t version_is_compatible(const emf_cbase_version_t* lhs, const emf
 > - Effects: Checks whether the version string is valid.
 > - Mandates: `version_string != NULL && version_string->data != NULL`.
 > - Returns: `emf_cbase_bool_true` if the string is valid, `emf_cbase_bool_false` otherwise.
+
+## Implementation
+
+[implementation]: #implementation
+
+### Initialization
+
+This proposal does not seek to specify any specific implementation, as such we will not make any assumptions on how the
+interface is initialized. An implementor may choose to implement the interface in any way, and language, they see fit.
+The only requirement is, that the interface is exported with the name `"emf:core_base"` (see `EMF_CBASE_INTERFACE_NAME`)
+at the end of the initialization routine.
+
+In case the interface is implemented as a standalone native module, the initialization is handled by the exported module
+interface. See the following example:
+
+```c
+// we need dummy functions to enter the initialization routine.
+emf_cbase_bool_t sys_has_function_dummy(emf_cbase_fn_ptr_id id) {
+    // Check if the `magic` value was passed.
+    if ((int32_t)id == 0) {
+        return emf_cbase_bool_true;
+    } else {
+        return emf_cbase_bool_false;
+    }
+}
+
+emf_cbase_fn_optional_t sys_get_function_dummy(emf_cbase_fn_ptr_id id) {
+    emf_cbase_fn_optional_t optional_fn = { ._dummy = 0, .has_value = emf_cbase_bool_false };
+    return optional_fn;
+}
+
+typedef struct base_module_t {
+  void* library;
+  emf_cbase_interface_t* base_interface;
+  emf_cbase_native_module_t* module_handle;
+  emf_cbase_native_module_interface_t* module_interface;
+} base_module_t;
+
+base_module_t initialize() {
+    // load the module library using a platform dependent function, eg dlopen
+    void* module_library = dlopen(...);
+    emf_cbase_native_module_interface_t* module_interface = 
+            (emf_cbase_native_module_interface_t* )dlsym(module_library, EMF_CBASE_NATIVE_MODULE_INTERFACE_SYMBOL_NAME);
+    
+    // load the module
+    emf_cbase_native_module_ptr_result_t module_result = module_interface->load_fn(
+            (emf_cbase_module_handle_t) { .id = 0 }, NULL, sys_has_function_dummy, sys_get_function_dummy);
+    if (module_result.has_error) {
+        // handle error
+        ...
+    }
+    emf_cbase_native_module_t* module_handle = module_result.result;
+    
+    // initialize the module
+    emf_cbase_module_result_t result = module_interface->initialize_fn(module_handle);
+    if (result.has_error) {
+        // handle initialization error
+        ...
+    }
+    
+    // fetch the interface
+    emf_cbase_interface_name_t required_name = {
+            .data = EMF_CBASE_INTERFACE_NAME,
+            .length = strlen(EMF_CBASE_INTERFACE_NAME)
+    };
+    
+    emf_cbase_version_t required_version = {
+            .major = EMF_CBASE_VERSION_MAJOR,
+            .minor = EMF_CBASE_VERSION_MINOR,
+            .patch = EMF_CBASE_VERSION_PATCH,
+            .build_number = EMF_CBASE_VERSION_BUILD,
+            .release_number = EMF_CBASE_VERSION_RELEASE_NUMBER,
+            .release_type = (emf_cbase_version_release_t) EMF_CBASE_VERSION_RELEASE_TYPE
+    };
+    
+    emf_cbase_interface_extension_span_t required_extensions = {
+            .data = NULL,
+            .length = 0
+    };
+    
+    emf_cbase_interface_descriptor_t required_interface = {
+            .name = required_name,
+            .version = required_version,
+            .extensions = required_extensions
+    };
+    
+    emf_cbase_module_interface_result_t interface_result = module_interface->get_interface_fn(
+            module_handle, &required_interface);
+    if (interface_result.has_error) {
+        // handle error
+        ...
+    }
+    
+    return (base_module_t) { 
+        .library = module_library,
+        .base_interface = (emf_cbase_interface_t*) interface_result.result.interface,
+        .module_handle = module_handle,
+        .module_interface = module_interface
+    };
+}
+```
 
 ## Reference
 
@@ -2776,10 +2877,10 @@ For the sake of brevity, we will introduce the following macros:
 
 ---
 
-#### emf_cbase_sys_fn_optional_t
+#### emf_cbase_fn_optional_t
 
 > ```c
-> OPTIONAL_T(emf_cbase_sys_fn_optional_t, emf_cbase_fn_t)
+> OPTIONAL_T(emf_cbase_fn_optional_t, emf_cbase_fn_t)
 > ```
 >
 > - Description: An optional `emf_cbase_fn_t` value.
@@ -3769,7 +3870,7 @@ For the sake of brevity, we will introduce the following macros:
 
 > ```c
 > BASE_FN_T(emf_cbase_sys_get_function_fn_t,
->       emf_cbase_sys_fn_optional_t,
+>       emf_cbase_fn_optional_t,
 >       emf_cbase_fn_ptr_id_t fn_id)
 > ```
 
@@ -4655,7 +4756,7 @@ BASE_FN_T(emf_cbase_module_get_interface_fn_t, emf_cbase_module_interface_result
 #include <emf_core_base/emf_cbase_fn_ptr_id_t.h>
 
 FN_T(emf_cbase_fn_t, void, void)
-OPTIONAL_T(emf_cbase_sys_fn_optional_t, emf_cbase_fn_t)
+OPTIONAL_T(emf_cbase_fn_optional_t, emf_cbase_fn_t)
 
 // sync handler interface
 typedef struct emf_cbase_sync_handler_t emf_cbase_sync_handler_t;
@@ -4678,7 +4779,7 @@ BASE_FN_T(emf_cbase_sys_panic_fn_t, void, void)
 
 // queries
 BASE_FN_T(emf_cbase_sys_has_function_fn_t, emf_cbase_bool_t, emf_cbase_fn_ptr_id_t fn_id)
-BASE_FN_T(emf_cbase_sys_get_function_fn_t, emf_cbase_sys_fn_optional_t, emf_cbase_fn_ptr_id_t fn_id)
+BASE_FN_T(emf_cbase_sys_get_function_fn_t, emf_cbase_fn_optional_t, emf_cbase_fn_ptr_id_t fn_id)
 
 // synchronization
 BASE_FN_T(emf_cbase_sys_lock_fn_t, void, void)
@@ -4778,10 +4879,6 @@ BASE_FN_T(emf_cbase_version_is_compatible_fn_t, emf_cbase_bool_t,
 
 #define EMF_CBASE_VERSION_STRING "0.1.0"
 ```
-
-## Glossary
-
-[glossary]: #glossary
 
 # Drawbacks
 
