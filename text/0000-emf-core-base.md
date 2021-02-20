@@ -4347,6 +4347,8 @@ typedef struct emf_cbase_interface_t {
 #define EMF_CBASE_OS_PATH_CHAR char
 #endif
 
+typedef struct emf_cbase_t emf_cbase_t;
+
 FN_T(emf_cbase_fn_t, void, void)
 
 typedef enum emf_cbase_library_predefined_handles_t : int32_t {
@@ -4755,6 +4757,8 @@ BASE_FN_T(emf_cbase_module_get_interface_fn_t, emf_cbase_module_interface_result
 #include <emf_core_base/emf_cbase_bool_t.h>
 #include <emf_core_base/emf_cbase_fn_ptr_id_t.h>
 
+typedef struct emf_cbase_t emf_cbase_t;
+
 FN_T(emf_cbase_fn_t, void, void)
 OPTIONAL_T(emf_cbase_fn_optional_t, emf_cbase_fn_t)
 
@@ -4799,6 +4803,8 @@ BASE_FN_T(emf_cbase_sys_set_sync_handler_fn_t, void,
 #include <stdint.h>
 
 #include <emf_core_base/emf_cbase_bool_t.h>
+
+typedef struct emf_cbase_t emf_cbase_t;
 
 typedef enum emf_cbase_version_error_t : int32_t {
     emf_cbase_version_error_invalid_string = 0,
