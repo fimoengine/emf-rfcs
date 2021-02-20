@@ -4214,6 +4214,8 @@ FN_T(emf_cbase_library_loader_interface_get_data_symbol_fn_t, emf_cbase_library_
 FN_T(emf_cbase_library_loader_interface_get_function_symbol_fn_t, emf_cbase_library_fn_symbol_result_t,
         emf_cbase_library_loader_t* library_loader, emf_cbase_internal_library_handle_t library_handle,
         const char* symbol_name)
+FN_T(emf_cbase_library_loader_interface_get_internal_interface_fn_t, const void*, 
+        emf_cbase_library_loader_t* library_loader)
 
 typedef struct emf_cbase_library_loader_interface_t {
     emf_cbase_library_loader_t* library_loader;
