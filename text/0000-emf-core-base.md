@@ -1606,6 +1606,12 @@ base_module_t initialize() {
 }
 ```
 
+### Extensions
+
+An implementation can extend the specified interface by defining any number of extensions. The name of those extensions
+may not start with `"emf::"` or `"__"`, as those names are reserved for standard extensions. In the future, we may
+introduce unstable features by exposing them as extensions, until they become stabilized.
+
 ## Reference
 
 [reference]: #reference
@@ -4890,18 +4896,38 @@ BASE_FN_T(emf_cbase_version_is_compatible_fn_t, emf_cbase_bool_t,
 
 [drawbacks]: #drawbacks
 
+The current design has several drawbacks:
+
+- Verbosity: This design serves only as a thin abstraction over the OS's dynamic linking functionality, which by itself
+  is a fairly low-level operation. Because of that, it can become quite cumbersome to use the interface.
+- Ownership: The design lacks any concept of resource (eg. library, module, etc.) ownership, allowing anyone to freely
+  modify those resources.
+
 # Rationale and alternatives
 
 [rationale-and-alternatives]: #rationale-and-alternatives
+
+The verbosity stems from the fact, that the C language itself is actually quite limiting with its lack of generics and
+strong type safety guarantees. This design, which might deviate from an idiomatic C design, will allow us to more easily
+wrap the interface in other languages like C++ or Rust. The lack of ownership semantics can also be mitigated by those
+languages with clever use of generics and type wrapping.
 
 # Prior art
 
 [prior-art]: #prior-art
 
+Many engines implement a plugin system, but I am currently not aware of any implementation that seeks to implement a
+fully modular engine, instead of only extending the "core" engine.
+
 # Unresolved questions
 
 [unresolved-questions]: #unresolved-questions
 
+The current design makes heavy use of error constants, but it is difficult to actually specify a set of errors that
+encapsulate every possible error condition.
+
 # Future possibilities
 
 [future-possibilities]: #future-possibilities
+
+As already mentioned in the [implementation](#implementation) section, we may extend the interface through extensions.
