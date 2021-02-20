@@ -3,9 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>The EMF RFC Book</title>
-        
-        <meta name="robots" content="noindex" />
+        <title>0000-emf-core-base - The EMF RFC Book</title>
         
         
 
@@ -97,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="0000-emf-core-base.html">0000-emf-core-base</a></li><li class="chapter-item expanded "><a href="0004-versioning-specification.html">0004-versioning-specification</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="0000-emf-core-base.html" class="active">0000-emf-core-base</a></li><li class="chapter-item expanded "><a href="0004-versioning-specification.html">0004-versioning-specification</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -169,33 +167,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#emf-rfcs" id="emf-rfcs">EMF RFCs</a></h1>
-<p>TBA</p>
-<h2><a class="header" href="#table-of-contents" id="table-of-contents">Table of Contents</a></h2>
-<ul>
-<li><a href="introduction.html#emf-rfcs">EMF RFCs</a>
-<ul>
-<li><a href="introduction.html#table-of-contents">Table of Contents</a></li>
-<li><a href="introduction.html#process">Process</a></li>
-<li><a href="introduction.html#license">License</a>
-<ul>
-<li><a href="introduction.html#contributions">Contributions</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2><a class="header" href="#process" id="process">Process</a></h2>
-<p>TBA</p>
-<h2><a class="header" href="#license" id="license">License</a></h2>
-<p>The repository is currently licensed under either of:</p>
-<ul>
-<li>Apache License, Version 2.0, (<a href="LICENSE-APACHE">LICENSE-APACHE</a> or <a href="https://www.apache.org/licenses/LICENSE-2.0">https://www.apache.org/licenses/LICENSE-2.0</a>)</li>
-<li>MIT license (<a href="LICENSE-MIT">LICENSE-MIT</a> or <a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>)</li>
-</ul>
-<h3><a class="header" href="#contributions" id="contributions">Contributions</a></h3>
-<p>Any work intentionally submitted for inclusion into the repository shall be dual licensed as above, without any additional terms or conditions.</p>
-<ul>
+                        <ul>
 <li>Feature Name: <code>emf_core_base_interface</code></li>
 <li>Start Date: 2021-02-16</li>
 <li>RFC PR: <a href="https://github.com/fimoengine/emf-rfcs/pull/0000">fimoengine/emf-rfcs#0000</a></li>
@@ -213,37 +185,37 @@ look at the plethora of existing game engines.</p>
 <strong>emf-core-base</strong> specifies the lifecycle and the basic capabilities of a conforming engine.</p>
 <p>It consists of several apis:</p>
 <ul>
-<li><a href="0000-emf-core-base.html#sys-api">Sys api</a></li>
-<li><a href="0000-emf-core-base.html#library-api">Library api</a></li>
-<li><a href="0000-emf-core-base.html#module-api">Module api</a></li>
-<li><a href="0000-emf-core-base.html#version-api">Version api</a></li>
+<li><a href="#sys-api">Sys api</a></li>
+<li><a href="#library-api">Library api</a></li>
+<li><a href="#module-api">Module api</a></li>
+<li><a href="#version-api">Version api</a></li>
 </ul>
 <h1><a class="header" href="#reference-level-explanation" id="reference-level-explanation">Reference-level explanation</a></h1>
 <p>The <strong>emf-core-base</strong> interface specifies a number of apis and conventions to be implemented by a conforming engine. To
 specify the interface, we will make use of the C language, as it serves as a lingua franca for many other languages.</p>
 <p>The relevant sections of the specification can be found in the following table:</p>
-<h2><a class="header" href="#table-of-contents-1" id="table-of-contents-1">Table of contents</a></h2>
+<h2><a class="header" href="#table-of-contents" id="table-of-contents">Table of contents</a></h2>
 <ul>
-<li><a href="0000-emf-core-base.html#reference-level-explanation">Specification</a></li>
-<li><a href="0000-emf-core-base.html#table-of-contents">Table of contents</a></li>
-<li><a href="0000-emf-core-base.html#api">Apis</a>
+<li><a href="#reference-level-explanation">Specification</a></li>
+<li><a href="#table-of-contents">Table of contents</a></li>
+<li><a href="#api">Apis</a>
 <ul>
-<li><a href="0000-emf-core-base.html#sys-api">Sys api</a></li>
-<li><a href="0000-emf-core-base.html#library-api">Library api</a></li>
-<li><a href="0000-emf-core-base.html#module-api">Module api</a></li>
-<li><a href="0000-emf-core-base.html#version-api">Version api</a></li>
+<li><a href="#sys-api">Sys api</a></li>
+<li><a href="#library-api">Library api</a></li>
+<li><a href="#module-api">Module api</a></li>
+<li><a href="#version-api">Version api</a></li>
 </ul>
 </li>
-<li><a href="0000-emf-core-base.html#implementation">Implementation</a></li>
-<li><a href="0000-emf-core-base.html#reference">Reference</a>
+<li><a href="#implementation">Implementation</a></li>
+<li><a href="#reference">Reference</a>
 <ul>
-<li><a href="0000-emf-core-base.html#constants">Constants</a></li>
-<li><a href="0000-emf-core-base.html#enums">Enums</a></li>
-<li><a href="0000-emf-core-base.html#structs">Structs</a></li>
-<li><a href="0000-emf-core-base.html#types">Types</a></li>
+<li><a href="#constants">Constants</a></li>
+<li><a href="#enums">Enums</a></li>
+<li><a href="#structs">Structs</a></li>
+<li><a href="#types">Types</a></li>
 </ul>
 </li>
-<li><a href="0000-emf-core-base.html#headers">Headers</a></li>
+<li><a href="#headers">Headers</a></li>
 </ul>
 <h2><a class="header" href="#api" id="api">Api</a></h2>
 <p>Like already mentioned, the interface is composed of a collection of apis, which control one aspect of an engine. What
@@ -4574,135 +4546,22 @@ fully modular engine, instead of only extending the &quot;core&quot; engine.</p>
 <p>The current design makes heavy use of error constants, but it is difficult to actually specify a set of errors that
 encapsulate every possible error condition.</p>
 <h1><a class="header" href="#future-possibilities" id="future-possibilities">Future possibilities</a></h1>
-<p>As already mentioned in the <a href="0000-emf-core-base.html#implementation">implementation</a> section, we may extend the interface through extensions.</p>
-<ul>
-<li>Feature Name: <code>versioning_specification</code></li>
-<li>Start Date: 2021-02-16</li>
-<li>RFC PR: <a href="https://github.com/fimoengine/emf-rfcs/pull/0004">fimoengine/emf-rfcs#0004</a></li>
-</ul>
-<h1><a class="header" href="#summary-1" id="summary-1">Summary</a></h1>
-<p>This RFC specifies the versioning scheme used by the EMF project.</p>
-<h1><a class="header" href="#motivation-1" id="motivation-1">Motivation</a></h1>
-<p>The project needs a consistent solution for identifying incompatibilities and breaking changes.</p>
-<h1><a class="header" href="#guide-level-explanation-1" id="guide-level-explanation-1">Guide-level explanation</a></h1>
-<p>A version is any string that matches the following regular expression:</p>
-<pre><code>\d+\.\d+\.\d+(-(unstable|beta)\.\d+)?(\+\d+)?
-</code></pre>
-<p>Examples:</p>
-<ul>
-<li><code>1.0.0</code></li>
-<li><code>1.0.0+512</code></li>
-<li><code>1.0.0-unstable</code></li>
-<li><code>1.0.0-unstable+1112</code></li>
-<li><code>1.0.0-beta.12</code></li>
-<li><code>1.0.0-beta.12+1215120</code></li>
-</ul>
-<p>Order:</p>
-<ul>
-<li><code>0.1.0 &lt;=₁ 0.1.1 &lt;=₁ 1.0.0</code></li>
-<li><code>0.1.0-unstable &lt;= 0.1.0-unstable.2 &lt;= 0.1.0-beta &lt;= 0.1.0</code></li>
-<li><code>1.0.0-beta.3+50 &lt;=₃ 1.0.0-beta.3+51 &lt;=₃ 1.0.0</code></li>
-</ul>
-<p>Equality:</p>
-<ul>
-<li><code>0.1.0 ==₁ 0.1.0-unstable ==₁ 0.1.0-beta.5</code></li>
-<li><code>0.1.0 == 0.1.0+2 == 0.1.0+100</code></li>
-<li><code>1.2.3+beta.5+10 ==₃ 1.2.3+beta.5+10</code></li>
-</ul>
-<p>Compatibility:</p>
-<ul>
-<li><code>0.1.0 ~ 0.1.5</code></li>
-<li><code>1.1.0 ~ 1.2.7</code></li>
-<li><code>1.0.5-unstable.1+1000 ~ 1.0.5-unstable.1+1151</code></li>
-<li><code>1.0.5-beta.2+1000 ~ 1.0.5-beta.5+1</code></li>
-</ul>
-<h1><a class="header" href="#reference-level-explanation-1" id="reference-level-explanation-1">Reference-level explanation</a></h1>
-<h2><a class="header" href="#grammar" id="grammar">Grammar</a></h2>
-<p>Here is the grammar for a version (EBNF notation):</p>
-<pre><code>VERSION             = VERSION_CORE, [ RELEASE_IDENTIFIER ], [ BUILD_NUMBER ];
-VERSION_CORE        = MAJOR_VERSION, `.`, MINOR_VERSION, `.`, PATCH_VERSION;
-RELEASE_IDENTIFIER  = `-`, RELEASE_TYPE, [RELEASE_NUMBER];
-BUILD_NUMBER        = `+`, NUMBER;
-MAJOR_VERSION       = NUMBER;
-MINOR_VERSION       = NUMBER;
-PATCH_VERSION       = NUMBER;
-RELEASE_TYPE        = `unstable` | `beta`;
-RELEASE_NUMBER      = `.`, NUMBER;
-NUMBER              = `0` 
-                    | DIGIT_WITHOUT_ZERO, { DIGIT }
-DIGIT_WITHOUT_ZERO  = `1`
-                    | `2`
-                    | `3`
-                    | `4`
-                    | `5`
-                    | `6`
-                    | `7`
-                    | `8`
-                    | `9`
-                    ;
-DIGIT               = `0`
-                    | DIGIT_WITHOUT_ZERO
-                    ;
-</code></pre>
-<h2><a class="header" href="#order" id="order">Order</a></h2>
-<p>The set of all valid version can be ordered using the three order relations <code>&lt;=₁</code> (weak order), <code>&lt;=₂</code> (normal order), <code>&lt;=₃</code> (strong order). For the sake of brevity, <code>&lt;=</code> will be used instead of <code>&lt;=₂</code>.</p>
-<h3><a class="header" href="#weak-order" id="weak-order">Weak order</a></h3>
-<p>For two versions <code>v</code> and <code>w</code>, the order generated by <code>&lt;=₁</code> is defined as follows:</p>
-<blockquote>
-<ol>
-<li>Sort by major versions.</li>
-<li>Sort by minor versions.</li>
-<li>Sort by patch versions.</li>
-</ol>
-</blockquote>
-<h3><a class="header" href="#normal-order" id="normal-order">Normal order</a></h3>
-<p>For two versions <code>v</code> and <code>w</code>, the order generated by <code>&lt;=</code> is defined as follows:</p>
-<blockquote>
-<ol>
-<li>Sort using the <code>&lt;=₁</code> operation.</li>
-<li>Sort by release type, with <code>&quot;unstable&quot; &lt; &quot;beta&quot; &lt; &quot;&quot;</code>.</li>
-<li>Sort by release number.</li>
-</ol>
-</blockquote>
-<h3><a class="header" href="#strong-order" id="strong-order">Strong order</a></h3>
-<p>For two versions <code>v</code> and <code>w</code>, the order generated by <code>&lt;=₃</code> is defined as follows:</p>
-<blockquote>
-<ol>
-<li>Sort using the <code>&lt;=</code> operation.</li>
-<li>Sort by build number.</li>
-</ol>
-</blockquote>
-<h2><a class="header" href="#equality" id="equality">Equality</a></h2>
-<p>Using the three order relations, we can define the three equality relationships  <code>==₁</code> (weak equality), <code>==₂</code> (normal equality), <code>==₃</code> (strong equality). For the sake of brevity, <code>==</code> will be used instead of <code>==₂</code>.</p>
-<p>For two versions <code>v</code> and <code>w</code>, they are defined as follows:</p>
-<ul>
-<li><code>v ==₁ w  &lt;=&gt; v &lt;=₁ w ∧ w &lt;=₁ v</code></li>
-<li><code>v == w &lt;=&gt; v &lt;= w ∧ w &lt;= v</code></li>
-<li><code>v ==₃ w  &lt;=&gt; v &lt;=₃ w ∧ w &lt;=₃ v</code></li>
-</ul>
-<h2><a class="header" href="#compatibility" id="compatibility">Compatibility</a></h2>
-<p>Having defined the order and equality of versions, we can define a compatibility relation <code>~</code>.
-For two versions <code>v</code> and <code>w</code>, <code>v ~ w</code> denotes that <code>v</code> is compatible to <code>w</code>.
-The relation <code>~</code> is not symmetric.</p>
-<p>In practical terms, having an interface with the versions <code>v</code> and <code>w</code>, for which <code>v ~ w</code> applies, means that the version <code>w</code> can be selected instead of <code>v</code>, without breaking any guarantees (invariants, constants, functions, etc.) defined in version <code>v</code>.</p>
-<p>In case the major version of <code>v</code> does not equal <code>0</code>, <code>v ~ w</code> applies if, <code>v</code> and <code>w</code> share the same major version and <code>v &lt;= w</code> applies. Otherwise it is also required, that <code>v</code> and <code>w</code> share the same minor version. Unstable versions must also satisfy <code>v == w</code>, while beta versions must satisfy <code>v ==₁ w</code>.</p>
-<h1><a class="header" href="#drawbacks-1" id="drawbacks-1">Drawbacks</a></h1>
-<p>This proposed design is rather restrictive when compared with other versioning schemes, as is forces the use of one of the three specified release types.</p>
-<h1><a class="header" href="#rationale-and-alternatives-1" id="rationale-and-alternatives-1">Rationale and alternatives</a></h1>
-<p>The specified design should suffice for the scope of the EMF project, as being able to specify compatibilities is more important than having the freedom of a custom versioning scheme.</p>
-<h1><a class="header" href="#prior-art-1" id="prior-art-1">Prior art</a></h1>
-<p>A broadly used versioning scheme is <a href="https://semver.org/">SemVer</a>, which is a superset of the versions defined in this specification.</p>
-<h1><a class="header" href="#unresolved-questions-1" id="unresolved-questions-1">Unresolved questions</a></h1>
-<p>This RFC tries to represent interface stability as a version. In the case of a lacking stability, such as unstable or beta versions, it remains an open question how the compatibility relation should be defined.</p>
-<h1><a class="header" href="#future-possibilities-1" id="future-possibilities-1">Future possibilities</a></h1>
-<p>In the future, we may look into adding more release types.</p>
+<p>As already mentioned in the <a href="#implementation">implementation</a> section, we may extend the interface through extensions.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
+                            <a rel="prev" href="introduction.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
 
+                        
+                            <a rel="next" href="0004-versioning-specification.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
                         
 
                         <div style="clear: both"></div>
@@ -4712,7 +4571,15 @@ The relation <code>~</code> is not symmetric.</p>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
+                    <a rel="prev" href="introduction.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
 
+                
+                    <a rel="next" href="0004-versioning-specification.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
                 
             </nav>
 
@@ -4745,14 +4612,6 @@ The relation <code>~</code> is not symmetric.</p>
         <!-- Custom JS scripts -->
         
 
-        
-        
-        <script type="text/javascript">
-        window.addEventListener('load', function() {
-            window.setTimeout(window.print, 100);
-        });
-        </script>
-        
         
 
     </body>
