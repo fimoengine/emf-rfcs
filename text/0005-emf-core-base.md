@@ -2967,12 +2967,12 @@ For the sake of brevity, we will introduce the following macros:
 #### emf_cbase_sync_handler_interface_t
 
 > ```c
-> typedef struct emf_sync_handler_interface_t {
+> typedef struct emf_cbase_sync_handler_interface_t {
 >     emf_cbase_sync_handler_t* sync_handler;
 >     emf_cbase_sync_handler_lock_fn_t lock_fn;
 >     emf_cbase_sync_handler_try_lock_fn_t try_lock_fn;
 >     emf_cbase_sync_handler_unlock_fn_t unlock_fn;
-> } emf_sync_handler_interface_t;
+> } emf_cbase_sync_handler_interface_t;
 > ```
 >
 > - Description: Interface of a synchronization handler.
@@ -4775,12 +4775,12 @@ FN_T(emf_cbase_sync_handler_lock_fn_t, void, emf_cbase_sync_handler_t* sync_hand
 FN_T(emf_cbase_sync_handler_try_lock_fn_t, emf_cbase_bool_t, emf_cbase_sync_handler_t* sync_handler)
 FN_T(emf_cbase_sync_handler_unlock_fn_t, void, emf_cbase_sync_handler_t* sync_handler)
 
-typedef struct emf_sync_handler_interface_t {
+typedef struct emf_cbase_sync_handler_interface_t {
     emf_cbase_sync_handler_t* sync_handler;
     emf_cbase_sync_handler_lock_fn_t lock_fn;
     emf_cbase_sync_handler_try_lock_fn_t try_lock_fn;
     emf_cbase_sync_handler_unlock_fn_t unlock_fn;
-} emf_sync_handler_interface_t;
+} emf_cbase_sync_handler_interface_t;
 
 // sys api
 // termination
