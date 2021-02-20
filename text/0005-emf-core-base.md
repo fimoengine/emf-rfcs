@@ -1,6 +1,6 @@
 - Feature Name: `emf_core_base_interface`
 - Start Date: 2021-02-16
-- RFC PR: [fimoengine/emf-rfcs#0000](https://github.com/fimoengine/emf-rfcs/pull/0000)
+- RFC PR: [fimoengine/emf-rfcs#0005](https://github.com/fimoengine/emf-rfcs/pull/0005)
 
 # Summary
 
