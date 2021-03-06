@@ -422,7 +422,7 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 >
 > - Effects: Checks if a library type exists.
 > - Mandates: `library_type != NULL`.
-> - Returns: `emf_cbase_bool_true` if the type is exists, `emf_cbase_bool_false` otherwise.
+> - Returns: `emf_cbase_bool_true` if the type exists, `emf_cbase_bool_false` otherwise.
 
 ---
 
@@ -1521,7 +1521,7 @@ interface. See the following example:
 
 ```c
 // we need dummy functions to enter the initialization routine.
-emf_cbase_bool_t sys_has_function_dummy(emf_cbase_fn_ptr_id id) {
+emf_cbase_bool_t sys_has_function_dummy(emf_cbase_fn_ptr_id_t id) {
     // Check if the `magic` value was passed.
     if ((int32_t)id == 0) {
         return emf_cbase_bool_true;
@@ -1530,7 +1530,7 @@ emf_cbase_bool_t sys_has_function_dummy(emf_cbase_fn_ptr_id id) {
     }
 }
 
-emf_cbase_fn_optional_t sys_get_function_dummy(emf_cbase_fn_ptr_id id) {
+emf_cbase_fn_optional_t sys_get_function_dummy(emf_cbase_fn_ptr_id_t id) {
     emf_cbase_fn_optional_t optional_fn = { ._dummy = 0, .has_value = emf_cbase_bool_false };
     return optional_fn;
 }
@@ -2015,7 +2015,7 @@ For the sake of brevity, we will introduce the following macros:
 >       module_get_module_path = 333,
 >       module_get_module_info = 334,
 >       module_get_interface = 335,
-> } emf_cbase_fn_ptr_id;
+> } emf_cbase_fn_ptr_id_t;
 > ```
 >
 > - Description: Id's of the exported functions.
@@ -2030,7 +2030,7 @@ For the sake of brevity, we will introduce the following macros:
 >     emf_cbase_library_error_library_path_not_found = 0,
 >     emf_cbase_library_error_library_handle_invalid = 1,
 >     emf_cbase_library_error_loader_handle_invalid = 2,
->     emf_cbase_library_error_loader_library_handle_invalid = 3,
+>     emf_cbase_library_error_internal_handle_invalid = 3,
 >     emf_cbase_library_error_library_type_invalid = 4,
 >     emf_cbase_library_error_library_type_not_found = 5,
 >     emf_cbase_library_error_duplicate_library_type = 6,
@@ -2042,17 +2042,17 @@ For the sake of brevity, we will introduce the following macros:
 > - Description: An enum describing all defined error values.
     The values `0-99` are reserved for future use.
 >
-> | Name                                                      | Value | Description                             |
-> | --------------------------------------------------------- | ----- | --------------------------------------- |
-> | **emf_cbase_library_error_library_path_not_found**        | `0`   | A path could not be found.              |
-> | **emf_cbase_library_error_library_handle_invalid**        | `1`   | The library handle is invalid.          |
-> | **emf_cbase_library_error_loader_handle_invalid**         | `2`   | The loader handle is invalid.           |
-> | **emf_cbase_library_error_loader_library_handle_invalid** | `3`   | The internal library handle is invalid. |
-> | **emf_cbase_library_error_library_type_invalid**          | `4`   | The library type is invalid.            |
-> | **emf_cbase_library_error_library_type_not_found**        | `5`   | The library type could not be found.    |
-> | **emf_cbase_library_error_duplicate_library_type**        | `6`   | The library type already exists.        |
-> | **emf_cbase_library_error_symbol_not_found**              | `7`   | A symbol could not be found.            |
-> | **emf_cbase_library_error_buffer_overflow**               | `8`   | The buffer is too small.                |
+> | Name                                                | Value | Description                             |
+> | ----------------------------------------------------| ----- | --------------------------------------- |
+> | **emf_cbase_library_error_library_path_not_found**  | `0`   | A path could not be found.              |
+> | **emf_cbase_library_error_library_handle_invalid**  | `1`   | The library handle is invalid.          |
+> | **emf_cbase_library_error_loader_handle_invalid**   | `2`   | The loader handle is invalid.           |
+> | **emf_cbase_library_error_internal_handle_invalid** | `3`   | The internal library handle is invalid. |
+> | **emf_cbase_library_error_library_type_invalid**    | `4`   | The library type is invalid.            |
+> | **emf_cbase_library_error_library_type_not_found**  | `5`   | The library type could not be found.    |
+> | **emf_cbase_library_error_duplicate_library_type**  | `6`   | The library type already exists.        |
+> | **emf_cbase_library_error_symbol_not_found**        | `7`   | A symbol could not be found.            |
+> | **emf_cbase_library_error_buffer_overflow**         | `8`   | The buffer is too small.                |
 
 ---
 
@@ -2081,7 +2081,7 @@ For the sake of brevity, we will introduce the following macros:
 >     emf_cbase_module_error_module_state_invalid = 1,
 >     emf_cbase_module_error_module_handle_invalid = 2,
 >     emf_cbase_module_error_loader_handle_invalid = 3,
->     emf_cbase_module_error_loader_module_handle_invalid = 4,
+>     emf_cbase_module_error_internal_handle_invalid = 4,
 >     emf_cbase_module_error_module_type_invalid = 5,
 >     emf_cbase_module_error_module_type_not_found = 6,
 >     emf_cbase_module_error_duplicate_module_type = 7,
@@ -2101,7 +2101,7 @@ For the sake of brevity, we will introduce the following macros:
 > | **emf_cbase_module_error_module_state_invalid**         | `1`   | The state of the module is invalid.                    |
 > | **emf_cbase_module_error_module_handle_invalid**        | `2`   | The module handle is invalid.                          |
 > | **emf_cbase_module_error_loader_handle_invalid**        | `3`   | The loader is invalid.                                 |
-> | **emf_cbase_module_error_loader_module_handle_invalid** | `4`   | The internal module handle is invalid.                 |
+> | **emf_cbase_module_error_internal_handle_invalid**      | `4`   | The internal module handle is invalid.                 |
 > | **emf_cbase_module_error_module_type_invalid**          | `5`   | The module type is invalid.                            |
 > | **emf_cbase_module_error_module_type_not_found**        | `6`   | The module type does not exist.                        |
 > | **emf_cbase_module_error_duplicate_module_type**        | `7`   | The operation would result in a duplicate module type. |
@@ -2794,12 +2794,21 @@ For the sake of brevity, we will introduce the following macros:
 
 ---
 
+#### emf_cbase_native_library_handle_result_t
+
+> ```c
+> RESULT_T(emf_cbase_native_library_handle_result_t, native_library_handle_t, emf_cbase_library_error_t)
+> ```
+
+---
+
 #### emf_cbase_native_library_loader_interface_t
 
 > ```c
 > typedef struct emf_cbase_native_library_loader_interface_t {
 >     const emf_cbase_library_loader_interface_t* library_loader_interface;
 >     emf_cbase_native_library_loader_interface_load_ext_fn_t load_ext_fn;
+>     emf_cbase_native_library_loader_get_native_handle_fn_t get_native_handle_fn;
 > } emf_cbase_native_library_loader_interface_t;
 > ```
 >
@@ -3712,6 +3721,29 @@ For the sake of brevity, we will introduce the following macros:
 
 ---
 
+#### emf_cbase_native_library_handle_fn_t
+
+> ```c
+> #if defined(Win32) || defined(_WIN32)
+> typedef void* emf_cbase_native_library_handle_fn_t;
+> #else
+> typedef void* emf_cbase_native_library_handle_fn_t;
+> #endif // defined(Win32) || defined(_WIN32)
+> ```
+
+---
+
+#### emf_cbase_native_library_loader_get_native_handle_fn_t
+
+> ```c
+> FN_T(emf_cbase_native_library_loader_get_native_handle_fn_t,
+>       emf_cbase_native_library_handle_result_t,
+>       emf_cbase_library_loader_t*, library_loader,
+>       const emf_cbase_os_path_char_t* library_path)
+> ```
+
+---
+
 #### emf_cbase_native_library_loader_interface_load_ext_fn_t
 
 > ```c
@@ -4239,9 +4271,9 @@ typedef enum emf_cbase_fn_ptr_id_t : int32_t {
 ### Synopsis `emf_cbase_interface_t.h`
 
 ```c
-#include <emf_core_base/emf_cbase_library_t.h>
-#include <emf_core_base/emf_cbase_module_t.h>
-#include <emf_core_base/emf_cbase_sys_t.h>
+#include <emf_core_base/emf_cbase_library.h>
+#include <emf_core_base/emf_cbase_module.h>
+#include <emf_core_base/emf_cbase_sys.h>
 #include <emf_core_base/emf_cbase_version_t.h>
 
 #define EMF_CBASE_INTERFACE_NAME "emf:core_base"
@@ -4365,7 +4397,7 @@ typedef enum emf_cbase_library_error_t : int32_t {
     emf_cbase_library_error_library_path_not_found = 0,
     emf_cbase_library_error_library_handle_invalid = 1,
     emf_cbase_library_error_loader_handle_invalid = 2,
-    emf_cbase_library_error_loader_library_handle_invalid = 3,
+    emf_cbase_library_error_internal_handle_invalid = 3,
     emf_cbase_library_error_library_type_invalid = 4,
     emf_cbase_library_error_library_type_not_found = 5,
     emf_cbase_library_error_duplicate_library_type = 6,
@@ -4435,18 +4467,30 @@ RESULT_T(emf_cbase_library_loader_interface_result_t,
 
 // native library loader interface
 #if defined(Win32) || defined(_WIN32)
+typedef void* emf_cbase_native_library_handle_fn_t;
+
 FN_T(emf_cbase_native_library_loader_interface_load_ext_fn_t, emf_cbase_internal_library_handle_result_t,
         emf_cbase_library_loader_t*, library_loader, const emf_cbase_os_path_char_t* library_path,
         void* h_file, uint32_t flags)
 #else
+typedef void* emf_cbase_native_library_handle_fn_t;
+
 FN_T(emf_cbase_native_library_loader_interface_load_ext_fn_t, emf_cbase_internal_library_handle_result_t,
         emf_cbase_library_loader_t*, library_loader, const emf_cbase_os_path_char_t* library_path,
         int flags)
 #endif // defined(Win32) || defined(_WIN32)
 
+RESULT_T(emf_cbase_native_library_handle_result_t, emf_cbase_native_library_handle_fn_t, emf_cbase_library_error_t)
+
+FN_T(emf_cbase_native_library_loader_get_native_handle_fn_t,
+        emf_cbase_native_library_handle_result_t,
+        emf_cbase_library_loader_t*, library_loader,
+        const emf_cbase_os_path_char_t* library_path)
+
 typedef struct emf_cbase_native_library_loader_interface_t {
     const emf_cbase_library_loader_interface_t* library_loader_interface;
     emf_cbase_native_library_loader_interface_load_ext_fn_t load_ext_fn;
+    emf_cbase_native_library_loader_get_native_handle_fn_t get_native_handle_fn;
 } emf_cbase_native_library_loader_interface_t;
 
 // library api
@@ -4524,7 +4568,7 @@ typedef enum emf_cbase_module_error_t : int32_t {
     emf_cbase_module_error_module_state_invalid = 1,
     emf_cbase_module_error_module_handle_invalid = 2,
     emf_cbase_module_error_loader_handle_invalid = 3,
-    emf_cbase_module_error_loader_module_handle_invalid = 4,
+    emf_cbase_module_error_internal_handle_invalid = 4,
     emf_cbase_module_error_module_type_invalid = 5,
     emf_cbase_module_error_module_type_not_found = 6,
     emf_cbase_module_error_duplicate_module_type = 7,
@@ -4722,7 +4766,7 @@ BASE_FN_T(emf_cbase_module_remove_module_handle_fn_t, emf_cbase_module_result_t,
         emf_cbase_module_handle_t module_handle)
 BASE_FN_T(emf_cbase_module_link_module_fn_t, emf_cbase_module_result_t, 
         emf_cbase_module_handle_t module_handle, emf_cbase_module_loader_handle_t loader_handle, 
-        emf_cbase_internal_module_handle_t loader_module_handle)
+        emf_cbase_internal_module_handle_t internal_handle)
 BASE_FN_T(emf_cbase_module_get_internal_module_handle_fn_t, emf_cbase_internal_module_handle_result_t, 
         emf_cbase_module_handle_t module_handle)
 
