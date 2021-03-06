@@ -172,15 +172,15 @@
 <li>Start Date: 2021-02-16</li>
 <li>RFC PR: <a href="https://github.com/fimoengine/emf-rfcs/pull/0005">fimoengine/emf-rfcs#0005</a></li>
 </ul>
-<h1><a class="header" href="#summary" id="summary">Summary</a></h1>
+<h1 id="summary"><a class="header" href="#summary">Summary</a></h1>
 <p>This RFC proposes a new interface to be added to the EMF project. This proposed interface will serve as a foundation for
 all future interfaces.</p>
-<h1><a class="header" href="#motivation" id="motivation">Motivation</a></h1>
+<h1 id="motivation"><a class="header" href="#motivation">Motivation</a></h1>
 <p>As software grows in complexity, it tends to become more tightly integrated and their subsystems more tightly coupled.
 Such a tight coupling reduces flexibility and re-usability, and modifying it becomes a hassle. Because of that, many
 developers are forced to constantly reinvent the wheel, which takes time and manpower. This becomes apparent, when we
 look at the plethora of existing game engines.</p>
-<h1><a class="header" href="#guide-level-explanation" id="guide-level-explanation">Guide-level explanation</a></h1>
+<h1 id="guide-level-explanation"><a class="header" href="#guide-level-explanation">Guide-level explanation</a></h1>
 <p>This RFC proposes an interface, which poses as a backbone for a loosely coupled game engine. This interface named 
 <strong>emf-core-base</strong> specifies the lifecycle and the basic capabilities of a conforming engine.</p>
 <p>It consists of several apis:</p>
@@ -190,11 +190,11 @@ look at the plethora of existing game engines.</p>
 <li><a href="#module-api">Module api</a></li>
 <li><a href="#version-api">Version api</a></li>
 </ul>
-<h1><a class="header" href="#reference-level-explanation" id="reference-level-explanation">Reference-level explanation</a></h1>
+<h1 id="reference-level-explanation"><a class="header" href="#reference-level-explanation">Reference-level explanation</a></h1>
 <p>The <strong>emf-core-base</strong> interface specifies a number of apis and conventions to be implemented by a conforming engine. To
 specify the interface, we will make use of the C language, as it serves as a lingua franca for many other languages.</p>
 <p>The relevant sections of the specification can be found in the following table:</p>
-<h2><a class="header" href="#table-of-contents" id="table-of-contents">Table of contents</a></h2>
+<h2 id="table-of-contents"><a class="header" href="#table-of-contents">Table of contents</a></h2>
 <ul>
 <li><a href="#reference-level-explanation">Specification</a></li>
 <li><a href="#table-of-contents">Table of contents</a></li>
@@ -217,13 +217,13 @@ specify the interface, we will make use of the C language, as it serves as a lin
 </li>
 <li><a href="#headers">Headers</a></li>
 </ul>
-<h2><a class="header" href="#api" id="api">Api</a></h2>
+<h2 id="api"><a class="header" href="#api">Api</a></h2>
 <p>Like already mentioned, the interface is composed of a collection of apis, which control one aspect of an engine. What
 follows is the specification of each api. Unless otherwise stated, each function requires unique access to the
 interface.</p>
-<h3><a class="header" href="#sys-api" id="sys-api">Sys api</a></h3>
+<h3 id="sys-api"><a class="header" href="#sys-api">Sys api</a></h3>
 <p>The sys api controls the synchronization and termination of the engine.</p>
-<h4><a class="header" href="#sys-api-overview" id="sys-api-overview">Sys api overview</a></h4>
+<h4 id="sys-api-overview"><a class="header" href="#sys-api-overview">Sys api overview</a></h4>
 <pre><code class="language-c">// termination
 _Noreturn void sys_shutdown()
 _Noreturn void sys_panic(const char* error)
@@ -241,9 +241,9 @@ void sys_unlock()
 const emf_cbase_sync_handler_interface_t* sys_get_sync_handler()
 void sys_set_sync_handler(const emf_cbase_sync_handler_interface_t* sync_handler)
 </code></pre>
-<h4><a class="header" href="#sys-api-functions" id="sys-api-functions">Sys api functions</a></h4>
-<h5><a class="header" href="#sys-api-termination" id="sys-api-termination">Sys api termination</a></h5>
-<h6><a class="header" href="#sys_shutdown" id="sys_shutdown">sys_shutdown</a></h6>
+<h4 id="sys-api-functions"><a class="header" href="#sys-api-functions">Sys api functions</a></h4>
+<h5 id="sys-api-termination"><a class="header" href="#sys-api-termination">Sys api termination</a></h5>
+<h6 id="sys_shutdown"><a class="header" href="#sys_shutdown">sys_shutdown</a></h6>
 <blockquote>
 <pre><code class="language-c">_Noreturn void sys_shutdown()
 </code></pre>
@@ -252,7 +252,7 @@ void sys_set_sync_handler(const emf_cbase_sync_handler_interface_t* sync_handler
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#sys_panic" id="sys_panic">sys_panic</a></h6>
+<h6 id="sys_panic"><a class="header" href="#sys_panic">sys_panic</a></h6>
 <blockquote>
 <pre><code class="language-c">_Noreturn void sys_panic(const char* error)
 </code></pre>
@@ -260,8 +260,8 @@ void sys_set_sync_handler(const emf_cbase_sync_handler_interface_t* sync_handler
 <li>Effects: Execution of the program is stopped abruptly. The error may be logged.</li>
 </ul>
 </blockquote>
-<h5><a class="header" href="#sys-api-queries" id="sys-api-queries">Sys api queries</a></h5>
-<h6><a class="header" href="#sys_has_function" id="sys_has_function">sys_has_function</a></h6>
+<h5 id="sys-api-queries"><a class="header" href="#sys-api-queries">Sys api queries</a></h5>
+<h6 id="sys_has_function"><a class="header" href="#sys_has_function">sys_has_function</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_bool_t sys_has_function(emf_cbase_fn_ptr_id_t fn_id)
 </code></pre>
@@ -271,7 +271,7 @@ void sys_set_sync_handler(const emf_cbase_sync_handler_interface_t* sync_handler
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#sys_get_function" id="sys_get_function">sys_get_function</a></h6>
+<h6 id="sys_get_function"><a class="header" href="#sys_get_function">sys_get_function</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_fn_optional_t sys_get_function(emf_cbase_fn_ptr_id_t fn_id)
 </code></pre>
@@ -279,8 +279,8 @@ void sys_set_sync_handler(const emf_cbase_sync_handler_interface_t* sync_handler
 <li>Returns: Function pointer to the requested function.</li>
 </ul>
 </blockquote>
-<h5><a class="header" href="#sys-api-synchronization" id="sys-api-synchronization">Sys api synchronization</a></h5>
-<h6><a class="header" href="#sys_lock" id="sys_lock">sys_lock</a></h6>
+<h5 id="sys-api-synchronization"><a class="header" href="#sys-api-synchronization">Sys api synchronization</a></h5>
+<h6 id="sys_lock"><a class="header" href="#sys_lock">sys_lock</a></h6>
 <blockquote>
 <pre><code class="language-c">void sys_lock()
 </code></pre>
@@ -291,7 +291,7 @@ The calling thread is stalled until the lock can be acquired. Only one thread ca
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#sys_try_lock" id="sys_try_lock">sys_try_lock</a></h6>
+<h6 id="sys_try_lock"><a class="header" href="#sys_try_lock">sys_try_lock</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_bool_t sys_try_lock()
 </code></pre>
@@ -302,7 +302,7 @@ The function fails if another thread already holds the lock.</li>
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#sys_unlock" id="sys_unlock">sys_unlock</a></h6>
+<h6 id="sys_unlock"><a class="header" href="#sys_unlock">sys_unlock</a></h6>
 <blockquote>
 <pre><code class="language-c">void sys_unlock()
 </code></pre>
@@ -310,8 +310,8 @@ The function fails if another thread already holds the lock.</li>
 <li>Effects: Unlocks the interface.</li>
 </ul>
 </blockquote>
-<h5><a class="header" href="#sys-api-manual-synchronization" id="sys-api-manual-synchronization">Sys api manual synchronization</a></h5>
-<h6><a class="header" href="#sys_get_sync_handler" id="sys_get_sync_handler">sys_get_sync_handler</a></h6>
+<h5 id="sys-api-manual-synchronization"><a class="header" href="#sys-api-manual-synchronization">Sys api manual synchronization</a></h5>
+<h6 id="sys_get_sync_handler"><a class="header" href="#sys_get_sync_handler">sys_get_sync_handler</a></h6>
 <blockquote>
 <pre><code class="language-c">const emf_cbase_sync_handler_interface_t* sys_get_sync_handler()
 </code></pre>
@@ -321,7 +321,7 @@ The function fails if another thread already holds the lock.</li>
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#sys_set_sync_handler" id="sys_set_sync_handler">sys_set_sync_handler</a></h6>
+<h6 id="sys_set_sync_handler"><a class="header" href="#sys_set_sync_handler">sys_set_sync_handler</a></h6>
 <blockquote>
 <pre><code class="language-c">void sys_set_sync_handler(const emf_cbase_sync_handler_interface_t* sync_handler)
 </code></pre>
@@ -341,19 +341,19 @@ synchronization mechanism than the one presented by the default handler.</li>
 if they depend on a specific synchronization handler.</li>
 </ul>
 </blockquote>
-<h3><a class="header" href="#library-api" id="library-api">Library api</a></h3>
+<h3 id="library-api"><a class="header" href="#library-api">Library api</a></h3>
 <p>The library api is a collection of procedures that provide a platform agnostic interface to loading shared libraries.
 The actual loading of a library is handled by a library loader. Each library loader is associated to a library type.</p>
-<h4><a class="header" href="#library-loaders" id="library-loaders">Library Loaders</a></h4>
+<h4 id="library-loaders"><a class="header" href="#library-loaders">Library Loaders</a></h4>
 <p>The job of a library loader is to manage the loading and unloading of libraries. A library loader can be added by
 constructing a <code>emf_cbase_library_loader_interface_t</code> and then calling the <code>library_register_loader()</code>
 function.</p>
-<h4><a class="header" href="#library-types" id="library-types">Library types</a></h4>
+<h4 id="library-types"><a class="header" href="#library-types">Library types</a></h4>
 <p>The library api allows the loading of custom library formats. Each format is identified by a <code>emf_cbase_library_type_t</code>
 and is associated to exactly one library loader.</p>
-<h4><a class="header" href="#predefined-library-loaders" id="predefined-library-loaders">Predefined library loaders</a></h4>
+<h4 id="predefined-library-loaders"><a class="header" href="#predefined-library-loaders">Predefined library loaders</a></h4>
 <p>Some library loaders are always present and can not be removed at runtime.</p>
-<h5><a class="header" href="#native-library-loader" id="native-library-loader">Native library loader</a></h5>
+<h5 id="native-library-loader"><a class="header" href="#native-library-loader">Native library loader</a></h5>
 <p>The native library loader is able to load platform-specific libraries (e.g. dlopen()/LoadLibrary()). It is associated to
 the <code>EMF_CBASE_NATIVE_LIBRARY_TYPE_NAME</code> library type and is reachable with
 the <code>EMF_CBASE_LIBRARY_LOADER_DEFAULT_HANDLE</code> handle. Libraries with the same absolute path are loaded only once and
@@ -364,7 +364,7 @@ of <code>get_internal_interface_fn</code> to a <code>emf_cbase_native_library_lo
 function.</p>
 <p>If the library has dependencies on other libraries, then it must specify them by specifying an <code>rpath</code> on POSIX or
 embedding an <code>Activation Context manifest</code> into the library on Windows.</p>
-<h4><a class="header" href="#library-api-example" id="library-api-example">Library api example</a></h4>
+<h4 id="library-api-example"><a class="header" href="#library-api-example">Library api example</a></h4>
 <pre><code class="language-c">/// `base_interf` is a structure containing the `emf-core-base` interface.
 /// `base_handle` is a handle to the `emf-core-base` module.
 
@@ -397,7 +397,7 @@ if (result.has_error) {
 
 base_interf-&gt;sys_unlock_fn(base_handle);
 </code></pre>
-<h4><a class="header" href="#library-api-overview" id="library-api-overview">Library api overview</a></h4>
+<h4 id="library-api-overview"><a class="header" href="#library-api-overview">Library api overview</a></h4>
 <pre><code class="language-c">// loader management
 emf_cbase_library_loader_handle_result_t library_register_loader(
         const emf_cbase_library_loader_interface_t* loader_interface, 
@@ -440,9 +440,9 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
         emf_cbase_library_handle_t library_handle, 
         const char* symbol_name)
 </code></pre>
-<h4><a class="header" href="#library-api-functions" id="library-api-functions">Library api functions</a></h4>
-<h5><a class="header" href="#library-api-loader-management" id="library-api-loader-management">Library api loader management</a></h5>
-<h6><a class="header" href="#library_register_loader" id="library_register_loader">library_register_loader</a></h6>
+<h4 id="library-api-functions"><a class="header" href="#library-api-functions">Library api functions</a></h4>
+<h5 id="library-api-loader-management"><a class="header" href="#library-api-loader-management">Library api loader management</a></h5>
+<h6 id="library_register_loader"><a class="header" href="#library_register_loader">library_register_loader</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_library_loader_handle_result_t library_register_loader(
       const emf_cbase_library_loader_interface_t* loader_interface, 
@@ -456,7 +456,7 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#library_unregister_loader" id="library_unregister_loader">library_unregister_loader</a></h6>
+<h6 id="library_unregister_loader"><a class="header" href="#library_unregister_loader">library_unregister_loader</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_library_result_t library_unregister_loader(emf_cbase_library_loader_handle_t loader_handle)
 </code></pre>
@@ -467,7 +467,7 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#library_get_loader_interface" id="library_get_loader_interface">library_get_loader_interface</a></h6>
+<h6 id="library_get_loader_interface"><a class="header" href="#library_get_loader_interface">library_get_loader_interface</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_library_loader_interface_result_t library_get_loader_interface(
       emf_cbase_library_loader_handle_t loader_handle)
@@ -479,7 +479,7 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#library_get_loader_handle_from_type" id="library_get_loader_handle_from_type">library_get_loader_handle_from_type</a></h6>
+<h6 id="library_get_loader_handle_from_type"><a class="header" href="#library_get_loader_handle_from_type">library_get_loader_handle_from_type</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_library_loader_handle_result_t library_get_loader_handle_from_type(
       const emf_cbase_library_type_t* library_type)
@@ -492,7 +492,7 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#library_get_loader_handle_from_library" id="library_get_loader_handle_from_library">library_get_loader_handle_from_library</a></h6>
+<h6 id="library_get_loader_handle_from_library"><a class="header" href="#library_get_loader_handle_from_library">library_get_loader_handle_from_library</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_library_loader_handle_result_t library_get_loader_handle_from_library(
       emf_cbase_library_handle_t library_handle)
@@ -503,8 +503,8 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 <li>Returns: Handle on success, error otherwise.</li>
 </ul>
 </blockquote>
-<h5><a class="header" href="#library-api-queries" id="library-api-queries">Library api queries</a></h5>
-<h6><a class="header" href="#library_get_num_loaders" id="library_get_num_loaders">library_get_num_loaders</a></h6>
+<h5 id="library-api-queries"><a class="header" href="#library-api-queries">Library api queries</a></h5>
+<h6 id="library_get_num_loaders"><a class="header" href="#library_get_num_loaders">library_get_num_loaders</a></h6>
 <blockquote>
 <pre><code class="language-c">size_t library_get_num_loaders()
 </code></pre>
@@ -514,7 +514,7 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#library_library_exists" id="library_library_exists">library_library_exists</a></h6>
+<h6 id="library_library_exists"><a class="header" href="#library_library_exists">library_library_exists</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_bool_t library_library_exists(emf_cbase_library_handle_t library_handle)
 </code></pre>
@@ -524,18 +524,18 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#library_type_exists" id="library_type_exists">library_type_exists</a></h6>
+<h6 id="library_type_exists"><a class="header" href="#library_type_exists">library_type_exists</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_bool_t library_type_exists(const emf_cbase_library_type_t* library_type)
 </code></pre>
 <ul>
 <li>Effects: Checks if a library type exists.</li>
 <li>Mandates: <code>library_type != NULL</code>.</li>
-<li>Returns: <code>emf_cbase_bool_true</code> if the type is exists, <code>emf_cbase_bool_false</code> otherwise.</li>
+<li>Returns: <code>emf_cbase_bool_true</code> if the type exists, <code>emf_cbase_bool_false</code> otherwise.</li>
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#library_get_library_types" id="library_get_library_types">library_get_library_types</a></h6>
+<h6 id="library_get_library_types"><a class="header" href="#library_get_library_types">library_get_library_types</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_library_size_result_t library_get_library_types(emf_cbase_library_type_span_t* buffer)
 </code></pre>
@@ -546,8 +546,8 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 <li>Returns: Number of written types on success, error otherwise.</li>
 </ul>
 </blockquote>
-<h5><a class="header" href="#library-api-internal-library-management" id="library-api-internal-library-management">Library api internal library management</a></h5>
-<h6><a class="header" href="#library_create_library_handle" id="library_create_library_handle">library_create_library_handle</a></h6>
+<h5 id="library-api-internal-library-management"><a class="header" href="#library-api-internal-library-management">Library api internal library management</a></h5>
+<h6 id="library_create_library_handle"><a class="header" href="#library_create_library_handle">library_create_library_handle</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_library_handle_t library_create_library_handle()
 </code></pre>
@@ -558,7 +558,7 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#library_remove_library_handle" id="library_remove_library_handle">library_remove_library_handle</a></h6>
+<h6 id="library_remove_library_handle"><a class="header" href="#library_remove_library_handle">library_remove_library_handle</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_library_result_t library_remove_library_handle(emf_cbase_library_handle_t library_handle)
 </code></pre>
@@ -570,7 +570,7 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#library_link_library" id="library_link_library">library_link_library</a></h6>
+<h6 id="library_link_library"><a class="header" href="#library_link_library">library_link_library</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_library_result_t library_link_library(
       emf_cbase_library_handle_t library_handle, 
@@ -586,7 +586,7 @@ Overrides the internal link of the library handle by setting it to the new libra
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#library_get_internal_library_handle" id="library_get_internal_library_handle">library_get_internal_library_handle</a></h6>
+<h6 id="library_get_internal_library_handle"><a class="header" href="#library_get_internal_library_handle">library_get_internal_library_handle</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_internal_library_handle_result_t library_get_internal_library_handle(
       emf_cbase_library_handle_t library_handle)
@@ -597,8 +597,8 @@ Overrides the internal link of the library handle by setting it to the new libra
 <li>Returns: Handle on success, error otherwise.</li>
 </ul>
 </blockquote>
-<h5><a class="header" href="#library-api-library-management" id="library-api-library-management">Library api library management</a></h5>
-<h6><a class="header" href="#library_load" id="library_load">library_load</a></h6>
+<h5 id="library-api-library-management"><a class="header" href="#library-api-library-management">Library api library management</a></h5>
+<h6 id="library_load"><a class="header" href="#library_load">library_load</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_library_handle_result_t library_load(
       emf_cbase_library_loader_handle_t loader_handle, 
@@ -613,7 +613,7 @@ or the type of the library can not be loaded with the loader.</li>
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#library_unload" id="library_unload">library_unload</a></h6>
+<h6 id="library_unload"><a class="header" href="#library_unload">library_unload</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_library_result_t library_unload(emf_cbase_library_handle_t library_handle)
 </code></pre>
@@ -624,7 +624,7 @@ or the type of the library can not be loaded with the loader.</li>
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#library_get_data_symbol" id="library_get_data_symbol">library_get_data_symbol</a></h6>
+<h6 id="library_get_data_symbol"><a class="header" href="#library_get_data_symbol">library_get_data_symbol</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_library_data_symbol_result_t library_get_data_symbol(
       emf_cbase_library_handle_t library_handle, 
@@ -640,7 +640,7 @@ See <code>library_get_function_symbol()</code> when fetching a function.</li>
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#library_get_function_symbol" id="library_get_function_symbol">library_get_function_symbol</a></h6>
+<h6 id="library_get_function_symbol"><a class="header" href="#library_get_function_symbol">library_get_function_symbol</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
       emf_cbase_library_handle_t library_handle, 
@@ -655,17 +655,17 @@ See <code>library_get_data_symbol()</code> when fetching some data.</li>
 <li>Returns: Symbol on success, error otherwise.</li>
 </ul>
 </blockquote>
-<h3><a class="header" href="#module-api" id="module-api">Module api</a></h3>
+<h3 id="module-api"><a class="header" href="#module-api">Module api</a></h3>
 <p>The module api is built on top of the library api and specifies the loading and unloading of modules. A module is a
 collection libraries and resources, that together form an independent unit. Similarly to the library api, the loading
 and unloading of modules is implemented by module loaders, which are associated to one module type.</p>
-<h4><a class="header" href="#module-loaders" id="module-loaders">Module loaders</a></h4>
+<h4 id="module-loaders"><a class="header" href="#module-loaders">Module loaders</a></h4>
 <p>Module loaders implement the actual loading and unloading of modules. Custom module loaders can be added by constructing
 an <code>emf_cbase_module_loader_interface_t</code> and calling the <code>module_register_loader()</code> function.</p>
-<h4><a class="header" href="#module-types" id="module-types">Module types</a></h4>
+<h4 id="module-types"><a class="header" href="#module-types">Module types</a></h4>
 <p>The type of a module identifies a module loader capable of loading a specific module. A module type is represented by
 an <code>emf_cbase_module_type_t</code>.</p>
-<h4><a class="header" href="#module-filesystem-structure" id="module-filesystem-structure">Module filesystem structure</a></h4>
+<h4 id="module-filesystem-structure"><a class="header" href="#module-filesystem-structure">Module filesystem structure</a></h4>
 <pre><code class="language-text">module/
 ├── module.json
 └── ...
@@ -673,10 +673,10 @@ an <code>emf_cbase_module_type_t</code>.</p>
 <p>A module is a simple directory containing all the required resources. The internal structure of the module is defined by
 the respective module loader. The only requirement is the existence of the module.json file at the root of the module.
 This file is the module manifest and specifies that the directory is indeed a module.</p>
-<h5><a class="header" href="#module-manifest" id="module-manifest">Module manifest</a></h5>
+<h5 id="module-manifest"><a class="header" href="#module-manifest">Module manifest</a></h5>
 <p>The module manifest identifies a module and specifies how a module can be loaded. To allow for backwards (and forwards)
 compatibility, the version of the manifest schema is saved in the manifest with the key <code>&quot;schema&quot;</code>.</p>
-<h6><a class="header" href="#module-manifest-schema-0" id="module-manifest-schema-0">Module manifest schema <code>&quot;0&quot;</code></a></h6>
+<h6 id="module-manifest-schema-0"><a class="header" href="#module-manifest-schema-0">Module manifest schema <code>&quot;0&quot;</code></a></h6>
 <p>The version <code>&quot;0&quot;</code> introduces several required and optional fields:</p>
 <ul>
 <li><code>&quot;name&quot;</code>: A <code>string</code> describing the name of the module. Has a maximum length of 32 ASCII characters. Is required.</li>
@@ -730,17 +730,17 @@ of 32 ASCII characters.</li>
     }]
 }
 </code></pre>
-<h4><a class="header" href="#predefined-module-loaders" id="predefined-module-loaders">Predefined module loaders</a></h4>
+<h4 id="predefined-module-loaders"><a class="header" href="#predefined-module-loaders">Predefined module loaders</a></h4>
 <p>Some module loaders are always present and can not be removed at runtime.</p>
-<h5><a class="header" href="#native-module-loader" id="native-module-loader">Native module loader</a></h5>
+<h5 id="native-module-loader"><a class="header" href="#native-module-loader">Native module loader</a></h5>
 <p>The native module loader is built on top of the native library loader and is able to load modules consisting of native
 libraries. It is reachable with the <code>EMF_CBASE_MODULE_LOADER_DEFAULT_HANDLE</code> handle. The same restrictions of the native
 library loader apply to the native module loader. The native module loader requires the presence of a native module
 manifest file named <code>native_module.json</code> at the root of the module.</p>
-<h5><a class="header" href="#native-module-manifest" id="native-module-manifest">Native module manifest</a></h5>
+<h5 id="native-module-manifest"><a class="header" href="#native-module-manifest">Native module manifest</a></h5>
 <p>The native module manifest specifies which library implements the module. To allow for backwards (and forwards)
 compatibility, the version of the manifest schema is saved in the manifest with the key <code>&quot;schema&quot;</code>.</p>
-<h6><a class="header" href="#native-module-manifest-schema-0" id="native-module-manifest-schema-0">Native module manifest schema <code>&quot;0&quot;</code></a></h6>
+<h6 id="native-module-manifest-schema-0"><a class="header" href="#native-module-manifest-schema-0">Native module manifest schema <code>&quot;0&quot;</code></a></h6>
 <p>The schema <code>&quot;0&quot;</code> specifies one field:</p>
 <ul>
 <li><code>library_path</code>: A <code>string</code> describing the relative path to the library. Is required.</li>
@@ -751,11 +751,11 @@ compatibility, the version of the manifest schema is saved in the manifest with 
     &quot;library_path&quot;: &quot;./lib/jobs.so&quot;
 }
 </code></pre>
-<h5><a class="header" href="#native-module-interface" id="native-module-interface">Native module interface</a></h5>
+<h5 id="native-module-interface"><a class="header" href="#native-module-interface">Native module interface</a></h5>
 <p>Once the module library has been loaded by the native library loader, the native module loader searches for a symbol
 with the name <code>emf_cbase_native_module_interface</code> (see <code>EMF_CBASE_NATIVE_MODULE_INTERFACE_SYMBOL_NAME</code>) and the
 type <code>emf_cbase_native_module_interface_t</code>.</p>
-<h4><a class="header" href="#module-api-example" id="module-api-example">Module api example</a></h4>
+<h4 id="module-api-example"><a class="header" href="#module-api-example">Module api example</a></h4>
 <pre><code class="language-c">/// `base_interf` is a structure containing the `emf-core-base` interface.
 /// `base_handle` is a handle to the `emf-core-base` module.
 
@@ -792,7 +792,7 @@ if (result.has_error) {
 
 base_interf-&gt;sys_unlock_fn(base_handle);
 </code></pre>
-<h4><a class="header" href="#module-api-overview" id="module-api-overview">Module api overview</a></h4>
+<h4 id="module-api-overview"><a class="header" href="#module-api-overview">Module api overview</a></h4>
 <pre><code class="language-c">// loader management
 emf_cbase_module_loader_handle_result_t module_register_loader(
         const emf_cbase_module_loader_interface_t* loader_interface,
@@ -865,9 +865,9 @@ emf_cbase_module_interface_result_t module_get_interface(
         emf_cbase_module_handle_t module_handle,
         const emf_cbase_interface_descriptor_t* interface_descriptor)
 </code></pre>
-<h4><a class="header" href="#module-api-functions" id="module-api-functions">Module api functions</a></h4>
-<h5><a class="header" href="#module-api-loader-management" id="module-api-loader-management">Module api loader management</a></h5>
-<h6><a class="header" href="#module_register_loader" id="module_register_loader">module_register_loader</a></h6>
+<h4 id="module-api-functions"><a class="header" href="#module-api-functions">Module api functions</a></h4>
+<h5 id="module-api-loader-management"><a class="header" href="#module-api-loader-management">Module api loader management</a></h5>
+<h6 id="module_register_loader"><a class="header" href="#module_register_loader">module_register_loader</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_module_loader_handle_result_t module_register_loader(
       const emf_cbase_module_loader_interface_t* loader_interface,
@@ -882,7 +882,7 @@ Module types starting with <code>__</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#module_unregister_loader" id="module_unregister_loader">module_unregister_loader</a></h6>
+<h6 id="module_unregister_loader"><a class="header" href="#module_unregister_loader">module_unregister_loader</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_module_result_t module_unregister_loader(
       emf_cbase_module_loader_handle_t loader_handle)
@@ -896,7 +896,7 @@ Unregistering a module loader also unloads the modules it loaded.</li>
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#module_get_loader_interface" id="module_get_loader_interface">module_get_loader_interface</a></h6>
+<h6 id="module_get_loader_interface"><a class="header" href="#module_get_loader_interface">module_get_loader_interface</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_module_loader_interface_result_t module_get_loader_interface(
       emf_cbase_module_loader_handle_t loader_handle)
@@ -908,7 +908,7 @@ Unregistering a module loader also unloads the modules it loaded.</li>
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#module_get_loader_handle_from_type" id="module_get_loader_handle_from_type">module_get_loader_handle_from_type</a></h6>
+<h6 id="module_get_loader_handle_from_type"><a class="header" href="#module_get_loader_handle_from_type">module_get_loader_handle_from_type</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_module_loader_handle_result_t module_get_loader_handle_from_type(
       const emf_cbase_module_type_t* module_type)
@@ -921,7 +921,7 @@ Unregistering a module loader also unloads the modules it loaded.</li>
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#module_get_loader_handle_from_module" id="module_get_loader_handle_from_module">module_get_loader_handle_from_module</a></h6>
+<h6 id="module_get_loader_handle_from_module"><a class="header" href="#module_get_loader_handle_from_module">module_get_loader_handle_from_module</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_module_loader_handle_result_t module_get_loader_handle_from_module(
       emf_cbase_module_handle_t module_handle)
@@ -932,8 +932,8 @@ Unregistering a module loader also unloads the modules it loaded.</li>
 <li>Returns: Handle on success, error otherwise.</li>
 </ul>
 </blockquote>
-<h5><a class="header" href="#module-api-queries" id="module-api-queries">Module api queries</a></h5>
-<h6><a class="header" href="#module_get_num_modules" id="module_get_num_modules">module_get_num_modules</a></h6>
+<h5 id="module-api-queries"><a class="header" href="#module-api-queries">Module api queries</a></h5>
+<h6 id="module_get_num_modules"><a class="header" href="#module_get_num_modules">module_get_num_modules</a></h6>
 <blockquote>
 <pre><code class="language-c">size_t module_get_num_modules()
 </code></pre>
@@ -943,7 +943,7 @@ Unregistering a module loader also unloads the modules it loaded.</li>
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#module_get_num_loaders" id="module_get_num_loaders">module_get_num_loaders</a></h6>
+<h6 id="module_get_num_loaders"><a class="header" href="#module_get_num_loaders">module_get_num_loaders</a></h6>
 <blockquote>
 <pre><code class="language-c">size_t module_get_num_loaders()
 </code></pre>
@@ -953,7 +953,7 @@ Unregistering a module loader also unloads the modules it loaded.</li>
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#module_get_num_exported_interfaces" id="module_get_num_exported_interfaces">module_get_num_exported_interfaces</a></h6>
+<h6 id="module_get_num_exported_interfaces"><a class="header" href="#module_get_num_exported_interfaces">module_get_num_exported_interfaces</a></h6>
 <blockquote>
 <pre><code class="language-c">size_t module_get_num_exported_interfaces()
 </code></pre>
@@ -963,7 +963,7 @@ Unregistering a module loader also unloads the modules it loaded.</li>
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#module_module_exists" id="module_module_exists">module_module_exists</a></h6>
+<h6 id="module_module_exists"><a class="header" href="#module_module_exists">module_module_exists</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_bool_t module_module_exists(emf_cbase_module_handle_t module_handle)
 </code></pre>
@@ -973,7 +973,7 @@ Unregistering a module loader also unloads the modules it loaded.</li>
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#module_type_exists" id="module_type_exists">module_type_exists</a></h6>
+<h6 id="module_type_exists"><a class="header" href="#module_type_exists">module_type_exists</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_bool_t module_type_exists(const emf_cbase_module_type_t* module_type)
 </code></pre>
@@ -984,7 +984,7 @@ Unregistering a module loader also unloads the modules it loaded.</li>
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#module_exported_interface_exists" id="module_exported_interface_exists">module_exported_interface_exists</a></h6>
+<h6 id="module_exported_interface_exists"><a class="header" href="#module_exported_interface_exists">module_exported_interface_exists</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_bool_t module_exported_interface_exists(
       const emf_cbase_interface_descriptor_t* interface)
@@ -996,7 +996,7 @@ Unregistering a module loader also unloads the modules it loaded.</li>
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#module_get_modules" id="module_get_modules">module_get_modules</a></h6>
+<h6 id="module_get_modules"><a class="header" href="#module_get_modules">module_get_modules</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_module_size_result_t module_get_modules(
       emf_cbase_module_info_span_t* buffer)
@@ -1009,7 +1009,7 @@ Unregistering a module loader also unloads the modules it loaded.</li>
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#module_get_module_types" id="module_get_module_types">module_get_module_types</a></h6>
+<h6 id="module_get_module_types"><a class="header" href="#module_get_module_types">module_get_module_types</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_module_size_result_t module_get_module_types(
       emf_cbase_module_type_span_t* buffer)
@@ -1022,7 +1022,7 @@ Unregistering a module loader also unloads the modules it loaded.</li>
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#module_get_exported_interfaces" id="module_get_exported_interfaces">module_get_exported_interfaces</a></h6>
+<h6 id="module_get_exported_interfaces"><a class="header" href="#module_get_exported_interfaces">module_get_exported_interfaces</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_module_size_result_t module_get_exported_interfaces(
       emf_cbase_interface_descriptor_span_t* buffer)
@@ -1035,7 +1035,7 @@ Unregistering a module loader also unloads the modules it loaded.</li>
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#module_get_exported_interface_handle" id="module_get_exported_interface_handle">module_get_exported_interface_handle</a></h6>
+<h6 id="module_get_exported_interface_handle"><a class="header" href="#module_get_exported_interface_handle">module_get_exported_interface_handle</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_module_handle_result_t module_get_exported_interface_handle(
       const emf_cbase_interface_descriptor_t* interface)
@@ -1047,8 +1047,8 @@ Unregistering a module loader also unloads the modules it loaded.</li>
 <li>Returns: Module handle on success, error otherwise.</li>
 </ul>
 </blockquote>
-<h5><a class="header" href="#module-api-internal-module-management" id="module-api-internal-module-management">Module api internal module management</a></h5>
-<h6><a class="header" href="#module_create_module_handle" id="module_create_module_handle">module_create_module_handle</a></h6>
+<h5 id="module-api-internal-module-management"><a class="header" href="#module-api-internal-module-management">Module api internal module management</a></h5>
+<h6 id="module_create_module_handle"><a class="header" href="#module_create_module_handle">module_create_module_handle</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_module_handle_t module_create_module_handle()
 </code></pre>
@@ -1059,7 +1059,7 @@ Unregistering a module loader also unloads the modules it loaded.</li>
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#module_remove_module_handle" id="module_remove_module_handle">module_remove_module_handle</a></h6>
+<h6 id="module_remove_module_handle"><a class="header" href="#module_remove_module_handle">module_remove_module_handle</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_module_result_t module_remove_module_handle(
       emf_cbase_module_handle_t module_handle)
@@ -1072,7 +1072,7 @@ Unregistering a module loader also unloads the modules it loaded.</li>
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#module_link_module" id="module_link_module">module_link_module</a></h6>
+<h6 id="module_link_module"><a class="header" href="#module_link_module">module_link_module</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_module_result_t module_link_module(
       emf_cbase_module_handle_t module_handle,
@@ -1087,7 +1087,7 @@ Unregistering a module loader also unloads the modules it loaded.</li>
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#module_get_internal_module_handle" id="module_get_internal_module_handle">module_get_internal_module_handle</a></h6>
+<h6 id="module_get_internal_module_handle"><a class="header" href="#module_get_internal_module_handle">module_get_internal_module_handle</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_internal_module_handle_result_t module_get_internal_module_handle(
       emf_cbase_module_handle_t module_handle)
@@ -1098,8 +1098,8 @@ Unregistering a module loader also unloads the modules it loaded.</li>
 <li>Returns: Internal handle on success, error otherwise.</li>
 </ul>
 </blockquote>
-<h5><a class="header" href="#module-api-module-management" id="module-api-module-management">Module api module management</a></h5>
-<h6><a class="header" href="#module_add_module" id="module_add_module">module_add_module</a></h6>
+<h5 id="module-api-module-management"><a class="header" href="#module-api-module-management">Module api module management</a></h5>
+<h6 id="module_add_module"><a class="header" href="#module_add_module">module_add_module</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_module_handle_result_t module_add_module(
       emf_cbase_module_loader_handle_t loader_handle,
@@ -1113,7 +1113,7 @@ the type of the module can not be loaded with the loader.</li>
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#module_remove_module" id="module_remove_module">module_remove_module</a></h6>
+<h6 id="module_remove_module"><a class="header" href="#module_remove_module">module_remove_module</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_module_result_t module_remove_module(emf_cbase_module_handle_t module_handle)
 </code></pre>
@@ -1124,7 +1124,7 @@ the type of the module can not be loaded with the loader.</li>
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#module_load" id="module_load">module_load</a></h6>
+<h6 id="module_load"><a class="header" href="#module_load">module_load</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_module_result_t module_load(emf_cbase_module_handle_t module_handle)
 </code></pre>
@@ -1136,7 +1136,7 @@ module are not exported or the module is not in an unloaded state.</li>
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#module_unload" id="module_unload">module_unload</a></h6>
+<h6 id="module_unload"><a class="header" href="#module_unload">module_unload</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_module_result_t module_unload(emf_cbase_module_handle_t module_handle)
 </code></pre>
@@ -1147,7 +1147,7 @@ module are not exported or the module is not in an unloaded state.</li>
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#module_initialize" id="module_initialize">module_initialize</a></h6>
+<h6 id="module_initialize"><a class="header" href="#module_initialize">module_initialize</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_module_result_t module_initialize(emf_cbase_module_handle_t module_handle)
 </code></pre>
@@ -1159,7 +1159,7 @@ exported or the module is not in a loaded state.</li>
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#module_terminate" id="module_terminate">module_terminate</a></h6>
+<h6 id="module_terminate"><a class="header" href="#module_terminate">module_terminate</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_module_result_t module_terminate(emf_cbase_module_handle_t module_handle)
 </code></pre>
@@ -1172,7 +1172,7 @@ they are also unloaded.</li>
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#module_add_dependency" id="module_add_dependency">module_add_dependency</a></h6>
+<h6 id="module_add_dependency"><a class="header" href="#module_add_dependency">module_add_dependency</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_module_result_t module_add_dependency(
       emf_cbase_module_handle_t module_handle,
@@ -1186,7 +1186,7 @@ they are also unloaded.</li>
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#module_remove_dependency" id="module_remove_dependency">module_remove_dependency</a></h6>
+<h6 id="module_remove_dependency"><a class="header" href="#module_remove_dependency">module_remove_dependency</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_module_result_t module_remove_dependency(
       emf_cbase_module_handle_t module_handle,
@@ -1200,7 +1200,7 @@ they are also unloaded.</li>
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#module_export_interface" id="module_export_interface">module_export_interface</a></h6>
+<h6 id="module_export_interface"><a class="header" href="#module_export_interface">module_export_interface</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_module_result_t module_export_interface(
       emf_cbase_module_handle_t module_handle,
@@ -1215,7 +1215,7 @@ they are also unloaded.</li>
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#module_get_load_dependencies" id="module_get_load_dependencies">module_get_load_dependencies</a></h6>
+<h6 id="module_get_load_dependencies"><a class="header" href="#module_get_load_dependencies">module_get_load_dependencies</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_interface_descriptor_const_span_result_t module_get_load_dependencies(
       emf_cbase_module_handle_t module_handle)
@@ -1227,7 +1227,7 @@ they are also unloaded.</li>
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#module_get_runtime_dependencies" id="module_get_runtime_dependencies">module_get_runtime_dependencies</a></h6>
+<h6 id="module_get_runtime_dependencies"><a class="header" href="#module_get_runtime_dependencies">module_get_runtime_dependencies</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_interface_descriptor_const_span_result_t module_get_runtime_dependencies(
       emf_cbase_module_handle_t module_handle)
@@ -1239,7 +1239,7 @@ they are also unloaded.</li>
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#module_get_exportable_interfaces" id="module_get_exportable_interfaces">module_get_exportable_interfaces</a></h6>
+<h6 id="module_get_exportable_interfaces"><a class="header" href="#module_get_exportable_interfaces">module_get_exportable_interfaces</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_interface_descriptor_const_span_result_t module_get_exportable_interfaces(
       emf_cbase_module_handle_t module_handle)
@@ -1251,7 +1251,7 @@ they are also unloaded.</li>
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#module_fetch_status" id="module_fetch_status">module_fetch_status</a></h6>
+<h6 id="module_fetch_status"><a class="header" href="#module_fetch_status">module_fetch_status</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_module_status_result_t module_fetch_status(emf_cbase_module_handle_t module_handle)
 </code></pre>
@@ -1262,7 +1262,7 @@ they are also unloaded.</li>
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#module_get_module_path" id="module_get_module_path">module_get_module_path</a></h6>
+<h6 id="module_get_module_path"><a class="header" href="#module_get_module_path">module_get_module_path</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_os_path_char_result_t module_get_module_path(emf_cbase_module_handle_t module_handle)
 </code></pre>
@@ -1273,7 +1273,7 @@ they are also unloaded.</li>
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#module_get_module_info" id="module_get_module_info">module_get_module_info</a></h6>
+<h6 id="module_get_module_info"><a class="header" href="#module_get_module_info">module_get_module_info</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_module_info_ptr_result_t module_get_module_info(emf_cbase_module_handle_t module_handle)
 </code></pre>
@@ -1284,7 +1284,7 @@ they are also unloaded.</li>
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#module_get_interface" id="module_get_interface">module_get_interface</a></h6>
+<h6 id="module_get_interface"><a class="header" href="#module_get_interface">module_get_interface</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_module_interface_result_t module_get_interface(
       emf_cbase_module_handle_t module_handle,
@@ -1298,11 +1298,11 @@ or the interface is not contained in the module.</li>
 <li>Returns: Interface on success, error otherwise.</li>
 </ul>
 </blockquote>
-<h3><a class="header" href="#version-api" id="version-api">Version api</a></h3>
+<h3 id="version-api"><a class="header" href="#version-api">Version api</a></h3>
 <p>The version api implements the versioning scheme specified in
 the <a href="0004-versioning-specification.html">versioning-specification RFC</a>.
 The functions of the version api don't require any synchronization.</p>
-<h4><a class="header" href="#version-api-example" id="version-api-example">Version api example</a></h4>
+<h4 id="version-api-example"><a class="header" href="#version-api-example">Version api example</a></h4>
 <pre><code class="language-c">/// `base_interf` is a structure containing the `emf-core-base` interface.
 /// `base_handle` is a handle to the `emf-core-base` module.
 
@@ -1328,7 +1328,7 @@ if (base_interf-&gt;version_compare_weak_fn(base_handle, &amp;v1, &amp;v2) != 0)
     base_interf-&gt;sys_unlock_fn(base_handle);
 }
 </code></pre>
-<h4><a class="header" href="#version-api-overview" id="version-api-overview">Version api overview</a></h4>
+<h4 id="version-api-overview"><a class="header" href="#version-api-overview">Version api overview</a></h4>
 <pre><code class="language-c">// construction
 emf_cbase_version_t version_new_short(
         int32_t major, 
@@ -1370,9 +1370,9 @@ int32_t version_compare_weak(const emf_cbase_version_t* lhs, const emf_cbase_ver
 int32_t version_compare_strong(const emf_cbase_version_t* lhs, const emf_cbase_version_t* rhs)
 emf_cbase_bool_t version_is_compatible(const emf_cbase_version_t* lhs, const emf_cbase_version_t* rhs)
 </code></pre>
-<h4><a class="header" href="#version-api-functions" id="version-api-functions">Version api functions</a></h4>
-<h5><a class="header" href="#version-api-construction" id="version-api-construction">Version api construction</a></h5>
-<h6><a class="header" href="#version_new_short" id="version_new_short">version_new_short</a></h6>
+<h4 id="version-api-functions"><a class="header" href="#version-api-functions">Version api functions</a></h4>
+<h5 id="version-api-construction"><a class="header" href="#version-api-construction">Version api construction</a></h5>
+<h6 id="version_new_short"><a class="header" href="#version_new_short">version_new_short</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_version_t version_new_short(
       int32_t major, 
@@ -1386,7 +1386,7 @@ Constructs a new version with <code>major</code>, <code>minor</code> and <code>p
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#version_new_long" id="version_new_long">version_new_long</a></h6>
+<h6 id="version_new_long"><a class="header" href="#version_new_long">version_new_long</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_version_t version_new_long(
       int32_t major, 
@@ -1403,7 +1403,7 @@ Constructs a new version with <code>major</code>, <code>minor</code>, <code>patc
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#version_new_full" id="version_new_full">version_new_full</a></h6>
+<h6 id="version_new_full"><a class="header" href="#version_new_full">version_new_full</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_version_t version_new_full(
       int32_t major, 
@@ -1420,7 +1420,7 @@ Constructs a new version with <code>major</code>, <code>minor</code>, <code>patc
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#version_from_string" id="version_from_string">version_from_string</a></h6>
+<h6 id="version_from_string"><a class="header" href="#version_from_string">version_from_string</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_version_result_t version_from_string(const emf_cbase_version_const_string_buffer_t* version_string)
 </code></pre>
@@ -1431,8 +1431,8 @@ Constructs a new version with <code>major</code>, <code>minor</code>, <code>patc
 <li>Returns: Constructed version.</li>
 </ul>
 </blockquote>
-<h5><a class="header" href="#version-api-strings" id="version-api-strings">Version api strings</a></h5>
-<h6><a class="header" href="#version_string_length_short" id="version_string_length_short">version_string_length_short</a></h6>
+<h5 id="version-api-strings"><a class="header" href="#version-api-strings">Version api strings</a></h5>
+<h6 id="version_string_length_short"><a class="header" href="#version_string_length_short">version_string_length_short</a></h6>
 <blockquote>
 <pre><code class="language-c">size_t version_string_length_short(const emf_cbase_version_t* version)
 </code></pre>
@@ -1443,7 +1443,7 @@ Constructs a new version with <code>major</code>, <code>minor</code>, <code>patc
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#version_string_length_long" id="version_string_length_long">version_string_length_long</a></h6>
+<h6 id="version_string_length_long"><a class="header" href="#version_string_length_long">version_string_length_long</a></h6>
 <blockquote>
 <pre><code class="language-c">size_t version_string_length_long(const emf_cbase_version_t* version)
 </code></pre>
@@ -1454,7 +1454,7 @@ Constructs a new version with <code>major</code>, <code>minor</code>, <code>patc
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#version_string_length_full" id="version_string_length_full">version_string_length_full</a></h6>
+<h6 id="version_string_length_full"><a class="header" href="#version_string_length_full">version_string_length_full</a></h6>
 <blockquote>
 <pre><code class="language-c">size_t version_string_length_full(const emf_cbase_version_t* version)
 </code></pre>
@@ -1465,7 +1465,7 @@ Constructs a new version with <code>major</code>, <code>minor</code>, <code>patc
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#version_as_string_short" id="version_as_string_short">version_as_string_short</a></h6>
+<h6 id="version_as_string_short"><a class="header" href="#version_as_string_short">version_as_string_short</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_version_size_result_t version_as_string_short(
       const emf_cbase_version_t* version,
@@ -1479,7 +1479,7 @@ Constructs a new version with <code>major</code>, <code>minor</code>, <code>patc
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#version_as_string_long" id="version_as_string_long">version_as_string_long</a></h6>
+<h6 id="version_as_string_long"><a class="header" href="#version_as_string_long">version_as_string_long</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_version_size_result_t version_as_string_long(
       const emf_cbase_version_t* version,
@@ -1493,7 +1493,7 @@ Constructs a new version with <code>major</code>, <code>minor</code>, <code>patc
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#version_as_string_full" id="version_as_string_full">version_as_string_full</a></h6>
+<h6 id="version_as_string_full"><a class="header" href="#version_as_string_full">version_as_string_full</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_version_size_result_t version_as_string_full(
       const emf_cbase_version_t* version,
@@ -1507,7 +1507,7 @@ Constructs a new version with <code>major</code>, <code>minor</code>, <code>patc
 </ul>
 </blockquote>
 <hr />
-<h6><a class="header" href="#version_string_is_valid" id="version_string_is_valid">version_string_is_valid</a></h6>
+<h6 id="version_string_is_valid"><a class="header" href="#version_string_is_valid">version_string_is_valid</a></h6>
 <blockquote>
 <pre><code class="language-c">emf_cbase_bool_t version_string_is_valid(const emf_cbase_version_const_string_buffer_t* version_string)
 </code></pre>
@@ -1517,8 +1517,8 @@ Constructs a new version with <code>major</code>, <code>minor</code>, <code>patc
 <li>Returns: <code>emf_cbase_bool_true</code> if the string is valid, <code>emf_cbase_bool_false</code> otherwise.</li>
 </ul>
 </blockquote>
-<h2><a class="header" href="#implementation" id="implementation">Implementation</a></h2>
-<h3><a class="header" href="#initialization" id="initialization">Initialization</a></h3>
+<h2 id="implementation"><a class="header" href="#implementation">Implementation</a></h2>
+<h3 id="initialization"><a class="header" href="#initialization">Initialization</a></h3>
 <p>This proposal does not seek to specify any specific implementation, as such we will not make any assumptions on how the
 interface is initialized. An implementor may choose to implement the interface in any way, and language, they see fit.
 The only requirement is, that the interface is exported with the name <code>&quot;emf:core_base&quot;</code> (see <code>EMF_CBASE_INTERFACE_NAME</code>)
@@ -1526,7 +1526,7 @@ at the end of the initialization routine.</p>
 <p>In case the interface is implemented as a standalone native module, the initialization is handled by the exported module
 interface. See the following example:</p>
 <pre><code class="language-c">// we need dummy functions to enter the initialization routine.
-emf_cbase_bool_t sys_has_function_dummy(emf_cbase_fn_ptr_id id) {
+emf_cbase_bool_t sys_has_function_dummy(emf_cbase_fn_ptr_id_t id) {
     // Check if the `magic` value was passed.
     if ((int32_t)id == 0) {
         return emf_cbase_bool_true;
@@ -1535,7 +1535,7 @@ emf_cbase_bool_t sys_has_function_dummy(emf_cbase_fn_ptr_id id) {
     }
 }
 
-emf_cbase_fn_optional_t sys_get_function_dummy(emf_cbase_fn_ptr_id id) {
+emf_cbase_fn_optional_t sys_get_function_dummy(emf_cbase_fn_ptr_id_t id) {
     emf_cbase_fn_optional_t optional_fn = { ._dummy = 0, .has_value = emf_cbase_bool_false };
     return optional_fn;
 }
@@ -1610,14 +1610,14 @@ base_module_t initialize() {
     };
 }
 </code></pre>
-<h3><a class="header" href="#extensions" id="extensions">Extensions</a></h3>
+<h3 id="extensions"><a class="header" href="#extensions">Extensions</a></h3>
 <p>An implementation can extend the specified interface by defining any number of extensions. The name of those extensions
 may not start with <code>&quot;emf::&quot;</code> or <code>&quot;__&quot;</code>, as those names are reserved for standard extensions. In the future, we may
 introduce unstable features by exposing them as extensions, until they become stabilized.</p>
-<h2><a class="header" href="#reference" id="reference">Reference</a></h2>
-<h3><a class="header" href="#conventions" id="conventions">Conventions</a></h3>
+<h2 id="reference"><a class="header" href="#reference">Reference</a></h2>
+<h3 id="conventions"><a class="header" href="#conventions">Conventions</a></h3>
 <p>For the sake of brevity, we will introduce the following macros:</p>
-<h4><a class="header" href="#base_fn_t" id="base_fn_t">BASE_FN_T</a></h4>
+<h4 id="base_fn_t"><a class="header" href="#base_fn_t">BASE_FN_T</a></h4>
 <blockquote>
 <pre><code class="language-c">#define BASE_FN_T(NAME, RET_T, ...) \  
   typedef RET_T(*NAME)(emf_cbase_t*, __VA_ARGS__);
@@ -1627,7 +1627,7 @@ introduce unstable features by exposing them as extensions, until they become st
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#buffer_t" id="buffer_t">BUFFER_T</a></h4>
+<h4 id="buffer_t"><a class="header" href="#buffer_t">BUFFER_T</a></h4>
 <blockquote>
 <pre><code class="language-c">#define BUFFER_T(NAME, T, LENGTH) \  
   typedef struct NAME { \
@@ -1640,7 +1640,7 @@ introduce unstable features by exposing them as extensions, until they become st
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#fn_t" id="fn_t">FN_T</a></h4>
+<h4 id="fn_t"><a class="header" href="#fn_t">FN_T</a></h4>
 <blockquote>
 <pre><code class="language-c">#define FN_T(NAME, RET_T, ...) \  
   typedef RET_T(*NAME)(__VA_ARGS__);
@@ -1650,7 +1650,7 @@ introduce unstable features by exposing them as extensions, until they become st
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#optional_t" id="optional_t">OPTIONAL_T</a></h4>
+<h4 id="optional_t"><a class="header" href="#optional_t">OPTIONAL_T</a></h4>
 <blockquote>
 <pre><code class="language-c">#define OPTIONAL_T(NAME, T) \  
   typedef struct NAME { \
@@ -1666,7 +1666,7 @@ introduce unstable features by exposing them as extensions, until they become st
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#result_t" id="result_t">RESULT_T</a></h4>
+<h4 id="result_t"><a class="header" href="#result_t">RESULT_T</a></h4>
 <blockquote>
 <pre><code class="language-c">#define RESULT_T(NAME, RES_T, ERR_T) \  
   typedef struct NAME { \
@@ -1682,7 +1682,7 @@ introduce unstable features by exposing them as extensions, until they become st
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#span_t" id="span_t">SPAN_T</a></h4>
+<h4 id="span_t"><a class="header" href="#span_t">SPAN_T</a></h4>
 <blockquote>
 <pre><code class="language-c">#define SPAN_T(NAME, T) \  
   typedef struct NAME { \
@@ -1694,8 +1694,8 @@ introduce unstable features by exposing them as extensions, until they become st
 <li>Description: A borrowed view of a memory region.</li>
 </ul>
 </blockquote>
-<h3><a class="header" href="#constants" id="constants">Constants</a></h3>
-<h4><a class="header" href="#emf_cbase_interface_extension_name_max_length" id="emf_cbase_interface_extension_name_max_length">EMF_CBASE_INTERFACE_EXTENSION_NAME_MAX_LENGTH</a></h4>
+<h3 id="constants"><a class="header" href="#constants">Constants</a></h3>
+<h4 id="emf_cbase_interface_extension_name_max_length"><a class="header" href="#emf_cbase_interface_extension_name_max_length">EMF_CBASE_INTERFACE_EXTENSION_NAME_MAX_LENGTH</a></h4>
 <blockquote>
 <pre><code class="language-c">#define EMF_CBASE_INTERFACE_EXTENSION_NAME_MAX_LENGTH 32
 </code></pre>
@@ -1704,7 +1704,7 @@ introduce unstable features by exposing them as extensions, until they become st
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_interface_info_name_max_length" id="emf_cbase_interface_info_name_max_length">EMF_CBASE_INTERFACE_INFO_NAME_MAX_LENGTH</a></h4>
+<h4 id="emf_cbase_interface_info_name_max_length"><a class="header" href="#emf_cbase_interface_info_name_max_length">EMF_CBASE_INTERFACE_INFO_NAME_MAX_LENGTH</a></h4>
 <blockquote>
 <pre><code class="language-c">#define EMF_CBASE_INTERFACE_INFO_NAME_MAX_LENGTH 32
 </code></pre>
@@ -1713,7 +1713,7 @@ introduce unstable features by exposing them as extensions, until they become st
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_interface_name" id="emf_cbase_interface_name">EMF_CBASE_INTERFACE_NAME</a></h4>
+<h4 id="emf_cbase_interface_name"><a class="header" href="#emf_cbase_interface_name">EMF_CBASE_INTERFACE_NAME</a></h4>
 <blockquote>
 <pre><code class="language-c">#define EMF_CBASE_INTERFACE_NAME &quot;emf::core_base&quot;
 </code></pre>
@@ -1722,7 +1722,7 @@ introduce unstable features by exposing them as extensions, until they become st
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_library_loader_default_handle" id="emf_cbase_library_loader_default_handle">EMF_CBASE_LIBRARY_LOADER_DEFAULT_HANDLE</a></h4>
+<h4 id="emf_cbase_library_loader_default_handle"><a class="header" href="#emf_cbase_library_loader_default_handle">EMF_CBASE_LIBRARY_LOADER_DEFAULT_HANDLE</a></h4>
 <blockquote>
 <pre><code class="language-c">#define EMF_CBASE_LIBRARY_LOADER_DEFAULT_HANDLE \
    (emf_cbase_library_loader_handle_t) { emf_cbase_library_predefined_handles_native }
@@ -1732,7 +1732,7 @@ introduce unstable features by exposing them as extensions, until they become st
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_library_loader_type_max_length" id="emf_cbase_library_loader_type_max_length">EMF_CBASE_LIBRARY_LOADER_TYPE_MAX_LENGTH</a></h4>
+<h4 id="emf_cbase_library_loader_type_max_length"><a class="header" href="#emf_cbase_library_loader_type_max_length">EMF_CBASE_LIBRARY_LOADER_TYPE_MAX_LENGTH</a></h4>
 <blockquote>
 <pre><code class="language-c">#define EMF_CBASE_LIBRARY_LOADER_TYPE_MAX_LENGTH 64
 </code></pre>
@@ -1741,7 +1741,7 @@ introduce unstable features by exposing them as extensions, until they become st
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_info_name_max_length" id="emf_cbase_module_info_name_max_length">EMF_CBASE_MODULE_INFO_NAME_MAX_LENGTH</a></h4>
+<h4 id="emf_cbase_module_info_name_max_length"><a class="header" href="#emf_cbase_module_info_name_max_length">EMF_CBASE_MODULE_INFO_NAME_MAX_LENGTH</a></h4>
 <blockquote>
 <pre><code class="language-c">#define EMF_CBASE_MODULE_INFO_NAME_MAX_LENGTH 32
 </code></pre>
@@ -1750,7 +1750,7 @@ introduce unstable features by exposing them as extensions, until they become st
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_info_version_max_length" id="emf_cbase_module_info_version_max_length">EMF_CBASE_MODULE_INFO_VERSION_MAX_LENGTH</a></h4>
+<h4 id="emf_cbase_module_info_version_max_length"><a class="header" href="#emf_cbase_module_info_version_max_length">EMF_CBASE_MODULE_INFO_VERSION_MAX_LENGTH</a></h4>
 <blockquote>
 <pre><code class="language-c">#define EMF_CBASE_MODULE_INFO_VERSION_MAX_LENGTH 32
 </code></pre>
@@ -1759,7 +1759,7 @@ introduce unstable features by exposing them as extensions, until they become st
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_loader_default_handle" id="emf_cbase_module_loader_default_handle">EMF_CBASE_MODULE_LOADER_DEFAULT_HANDLE</a></h4>
+<h4 id="emf_cbase_module_loader_default_handle"><a class="header" href="#emf_cbase_module_loader_default_handle">EMF_CBASE_MODULE_LOADER_DEFAULT_HANDLE</a></h4>
 <blockquote>
 <pre><code class="language-c">#define EMF_CBASE_MODULE_LOADER_DEFAULT_HANDLE \
    (emf_cbase_module_loader_handle_t) { emf_cbase_module_predefined_handles_native }
@@ -1769,7 +1769,7 @@ introduce unstable features by exposing them as extensions, until they become st
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_loader_type_max_length" id="emf_cbase_module_loader_type_max_length">EMF_CBASE_MODULE_LOADER_TYPE_MAX_LENGTH</a></h4>
+<h4 id="emf_cbase_module_loader_type_max_length"><a class="header" href="#emf_cbase_module_loader_type_max_length">EMF_CBASE_MODULE_LOADER_TYPE_MAX_LENGTH</a></h4>
 <blockquote>
 <pre><code class="language-c">#define EMF_CBASE_MODULE_LOADER_TYPE_MAX_LENGTH 64
 </code></pre>
@@ -1778,7 +1778,7 @@ introduce unstable features by exposing them as extensions, until they become st
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_native_library_type_name" id="emf_cbase_native_library_type_name">EMF_CBASE_NATIVE_LIBRARY_TYPE_NAME</a></h4>
+<h4 id="emf_cbase_native_library_type_name"><a class="header" href="#emf_cbase_native_library_type_name">EMF_CBASE_NATIVE_LIBRARY_TYPE_NAME</a></h4>
 <blockquote>
 <pre><code class="language-c">#define EMF_CBASE_NATIVE_LIBRARY_TYPE_NAME &quot;emf::core_base::native&quot;
 </code></pre>
@@ -1787,7 +1787,7 @@ introduce unstable features by exposing them as extensions, until they become st
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_native_module_interface_symbol_name" id="emf_cbase_native_module_interface_symbol_name">EMF_CBASE_NATIVE_MODULE_INTERFACE_SYMBOL_NAME</a></h4>
+<h4 id="emf_cbase_native_module_interface_symbol_name"><a class="header" href="#emf_cbase_native_module_interface_symbol_name">EMF_CBASE_NATIVE_MODULE_INTERFACE_SYMBOL_NAME</a></h4>
 <blockquote>
 <pre><code class="language-c">#define EMF_CBASE_NATIVE_MODULE_INTERFACE_SYMBOL_NAME emf_cbase_native_module_interface
 </code></pre>
@@ -1796,7 +1796,7 @@ introduce unstable features by exposing them as extensions, until they become st
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_native_module_type_name" id="emf_cbase_native_module_type_name">EMF_CBASE_NATIVE_MODULE_TYPE_NAME</a></h4>
+<h4 id="emf_cbase_native_module_type_name"><a class="header" href="#emf_cbase_native_module_type_name">EMF_CBASE_NATIVE_MODULE_TYPE_NAME</a></h4>
 <blockquote>
 <pre><code class="language-c">#define EMF_CBASE_NATIVE_MODULE_TYPE_NAME &quot;emf::core_base::native&quot;
 </code></pre>
@@ -1805,7 +1805,7 @@ introduce unstable features by exposing them as extensions, until they become st
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_os_path_char" id="emf_cbase_os_path_char">EMF_CBASE_OS_PATH_CHAR</a></h4>
+<h4 id="emf_cbase_os_path_char"><a class="header" href="#emf_cbase_os_path_char">EMF_CBASE_OS_PATH_CHAR</a></h4>
 <blockquote>
 <pre><code class="language-c">#if defined(Win32) || defined(_WIN32)
 #define EMF_CBASE_OS_PATH_CHAR wchar_t
@@ -1818,7 +1818,7 @@ introduce unstable features by exposing them as extensions, until they become st
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_version_build" id="emf_cbase_version_build">EMF_CBASE_VERSION_BUILD</a></h4>
+<h4 id="emf_cbase_version_build"><a class="header" href="#emf_cbase_version_build">EMF_CBASE_VERSION_BUILD</a></h4>
 <blockquote>
 <pre><code class="language-c">#define EMF_CBASE_VERSION_BUILD 0
 </code></pre>
@@ -1827,7 +1827,7 @@ introduce unstable features by exposing them as extensions, until they become st
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_version_major" id="emf_cbase_version_major">EMF_CBASE_VERSION_MAJOR</a></h4>
+<h4 id="emf_cbase_version_major"><a class="header" href="#emf_cbase_version_major">EMF_CBASE_VERSION_MAJOR</a></h4>
 <blockquote>
 <pre><code class="language-c">#define EMF_CBASE_VERSION_MAJOR 0
 </code></pre>
@@ -1836,7 +1836,7 @@ introduce unstable features by exposing them as extensions, until they become st
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_version_minor" id="emf_cbase_version_minor">EMF_CBASE_VERSION_MINOR</a></h4>
+<h4 id="emf_cbase_version_minor"><a class="header" href="#emf_cbase_version_minor">EMF_CBASE_VERSION_MINOR</a></h4>
 <blockquote>
 <pre><code class="language-c">#define EMF_CBASE_VERSION_MINOR 1
 </code></pre>
@@ -1845,7 +1845,7 @@ introduce unstable features by exposing them as extensions, until they become st
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_version_patch" id="emf_cbase_version_patch">EMF_CBASE_VERSION_PATCH</a></h4>
+<h4 id="emf_cbase_version_patch"><a class="header" href="#emf_cbase_version_patch">EMF_CBASE_VERSION_PATCH</a></h4>
 <blockquote>
 <pre><code class="language-c">#define EMF_CBASE_VERSION_PATCH 0
 </code></pre>
@@ -1854,7 +1854,7 @@ introduce unstable features by exposing them as extensions, until they become st
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_version_release_number" id="emf_cbase_version_release_number">EMF_CBASE_VERSION_RELEASE_NUMBER</a></h4>
+<h4 id="emf_cbase_version_release_number"><a class="header" href="#emf_cbase_version_release_number">EMF_CBASE_VERSION_RELEASE_NUMBER</a></h4>
 <blockquote>
 <pre><code class="language-c">#define EMF_CBASE_VERSION_RELEASE_NUMBER 0
 </code></pre>
@@ -1863,7 +1863,7 @@ introduce unstable features by exposing them as extensions, until they become st
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_version_string" id="emf_cbase_version_string">EMF_CBASE_VERSION_STRING</a></h4>
+<h4 id="emf_cbase_version_string"><a class="header" href="#emf_cbase_version_string">EMF_CBASE_VERSION_STRING</a></h4>
 <blockquote>
 <pre><code class="language-c">#define EMF_CBASE_VERSION_STRING 0
 </code></pre>
@@ -1872,7 +1872,7 @@ introduce unstable features by exposing them as extensions, until they become st
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_version_release_type" id="emf_cbase_version_release_type">EMF_CBASE_VERSION_RELEASE_TYPE</a></h4>
+<h4 id="emf_cbase_version_release_type"><a class="header" href="#emf_cbase_version_release_type">EMF_CBASE_VERSION_RELEASE_TYPE</a></h4>
 <blockquote>
 <pre><code class="language-c">#define EMF_CBASE_VERSION_RELEASE_TYPE &quot;0.1.0&quot;
 </code></pre>
@@ -1880,8 +1880,8 @@ introduce unstable features by exposing them as extensions, until they become st
 <li>Description: Version string of the <code>emf-core-base</code> interface.</li>
 </ul>
 </blockquote>
-<h3><a class="header" href="#enums" id="enums">Enums</a></h3>
-<h4><a class="header" href="#emf_cbase_bool_t" id="emf_cbase_bool_t">emf_cbase_bool_t</a></h4>
+<h3 id="enums"><a class="header" href="#enums">Enums</a></h3>
+<h4 id="emf_cbase_bool_t"><a class="header" href="#emf_cbase_bool_t">emf_cbase_bool_t</a></h4>
 <blockquote>
 <pre><code class="language-c">typedef enum emf_cbase_bool_t : int8_t {
     emf_cbase_bool_false = 0,
@@ -1897,7 +1897,7 @@ introduce unstable features by exposing them as extensions, until they become st
 </tbody></table>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_fn_ptr_id_t" id="emf_cbase_fn_ptr_id_t">emf_cbase_fn_ptr_id_t</a></h4>
+<h4 id="emf_cbase_fn_ptr_id_t"><a class="header" href="#emf_cbase_fn_ptr_id_t">emf_cbase_fn_ptr_id_t</a></h4>
 <blockquote>
 <pre><code class="language-c">typedef enum emf_cbase_fn_ptr_id_t : int32_t {
       emf_cbase_fn_ptr_id_sys_shutdown = 1,
@@ -1979,7 +1979,7 @@ introduce unstable features by exposing them as extensions, until they become st
       module_get_module_path = 333,
       module_get_module_info = 334,
       module_get_interface = 335,
-} emf_cbase_fn_ptr_id;
+} emf_cbase_fn_ptr_id_t;
 </code></pre>
 <ul>
 <li>Description: Id's of the exported functions.
@@ -1987,13 +1987,13 @@ The values <code>0-1000</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_library_error_t" id="emf_cbase_library_error_t">emf_cbase_library_error_t</a></h4>
+<h4 id="emf_cbase_library_error_t"><a class="header" href="#emf_cbase_library_error_t">emf_cbase_library_error_t</a></h4>
 <blockquote>
 <pre><code class="language-c">typedef enum emf_cbase_library_error_t : int32_t {
     emf_cbase_library_error_library_path_not_found = 0,
     emf_cbase_library_error_library_handle_invalid = 1,
     emf_cbase_library_error_loader_handle_invalid = 2,
-    emf_cbase_library_error_loader_library_handle_invalid = 3,
+    emf_cbase_library_error_internal_handle_invalid = 3,
     emf_cbase_library_error_library_type_invalid = 4,
     emf_cbase_library_error_library_type_not_found = 5,
     emf_cbase_library_error_duplicate_library_type = 6,
@@ -2009,7 +2009,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 <tr><td><strong>emf_cbase_library_error_library_path_not_found</strong></td><td><code>0</code></td><td>A path could not be found.</td></tr>
 <tr><td><strong>emf_cbase_library_error_library_handle_invalid</strong></td><td><code>1</code></td><td>The library handle is invalid.</td></tr>
 <tr><td><strong>emf_cbase_library_error_loader_handle_invalid</strong></td><td><code>2</code></td><td>The loader handle is invalid.</td></tr>
-<tr><td><strong>emf_cbase_library_error_loader_library_handle_invalid</strong></td><td><code>3</code></td><td>The internal library handle is invalid.</td></tr>
+<tr><td><strong>emf_cbase_library_error_internal_handle_invalid</strong></td><td><code>3</code></td><td>The internal library handle is invalid.</td></tr>
 <tr><td><strong>emf_cbase_library_error_library_type_invalid</strong></td><td><code>4</code></td><td>The library type is invalid.</td></tr>
 <tr><td><strong>emf_cbase_library_error_library_type_not_found</strong></td><td><code>5</code></td><td>The library type could not be found.</td></tr>
 <tr><td><strong>emf_cbase_library_error_duplicate_library_type</strong></td><td><code>6</code></td><td>The library type already exists.</td></tr>
@@ -2018,7 +2018,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </tbody></table>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_library_predefined_handles_t" id="emf_cbase_library_predefined_handles_t">emf_cbase_library_predefined_handles_t</a></h4>
+<h4 id="emf_cbase_library_predefined_handles_t"><a class="header" href="#emf_cbase_library_predefined_handles_t">emf_cbase_library_predefined_handles_t</a></h4>
 <blockquote>
 <pre><code class="language-c">typedef enum emf_cbase_library_predefined_handles_t : int32_t {
     emf_cbase_library_predefined_handles_native = 0,
@@ -2033,14 +2033,14 @@ The values <code>0-99</code> are reserved for future use.</li>
 </tbody></table>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_error_t" id="emf_cbase_module_error_t">emf_cbase_module_error_t</a></h4>
+<h4 id="emf_cbase_module_error_t"><a class="header" href="#emf_cbase_module_error_t">emf_cbase_module_error_t</a></h4>
 <blockquote>
 <pre><code class="language-c">typedef enum emf_cbase_module_error_t : int32_t {
     emf_cbase_module_error_path_invalid = 0,
     emf_cbase_module_error_module_state_invalid = 1,
     emf_cbase_module_error_module_handle_invalid = 2,
     emf_cbase_module_error_loader_handle_invalid = 3,
-    emf_cbase_module_error_loader_module_handle_invalid = 4,
+    emf_cbase_module_error_internal_handle_invalid = 4,
     emf_cbase_module_error_module_type_invalid = 5,
     emf_cbase_module_error_module_type_not_found = 6,
     emf_cbase_module_error_duplicate_module_type = 7,
@@ -2059,7 +2059,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 <tr><td><strong>emf_cbase_module_error_module_state_invalid</strong></td><td><code>1</code></td><td>The state of the module is invalid.</td></tr>
 <tr><td><strong>emf_cbase_module_error_module_handle_invalid</strong></td><td><code>2</code></td><td>The module handle is invalid.</td></tr>
 <tr><td><strong>emf_cbase_module_error_loader_handle_invalid</strong></td><td><code>3</code></td><td>The loader is invalid.</td></tr>
-<tr><td><strong>emf_cbase_module_error_loader_module_handle_invalid</strong></td><td><code>4</code></td><td>The internal module handle is invalid.</td></tr>
+<tr><td><strong>emf_cbase_module_error_internal_handle_invalid</strong></td><td><code>4</code></td><td>The internal module handle is invalid.</td></tr>
 <tr><td><strong>emf_cbase_module_error_module_type_invalid</strong></td><td><code>5</code></td><td>The module type is invalid.</td></tr>
 <tr><td><strong>emf_cbase_module_error_module_type_not_found</strong></td><td><code>6</code></td><td>The module type does not exist.</td></tr>
 <tr><td><strong>emf_cbase_module_error_duplicate_module_type</strong></td><td><code>7</code></td><td>The operation would result in a duplicate module type.</td></tr>
@@ -2070,7 +2070,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </tbody></table>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_predefined_handles_t" id="emf_cbase_module_predefined_handles_t">emf_cbase_module_predefined_handles_t</a></h4>
+<h4 id="emf_cbase_module_predefined_handles_t"><a class="header" href="#emf_cbase_module_predefined_handles_t">emf_cbase_module_predefined_handles_t</a></h4>
 <blockquote>
 <pre><code class="language-c">typedef enum emf_cbase_module_predefined_handles_t : int32_t {
     emf_cbase_module_predefined_handles_native = 0,
@@ -2085,7 +2085,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </tbody></table>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_status_t" id="emf_cbase_module_status_t">emf_cbase_module_status_t</a></h4>
+<h4 id="emf_cbase_module_status_t"><a class="header" href="#emf_cbase_module_status_t">emf_cbase_module_status_t</a></h4>
 <blockquote>
 <pre><code class="language-c">typedef enum emf_cbase_module_status_t : int32_t {
     emf_cbase_module_status_unloaded = 0,
@@ -2103,7 +2103,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </tbody></table>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_version_error_t" id="emf_cbase_version_error_t">emf_cbase_version_error_t</a></h4>
+<h4 id="emf_cbase_version_error_t"><a class="header" href="#emf_cbase_version_error_t">emf_cbase_version_error_t</a></h4>
 <blockquote>
 <pre><code class="language-c">typedef enum emf_cbase_version_error_t : int32_t {
     emf_cbase_version_error_invalid_string = 0,
@@ -2120,7 +2120,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </tbody></table>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_version_release_t" id="emf_cbase_version_release_t">emf_cbase_version_release_t</a></h4>
+<h4 id="emf_cbase_version_release_t"><a class="header" href="#emf_cbase_version_release_t">emf_cbase_version_release_t</a></h4>
 <blockquote>
 <pre><code class="language-c">typedef enum emf_cbase_version_release_t : int8_t {
     emf_cbase_version_release_stable = 0,
@@ -2137,8 +2137,8 @@ The values <code>0-99</code> are reserved for future use.</li>
 <tr><td><strong>emf_cbase_version_release_beta</strong></td><td><code>2</code></td><td>A beta release.</td></tr>
 </tbody></table>
 </blockquote>
-<h3><a class="header" href="#structs" id="structs">Structs</a></h3>
-<h4><a class="header" href="#emf_cbase_data_symbol_t" id="emf_cbase_data_symbol_t">emf_cbase_data_symbol_t</a></h4>
+<h3 id="structs"><a class="header" href="#structs">Structs</a></h3>
+<h4 id="emf_cbase_data_symbol_t"><a class="header" href="#emf_cbase_data_symbol_t">emf_cbase_data_symbol_t</a></h4>
 <blockquote>
 <pre><code class="language-c">typedef struct emf_cbase_data_symbol_t {
     void* symbol;
@@ -2150,7 +2150,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_fn_symbol_t" id="emf_cbase_fn_symbol_t">emf_cbase_fn_symbol_t</a></h4>
+<h4 id="emf_cbase_fn_symbol_t"><a class="header" href="#emf_cbase_fn_symbol_t">emf_cbase_fn_symbol_t</a></h4>
 <blockquote>
 <pre><code class="language-c">typedef struct emf_cbase_fn_symbol_t {
     emf_cbase_fn_t symbol;
@@ -2162,7 +2162,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_interface_descriptor_const_span_result_t" id="emf_cbase_interface_descriptor_const_span_result_t">emf_cbase_interface_descriptor_const_span_result_t</a></h4>
+<h4 id="emf_cbase_interface_descriptor_const_span_result_t"><a class="header" href="#emf_cbase_interface_descriptor_const_span_result_t">emf_cbase_interface_descriptor_const_span_result_t</a></h4>
 <blockquote>
 <pre><code class="language-c">RESULT(emf_cbase_interface_descriptor_const_span_result_t, 
       emf_cbase_interface_descriptor_const_span_t, emf_cbase_module_error_t)
@@ -2172,7 +2172,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_interface_descriptor_const_span_t" id="emf_cbase_interface_descriptor_const_span_t">emf_cbase_interface_descriptor_const_span_t</a></h4>
+<h4 id="emf_cbase_interface_descriptor_const_span_t"><a class="header" href="#emf_cbase_interface_descriptor_const_span_t">emf_cbase_interface_descriptor_const_span_t</a></h4>
 <blockquote>
 <pre><code class="language-c">SPAN_T(emf_cbase_interface_descriptor_const_span_t, const emf_cbase_interface_descriptor_t)
 </code></pre>
@@ -2181,7 +2181,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_interface_descriptor_span_t" id="emf_cbase_interface_descriptor_span_t">emf_cbase_interface_descriptor_span_t</a></h4>
+<h4 id="emf_cbase_interface_descriptor_span_t"><a class="header" href="#emf_cbase_interface_descriptor_span_t">emf_cbase_interface_descriptor_span_t</a></h4>
 <blockquote>
 <pre><code class="language-c">SPAN_T(emf_cbase_interface_descriptor_span_t, emf_cbase_interface_descriptor_t)
 </code></pre>
@@ -2190,7 +2190,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_interface_descriptor_t" id="emf_cbase_interface_descriptor_t">emf_cbase_interface_descriptor_t</a></h4>
+<h4 id="emf_cbase_interface_descriptor_t"><a class="header" href="#emf_cbase_interface_descriptor_t">emf_cbase_interface_descriptor_t</a></h4>
 <blockquote>
 <pre><code class="language-c">typedef struct emf_cbase_interface_descriptor_t {
     emf_cbase_interface_name_t name;
@@ -2203,7 +2203,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_interface_extension_span_t" id="emf_cbase_interface_extension_span_t">emf_cbase_interface_extension_span_t</a></h4>
+<h4 id="emf_cbase_interface_extension_span_t"><a class="header" href="#emf_cbase_interface_extension_span_t">emf_cbase_interface_extension_span_t</a></h4>
 <blockquote>
 <pre><code class="language-c">SPAN_T(emf_cbase_interface_extension_span_t, const emf_cbase_interface_extension_t)
 </code></pre>
@@ -2212,7 +2212,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_interface_extension_t" id="emf_cbase_interface_extension_t">emf_cbase_interface_extension_t</a></h4>
+<h4 id="emf_cbase_interface_extension_t"><a class="header" href="#emf_cbase_interface_extension_t">emf_cbase_interface_extension_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BUFFER_T(emf_cbase_interface_extension_t, char, EMF_CBASE_INTERFACE_EXTENSION_NAME_MAX_LENGTH)
 </code></pre>
@@ -2221,7 +2221,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_interface_name_t" id="emf_cbase_interface_name_t">emf_cbase_interface_name_t</a></h4>
+<h4 id="emf_cbase_interface_name_t"><a class="header" href="#emf_cbase_interface_name_t">emf_cbase_interface_name_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BUFFER_T(emf_cbase_interface_name_t, char, EMF_CBASE_INTERFACE_INFO_NAME_MAX_LENGTH)
 </code></pre>
@@ -2230,7 +2230,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_interface_t" id="emf_cbase_interface_t">emf_cbase_interface_t</a></h4>
+<h4 id="emf_cbase_interface_t"><a class="header" href="#emf_cbase_interface_t">emf_cbase_interface_t</a></h4>
 <blockquote>
 <pre><code class="language-c">typedef struct emf_cbase_interface_t {
       emf_cbase_version_t interface_version;
@@ -2322,7 +2322,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_library_data_symbol_result_t" id="emf_cbase_library_data_symbol_result_t">emf_cbase_library_data_symbol_result_t</a></h4>
+<h4 id="emf_cbase_library_data_symbol_result_t"><a class="header" href="#emf_cbase_library_data_symbol_result_t">emf_cbase_library_data_symbol_result_t</a></h4>
 <blockquote>
 <pre><code class="language-c">RESULT_T(emf_cbase_library_data_symbol_result_t, emf_cbase_data_symbol_t, emf_cbase_library_error_t)
 </code></pre>
@@ -2331,7 +2331,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_library_fn_symbol_result_t" id="emf_cbase_library_fn_symbol_result_t">emf_cbase_library_fn_symbol_result_t</a></h4>
+<h4 id="emf_cbase_library_fn_symbol_result_t"><a class="header" href="#emf_cbase_library_fn_symbol_result_t">emf_cbase_library_fn_symbol_result_t</a></h4>
 <blockquote>
 <pre><code class="language-c">RESULT_T(emf_cbase_library_fn_symbol_result_t, emf_cbase_fn_symbol_t, emf_cbase_library_error_t)
 </code></pre>
@@ -2340,7 +2340,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_library_handle_result_t" id="emf_cbase_library_handle_result_t">emf_cbase_library_handle_result_t</a></h4>
+<h4 id="emf_cbase_library_handle_result_t"><a class="header" href="#emf_cbase_library_handle_result_t">emf_cbase_library_handle_result_t</a></h4>
 <blockquote>
 <pre><code class="language-c">RESULT_T(emf_cbase_library_handle_result_t, emf_cbase_library_handle_t, emf_cbase_library_error_t)
 </code></pre>
@@ -2349,7 +2349,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_library_handle_t" id="emf_cbase_library_handle_t">emf_cbase_library_handle_t</a></h4>
+<h4 id="emf_cbase_library_handle_t"><a class="header" href="#emf_cbase_library_handle_t">emf_cbase_library_handle_t</a></h4>
 <blockquote>
 <pre><code class="language-c">typedef struct emf_cbase_library_handle_t {
     int32_t id;
@@ -2360,7 +2360,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_library_loader_handle_result_t" id="emf_cbase_library_loader_handle_result_t">emf_cbase_library_loader_handle_result_t</a></h4>
+<h4 id="emf_cbase_library_loader_handle_result_t"><a class="header" href="#emf_cbase_library_loader_handle_result_t">emf_cbase_library_loader_handle_result_t</a></h4>
 <blockquote>
 <pre><code class="language-c">RESULT_T(emf_cbase_library_loader_handle_result_t, emf_cbase_library_loader_handle_t, emf_cbase_library_error_t)
 </code></pre>
@@ -2369,7 +2369,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_library_loader_handle_t" id="emf_cbase_library_loader_handle_t">emf_cbase_library_loader_handle_t</a></h4>
+<h4 id="emf_cbase_library_loader_handle_t"><a class="header" href="#emf_cbase_library_loader_handle_t">emf_cbase_library_loader_handle_t</a></h4>
 <blockquote>
 <pre><code class="language-c">typedef struct emf_cbase_library_loader_handle_t {
     int32_t id;
@@ -2380,7 +2380,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_library_loader_interface_result_t" id="emf_cbase_library_loader_interface_result_t">emf_cbase_library_loader_interface_result_t</a></h4>
+<h4 id="emf_cbase_library_loader_interface_result_t"><a class="header" href="#emf_cbase_library_loader_interface_result_t">emf_cbase_library_loader_interface_result_t</a></h4>
 <blockquote>
 <pre><code class="language-c">RESULT_T(emf_cbase_library_loader_interface_result_t,
     const emf_cbase_library_loader_interface_t*, emf_cbase_library_error_t)
@@ -2391,7 +2391,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_library_loader_interface_t" id="emf_cbase_library_loader_interface_t">emf_cbase_library_loader_interface_t</a></h4>
+<h4 id="emf_cbase_library_loader_interface_t"><a class="header" href="#emf_cbase_library_loader_interface_t">emf_cbase_library_loader_interface_t</a></h4>
 <blockquote>
 <pre><code class="language-c">typedef struct emf_cbase_library_loader_interface_t {
     emf_cbase_library_loader_t* library_loader;
@@ -2407,7 +2407,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_internal_library_handle_result_t" id="emf_cbase_internal_library_handle_result_t">emf_cbase_internal_library_handle_result_t</a></h4>
+<h4 id="emf_cbase_internal_library_handle_result_t"><a class="header" href="#emf_cbase_internal_library_handle_result_t">emf_cbase_internal_library_handle_result_t</a></h4>
 <blockquote>
 <pre><code class="language-c">RESULT_T(emf_cbase_internal_library_handle_result_t, emf_cbase_internal_library_handle_t, emf_cbase_library_error_t)
 </code></pre>
@@ -2416,7 +2416,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_internal_library_handle_t" id="emf_cbase_internal_library_handle_t">emf_cbase_internal_library_handle_t</a></h4>
+<h4 id="emf_cbase_internal_library_handle_t"><a class="header" href="#emf_cbase_internal_library_handle_t">emf_cbase_internal_library_handle_t</a></h4>
 <blockquote>
 <pre><code class="language-c">typedef struct emf_cbase_internal_library_handle_t {
     intptr_t id;
@@ -2427,7 +2427,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_library_loader_t" id="emf_cbase_library_loader_t">emf_cbase_library_loader_t</a></h4>
+<h4 id="emf_cbase_library_loader_t"><a class="header" href="#emf_cbase_library_loader_t">emf_cbase_library_loader_t</a></h4>
 <blockquote>
 <pre><code class="language-c">typedef struct emf_cbase_library_loader_t emf_cbase_library_loader_t;
 </code></pre>
@@ -2436,7 +2436,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_library_result_t" id="emf_cbase_library_result_t">emf_cbase_library_result_t</a></h4>
+<h4 id="emf_cbase_library_result_t"><a class="header" href="#emf_cbase_library_result_t">emf_cbase_library_result_t</a></h4>
 <blockquote>
 <pre><code class="language-c">RESULT_T(emf_cbase_library_result_t, int8_t, emf_cbase_library_error_t)
 </code></pre>
@@ -2446,7 +2446,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_library_size_result_t" id="emf_cbase_library_size_result_t">emf_cbase_library_size_result_t</a></h4>
+<h4 id="emf_cbase_library_size_result_t"><a class="header" href="#emf_cbase_library_size_result_t">emf_cbase_library_size_result_t</a></h4>
 <blockquote>
 <pre><code class="language-c">RESULT_T(emf_cbase_library_size_result_t, size_t, emf_cbase_library_error_t)
 </code></pre>
@@ -2455,7 +2455,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_library_type_span_t" id="emf_cbase_library_type_span_t">emf_cbase_library_type_span_t</a></h4>
+<h4 id="emf_cbase_library_type_span_t"><a class="header" href="#emf_cbase_library_type_span_t">emf_cbase_library_type_span_t</a></h4>
 <blockquote>
 <pre><code class="language-c">SPAN_T(emf_cbase_library_type_span_t, emf_cbase_library_type_t)
 </code></pre>
@@ -2464,7 +2464,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_library_type_t" id="emf_cbase_library_type_t">emf_cbase_library_type_t</a></h4>
+<h4 id="emf_cbase_library_type_t"><a class="header" href="#emf_cbase_library_type_t">emf_cbase_library_type_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BUFFER_T(emf_cbase_library_type_t, char, EMF_CBASE_LIBRARY_LOADER_TYPE_MAX_LENGTH)
 </code></pre>
@@ -2473,7 +2473,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_handle_result_t" id="emf_cbase_module_handle_result_t">emf_cbase_module_handle_result_t</a></h4>
+<h4 id="emf_cbase_module_handle_result_t"><a class="header" href="#emf_cbase_module_handle_result_t">emf_cbase_module_handle_result_t</a></h4>
 <blockquote>
 <pre><code class="language-c">RESULT_T(emf_cbase_module_handle_result_t, emf_cbase_module_handle_t, emf_cbase_module_error_t)
 </code></pre>
@@ -2482,7 +2482,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_handle_t" id="emf_cbase_module_handle_t">emf_cbase_module_handle_t</a></h4>
+<h4 id="emf_cbase_module_handle_t"><a class="header" href="#emf_cbase_module_handle_t">emf_cbase_module_handle_t</a></h4>
 <blockquote>
 <pre><code class="language-c">typedef struct emf_cbase_module_handle_t {
     int32_t id;
@@ -2493,7 +2493,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_info_ptr_result_t" id="emf_cbase_module_info_ptr_result_t">emf_cbase_module_info_ptr_result_t</a></h4>
+<h4 id="emf_cbase_module_info_ptr_result_t"><a class="header" href="#emf_cbase_module_info_ptr_result_t">emf_cbase_module_info_ptr_result_t</a></h4>
 <blockquote>
 <pre><code class="language-c">RESULT_T(emf_cbase_module_info_ptr_result_t, const emf_cbase_module_info_t*, emf_cbase_module_error_t)
 </code></pre>
@@ -2503,7 +2503,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_info_span_t" id="emf_cbase_module_info_span_t">emf_cbase_module_info_span_t</a></h4>
+<h4 id="emf_cbase_module_info_span_t"><a class="header" href="#emf_cbase_module_info_span_t">emf_cbase_module_info_span_t</a></h4>
 <blockquote>
 <pre><code class="language-c">SPAN_T(emf_cbase_module_info_span_t, emf_cbase_module_info_t)
 </code></pre>
@@ -2512,7 +2512,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_info_t" id="emf_cbase_module_info_t">emf_cbase_module_info_t</a></h4>
+<h4 id="emf_cbase_module_info_t"><a class="header" href="#emf_cbase_module_info_t">emf_cbase_module_info_t</a></h4>
 <blockquote>
 <pre><code class="language-c">typedef struct emf_cbase_module_info_t {
     emf_cbase_module_name_t name;
@@ -2524,7 +2524,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_interface_result_t" id="emf_cbase_module_interface_result_t">emf_cbase_module_interface_result_t</a></h4>
+<h4 id="emf_cbase_module_interface_result_t"><a class="header" href="#emf_cbase_module_interface_result_t">emf_cbase_module_interface_result_t</a></h4>
 <blockquote>
 <pre><code class="language-c">RESULT_T(emf_cbase_module_interface_result_t, emf_cbase_module_interface_t, emf_cbase_module_error_t)
 </code></pre>
@@ -2533,7 +2533,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_interface_t" id="emf_cbase_module_interface_t">emf_cbase_module_interface_t</a></h4>
+<h4 id="emf_cbase_module_interface_t"><a class="header" href="#emf_cbase_module_interface_t">emf_cbase_module_interface_t</a></h4>
 <blockquote>
 <pre><code class="language-c">typedef struct emf_cbase_module_interface_t {
     void* interface;
@@ -2545,7 +2545,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_loader_handle_result_t" id="emf_cbase_module_loader_handle_result_t">emf_cbase_module_loader_handle_result_t</a></h4>
+<h4 id="emf_cbase_module_loader_handle_result_t"><a class="header" href="#emf_cbase_module_loader_handle_result_t">emf_cbase_module_loader_handle_result_t</a></h4>
 <blockquote>
 <pre><code class="language-c">RESULT_T(emf_cbase_module_loader_handle_result_t, emf_cbase_module_loader_handle_t, emf_cbase_module_error_t)
 </code></pre>
@@ -2554,7 +2554,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_loader_handle_t" id="emf_cbase_module_loader_handle_t">emf_cbase_module_loader_handle_t</a></h4>
+<h4 id="emf_cbase_module_loader_handle_t"><a class="header" href="#emf_cbase_module_loader_handle_t">emf_cbase_module_loader_handle_t</a></h4>
 <blockquote>
 <pre><code class="language-c">typedef struct emf_cbase_module_loader_handle_t {
     int32_t id;
@@ -2565,7 +2565,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_loader_interface_result_t" id="emf_cbase_module_loader_interface_result_t">emf_cbase_module_loader_interface_result_t</a></h4>
+<h4 id="emf_cbase_module_loader_interface_result_t"><a class="header" href="#emf_cbase_module_loader_interface_result_t">emf_cbase_module_loader_interface_result_t</a></h4>
 <blockquote>
 <pre><code class="language-c">RESULT_T(emf_cbase_module_loader_interface_result_t,
       const emf_cbase_module_loader_interface_t*, emf_cbase_module_error_t)
@@ -2576,7 +2576,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_loader_interface_t" id="emf_cbase_module_loader_interface_t">emf_cbase_module_loader_interface_t</a></h4>
+<h4 id="emf_cbase_module_loader_interface_t"><a class="header" href="#emf_cbase_module_loader_interface_t">emf_cbase_module_loader_interface_t</a></h4>
 <blockquote>
 <pre><code class="language-c">typedef struct emf_cbase_module_loader_interface_t {
     emf_cbase_module_loader_t* module_loader;
@@ -2601,7 +2601,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_result_t" id="emf_cbase_module_result_t">emf_cbase_module_result_t</a></h4>
+<h4 id="emf_cbase_module_result_t"><a class="header" href="#emf_cbase_module_result_t">emf_cbase_module_result_t</a></h4>
 <blockquote>
 <pre><code class="language-c">RESULT_T(emf_cbase_module_result_t, int8_t, emf_cbase_module_error_t)
 </code></pre>
@@ -2611,7 +2611,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_internal_module_handle_result_t" id="emf_cbase_internal_module_handle_result_t">emf_cbase_internal_module_handle_result_t</a></h4>
+<h4 id="emf_cbase_internal_module_handle_result_t"><a class="header" href="#emf_cbase_internal_module_handle_result_t">emf_cbase_internal_module_handle_result_t</a></h4>
 <blockquote>
 <pre><code class="language-c">RESULT_T(emf_cbase_internal_module_handle_result_t, emf_cbase_internal_module_handle_t, emf_cbase_module_error_t)
 </code></pre>
@@ -2620,7 +2620,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_internal_module_handle_t" id="emf_cbase_internal_module_handle_t">emf_cbase_internal_module_handle_t</a></h4>
+<h4 id="emf_cbase_internal_module_handle_t"><a class="header" href="#emf_cbase_internal_module_handle_t">emf_cbase_internal_module_handle_t</a></h4>
 <blockquote>
 <pre><code class="language-c">typedef struct emf_cbase_internal_module_handle_t {
     intptr_t id;
@@ -2631,7 +2631,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_loader_t" id="emf_cbase_module_loader_t">emf_cbase_module_loader_t</a></h4>
+<h4 id="emf_cbase_module_loader_t"><a class="header" href="#emf_cbase_module_loader_t">emf_cbase_module_loader_t</a></h4>
 <blockquote>
 <pre><code class="language-c">typedef struct emf_cbase_module_loader_t emf_cbase_module_loader_t;
 </code></pre>
@@ -2640,7 +2640,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_name_t" id="emf_cbase_module_name_t">emf_cbase_module_name_t</a></h4>
+<h4 id="emf_cbase_module_name_t"><a class="header" href="#emf_cbase_module_name_t">emf_cbase_module_name_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BUFFER_T(emf_cbase_module_name_t, char, EMF_CBASE_MODULE_INFO_NAME_MAX_LENGTH)
 </code></pre>
@@ -2649,7 +2649,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_size_result_t" id="emf_cbase_module_size_result_t">emf_cbase_module_size_result_t</a></h4>
+<h4 id="emf_cbase_module_size_result_t"><a class="header" href="#emf_cbase_module_size_result_t">emf_cbase_module_size_result_t</a></h4>
 <blockquote>
 <pre><code class="language-c">RESULT_T(emf_cbase_module_size_result_t, size_t, emf_cbase_module_error_t)
 </code></pre>
@@ -2658,7 +2658,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_status_result_t" id="emf_cbase_module_status_result_t">emf_cbase_module_status_result_t</a></h4>
+<h4 id="emf_cbase_module_status_result_t"><a class="header" href="#emf_cbase_module_status_result_t">emf_cbase_module_status_result_t</a></h4>
 <blockquote>
 <pre><code class="language-c">RESULT_T(emf_cbase_module_status_result_t, emf_cbase_module_status_t, emf_cbase_module_error_t)
 </code></pre>
@@ -2667,7 +2667,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_type_span_t" id="emf_cbase_module_type_span_t">emf_cbase_module_type_span_t</a></h4>
+<h4 id="emf_cbase_module_type_span_t"><a class="header" href="#emf_cbase_module_type_span_t">emf_cbase_module_type_span_t</a></h4>
 <blockquote>
 <pre><code class="language-c">SPAN_T(emf_cbase_module_type_span_t, emf_cbase_module_type_t)
 </code></pre>
@@ -2676,7 +2676,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_type_t" id="emf_cbase_module_type_t">emf_cbase_module_type_t</a></h4>
+<h4 id="emf_cbase_module_type_t"><a class="header" href="#emf_cbase_module_type_t">emf_cbase_module_type_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BUFFER_T(emf_cbase_module_type_t, char, EMF_CBASE_MODULE_LOADER_TYPE_MAX_LENGTH)
 </code></pre>
@@ -2686,7 +2686,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_version_t" id="emf_cbase_module_version_t">emf_cbase_module_version_t</a></h4>
+<h4 id="emf_cbase_module_version_t"><a class="header" href="#emf_cbase_module_version_t">emf_cbase_module_version_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BUFFER_T(emf_cbase_module_version_t, char, EMF_CBASE_MODULE_INFO_VERSION_MAX_LENGTH)
 </code></pre>
@@ -2696,11 +2696,18 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_native_library_loader_interface_t" id="emf_cbase_native_library_loader_interface_t">emf_cbase_native_library_loader_interface_t</a></h4>
+<h4 id="emf_cbase_native_library_handle_result_t"><a class="header" href="#emf_cbase_native_library_handle_result_t">emf_cbase_native_library_handle_result_t</a></h4>
+<blockquote>
+<pre><code class="language-c">RESULT_T(emf_cbase_native_library_handle_result_t, native_library_handle_t, emf_cbase_library_error_t)
+</code></pre>
+</blockquote>
+<hr />
+<h4 id="emf_cbase_native_library_loader_interface_t"><a class="header" href="#emf_cbase_native_library_loader_interface_t">emf_cbase_native_library_loader_interface_t</a></h4>
 <blockquote>
 <pre><code class="language-c">typedef struct emf_cbase_native_library_loader_interface_t {
     const emf_cbase_library_loader_interface_t* library_loader_interface;
     emf_cbase_native_library_loader_interface_load_ext_fn_t load_ext_fn;
+    emf_cbase_native_library_loader_get_native_handle_fn_t get_native_handle_fn;
 } emf_cbase_native_library_loader_interface_t;
 </code></pre>
 <ul>
@@ -2709,7 +2716,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_native_module_interface_t" id="emf_cbase_native_module_interface_t">emf_cbase_native_module_interface_t</a></h4>
+<h4 id="emf_cbase_native_module_interface_t"><a class="header" href="#emf_cbase_native_module_interface_t">emf_cbase_native_module_interface_t</a></h4>
 <blockquote>
 <pre><code class="language-c">typedef struct emf_cbase_native_module_interface_t {
     emf_cbase_native_module_interface_load_fn_t load_fn;
@@ -2728,7 +2735,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_native_module_loader_interface_t" id="emf_cbase_native_module_loader_interface_t">emf_cbase_native_module_loader_interface_t</a></h4>
+<h4 id="emf_cbase_native_module_loader_interface_t"><a class="header" href="#emf_cbase_native_module_loader_interface_t">emf_cbase_native_module_loader_interface_t</a></h4>
 <blockquote>
 <pre><code class="language-c">typedef struct emf_cbase_native_module_loader_interface_t {
     const emf_cbase_module_loader_interface_t* module_loader_interface;
@@ -2741,7 +2748,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_native_module_ptr_result_t" id="emf_cbase_native_module_ptr_result_t">emf_cbase_native_module_ptr_result_t</a></h4>
+<h4 id="emf_cbase_native_module_ptr_result_t"><a class="header" href="#emf_cbase_native_module_ptr_result_t">emf_cbase_native_module_ptr_result_t</a></h4>
 <blockquote>
 <pre><code class="language-c">RESULT_T(emf_cbase_native_module_ptr_result_t, emf_cbase_native_module_t*, emf_cbase_module_error_t)
 </code></pre>
@@ -2750,7 +2757,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_native_module_t" id="emf_cbase_native_module_t">emf_cbase_native_module_t</a></h4>
+<h4 id="emf_cbase_native_module_t"><a class="header" href="#emf_cbase_native_module_t">emf_cbase_native_module_t</a></h4>
 <blockquote>
 <pre><code class="language-c">typedef struct emf_cbase_native_module_t emf_cbase_native_module_t;
 </code></pre>
@@ -2759,7 +2766,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_os_path_char_result_t" id="emf_cbase_os_path_char_result_t">emf_cbase_os_path_char_result_t</a></h4>
+<h4 id="emf_cbase_os_path_char_result_t"><a class="header" href="#emf_cbase_os_path_char_result_t">emf_cbase_os_path_char_result_t</a></h4>
 <blockquote>
 <pre><code class="language-c">RESULT_T(emf_cbase_os_path_char_result_t, const emf_cbase_os_path_char_t*, emf_cbase_module_error_t)
 </code></pre>
@@ -2769,7 +2776,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_sync_handler_t" id="emf_cbase_sync_handler_t">emf_cbase_sync_handler_t</a></h4>
+<h4 id="emf_cbase_sync_handler_t"><a class="header" href="#emf_cbase_sync_handler_t">emf_cbase_sync_handler_t</a></h4>
 <blockquote>
 <pre><code class="language-c">typedef struct emf_cbase_sync_handler_t emf_cbase_sync_handler_t;
 </code></pre>
@@ -2778,7 +2785,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_fn_optional_t" id="emf_cbase_fn_optional_t">emf_cbase_fn_optional_t</a></h4>
+<h4 id="emf_cbase_fn_optional_t"><a class="header" href="#emf_cbase_fn_optional_t">emf_cbase_fn_optional_t</a></h4>
 <blockquote>
 <pre><code class="language-c">OPTIONAL_T(emf_cbase_fn_optional_t, emf_cbase_fn_t)
 </code></pre>
@@ -2788,7 +2795,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_t" id="emf_cbase_t">emf_cbase_t</a></h4>
+<h4 id="emf_cbase_t"><a class="header" href="#emf_cbase_t">emf_cbase_t</a></h4>
 <blockquote>
 <pre><code class="language-c">typedef struct emf_cbase_t emf_cbase_t;
 </code></pre>
@@ -2797,7 +2804,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_version_const_string_buffer_t" id="emf_cbase_version_const_string_buffer_t">emf_cbase_version_const_string_buffer_t</a></h4>
+<h4 id="emf_cbase_version_const_string_buffer_t"><a class="header" href="#emf_cbase_version_const_string_buffer_t">emf_cbase_version_const_string_buffer_t</a></h4>
 <blockquote>
 <pre><code class="language-c">SPAN_T(emf_cbase_version_const_string_buffer_t, const char)
 </code></pre>
@@ -2807,7 +2814,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_version_result_t" id="emf_cbase_version_result_t">emf_cbase_version_result_t</a></h4>
+<h4 id="emf_cbase_version_result_t"><a class="header" href="#emf_cbase_version_result_t">emf_cbase_version_result_t</a></h4>
 <blockquote>
 <pre><code class="language-c">RESULT_T(emf_cbase_version_result_t, emf_cbase_version_t, emf_cbase_version_error_t)
 </code></pre>
@@ -2816,7 +2823,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_version_size_result_t" id="emf_cbase_version_size_result_t">emf_cbase_version_size_result_t</a></h4>
+<h4 id="emf_cbase_version_size_result_t"><a class="header" href="#emf_cbase_version_size_result_t">emf_cbase_version_size_result_t</a></h4>
 <blockquote>
 <pre><code class="language-c">RESULT_T(emf_cbase_version_size_result_t, size_t, emf_cbase_version_error_t)
 </code></pre>
@@ -2825,7 +2832,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_version_string_buffer_t" id="emf_cbase_version_string_buffer_t">emf_cbase_version_string_buffer_t</a></h4>
+<h4 id="emf_cbase_version_string_buffer_t"><a class="header" href="#emf_cbase_version_string_buffer_t">emf_cbase_version_string_buffer_t</a></h4>
 <blockquote>
 <pre><code class="language-c">SPAN_T(emf_cbase_version_string_buffer_t, char)
 </code></pre>
@@ -2835,7 +2842,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_version_t" id="emf_cbase_version_t">emf_cbase_version_t</a></h4>
+<h4 id="emf_cbase_version_t"><a class="header" href="#emf_cbase_version_t">emf_cbase_version_t</a></h4>
 <blockquote>
 <pre><code class="language-c">typedef struct emf_cbase_version_t {
     int32_t major;
@@ -2852,7 +2859,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </ul>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_sync_handler_interface_t" id="emf_cbase_sync_handler_interface_t">emf_cbase_sync_handler_interface_t</a></h4>
+<h4 id="emf_cbase_sync_handler_interface_t"><a class="header" href="#emf_cbase_sync_handler_interface_t">emf_cbase_sync_handler_interface_t</a></h4>
 <blockquote>
 <pre><code class="language-c">typedef struct emf_cbase_sync_handler_interface_t {
     emf_cbase_sync_handler_t* sync_handler;
@@ -2865,81 +2872,81 @@ The values <code>0-99</code> are reserved for future use.</li>
 <li>Description: Interface of a synchronization handler.</li>
 </ul>
 </blockquote>
-<h3><a class="header" href="#types" id="types">Types</a></h3>
-<h4><a class="header" href="#emf_cbase_fn_t" id="emf_cbase_fn_t">emf_cbase_fn_t</a></h4>
+<h3 id="types"><a class="header" href="#types">Types</a></h3>
+<h4 id="emf_cbase_fn_t"><a class="header" href="#emf_cbase_fn_t">emf_cbase_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">FN_T(emf_cbase_fn_t, void, void)
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_library_create_library_handle_fn_t" id="emf_cbase_library_create_library_handle_fn_t">emf_cbase_library_create_library_handle_fn_t</a></h4>
+<h4 id="emf_cbase_library_create_library_handle_fn_t"><a class="header" href="#emf_cbase_library_create_library_handle_fn_t">emf_cbase_library_create_library_handle_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_library_create_library_handle_fn_t, emf_cbase_library_handle_t)
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_library_get_data_symbol_fn_t" id="emf_cbase_library_get_data_symbol_fn_t">emf_cbase_library_get_data_symbol_fn_t</a></h4>
+<h4 id="emf_cbase_library_get_data_symbol_fn_t"><a class="header" href="#emf_cbase_library_get_data_symbol_fn_t">emf_cbase_library_get_data_symbol_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_library_get_data_symbol_fn_t, emf_cbase_library_data_symbol_result_t, 
       emf_cbase_library_handle_t library_handle, const char* symbol_name)
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_library_get_function_symbol_fn_t" id="emf_cbase_library_get_function_symbol_fn_t">emf_cbase_library_get_function_symbol_fn_t</a></h4>
+<h4 id="emf_cbase_library_get_function_symbol_fn_t"><a class="header" href="#emf_cbase_library_get_function_symbol_fn_t">emf_cbase_library_get_function_symbol_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_library_get_function_symbol_fn_t, emf_cbase_library_fn_symbol_result_t, 
       emf_cbase_library_handle_t library_handle, const char* symbol_name)
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_library_get_internal_library_handle_fn_t" id="emf_cbase_library_get_internal_library_handle_fn_t">emf_cbase_library_get_internal_library_handle_fn_t</a></h4>
+<h4 id="emf_cbase_library_get_internal_library_handle_fn_t"><a class="header" href="#emf_cbase_library_get_internal_library_handle_fn_t">emf_cbase_library_get_internal_library_handle_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_library_get_internal_library_handle_fn_t, 
       emf_cbase_internal_library_handle_result_t, emf_cbase_library_handle_t library_handle)
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_library_get_library_types_fn_t" id="emf_cbase_library_get_library_types_fn_t">emf_cbase_library_get_library_types_fn_t</a></h4>
+<h4 id="emf_cbase_library_get_library_types_fn_t"><a class="header" href="#emf_cbase_library_get_library_types_fn_t">emf_cbase_library_get_library_types_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_library_get_library_types_fn_t, 
       emf_cbase_library_size_result_t, emf_cbase_library_type_span_t* buffer)
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_library_get_loader_handle_from_library_fn_t" id="emf_cbase_library_get_loader_handle_from_library_fn_t">emf_cbase_library_get_loader_handle_from_library_fn_t</a></h4>
+<h4 id="emf_cbase_library_get_loader_handle_from_library_fn_t"><a class="header" href="#emf_cbase_library_get_loader_handle_from_library_fn_t">emf_cbase_library_get_loader_handle_from_library_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_library_get_loader_handle_from_library_fn_t,
       emf_cbase_library_loader_handle_result_t, emf_cbase_library_handle_t library_handle)
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_library_get_loader_handle_from_type_fn_t" id="emf_cbase_library_get_loader_handle_from_type_fn_t">emf_cbase_library_get_loader_handle_from_type_fn_t</a></h4>
+<h4 id="emf_cbase_library_get_loader_handle_from_type_fn_t"><a class="header" href="#emf_cbase_library_get_loader_handle_from_type_fn_t">emf_cbase_library_get_loader_handle_from_type_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_library_get_loader_handle_from_type_fn_t,
       emf_cbase_library_loader_handle_result_t, const emf_cbase_library_type_t* library_type)
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_library_get_loader_interface_fn_t" id="emf_cbase_library_get_loader_interface_fn_t">emf_cbase_library_get_loader_interface_fn_t</a></h4>
+<h4 id="emf_cbase_library_get_loader_interface_fn_t"><a class="header" href="#emf_cbase_library_get_loader_interface_fn_t">emf_cbase_library_get_loader_interface_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_library_get_loader_interface_fn_t,
       emf_cbase_library_loader_interface_result_t, emf_cbase_library_loader_handle_t loader_handle)
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_library_get_num_loaders_fn_t" id="emf_cbase_library_get_num_loaders_fn_t">emf_cbase_library_get_num_loaders_fn_t</a></h4>
+<h4 id="emf_cbase_library_get_num_loaders_fn_t"><a class="header" href="#emf_cbase_library_get_num_loaders_fn_t">emf_cbase_library_get_num_loaders_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_library_get_num_loaders_fn_t, size_t, void)
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_library_library_exists_fn_t" id="emf_cbase_library_library_exists_fn_t">emf_cbase_library_library_exists_fn_t</a></h4>
+<h4 id="emf_cbase_library_library_exists_fn_t"><a class="header" href="#emf_cbase_library_library_exists_fn_t">emf_cbase_library_library_exists_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_library_library_exists_fn_t, emf_cbase_bool_t, emf_cbase_library_handle_t library_handle)
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_library_link_library_fn_t" id="emf_cbase_library_link_library_fn_t">emf_cbase_library_link_library_fn_t</a></h4>
+<h4 id="emf_cbase_library_link_library_fn_t"><a class="header" href="#emf_cbase_library_link_library_fn_t">emf_cbase_library_link_library_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_library_link_library_fn_t,
       emf_cbase_library_result_t,
@@ -2949,7 +2956,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_library_load_fn_t" id="emf_cbase_library_load_fn_t">emf_cbase_library_load_fn_t</a></h4>
+<h4 id="emf_cbase_library_load_fn_t"><a class="header" href="#emf_cbase_library_load_fn_t">emf_cbase_library_load_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_library_load_fn_t, 
       emf_cbase_library_handle_result_t,
@@ -2958,7 +2965,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_library_loader_interface_get_data_symbol_fn_t" id="emf_cbase_library_loader_interface_get_data_symbol_fn_t">emf_cbase_library_loader_interface_get_data_symbol_fn_t</a></h4>
+<h4 id="emf_cbase_library_loader_interface_get_data_symbol_fn_t"><a class="header" href="#emf_cbase_library_loader_interface_get_data_symbol_fn_t">emf_cbase_library_loader_interface_get_data_symbol_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">FN_T(emf_cbase_library_loader_interface_get_data_symbol_fn_t,
       emf_cbase_library_data_symbol_result_t,
@@ -2968,7 +2975,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_library_loader_interface_get_function_symbol_fn_t" id="emf_cbase_library_loader_interface_get_function_symbol_fn_t">emf_cbase_library_loader_interface_get_function_symbol_fn_t</a></h4>
+<h4 id="emf_cbase_library_loader_interface_get_function_symbol_fn_t"><a class="header" href="#emf_cbase_library_loader_interface_get_function_symbol_fn_t">emf_cbase_library_loader_interface_get_function_symbol_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">FN_T(emf_cbase_library_loader_interface_get_function_symbol_fn_t,
       emf_cbase_library_fn_symbol_result_t,
@@ -2978,7 +2985,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_library_loader_interface_get_internal_interface_fn_t" id="emf_cbase_library_loader_interface_get_internal_interface_fn_t">emf_cbase_library_loader_interface_get_internal_interface_fn_t</a></h4>
+<h4 id="emf_cbase_library_loader_interface_get_internal_interface_fn_t"><a class="header" href="#emf_cbase_library_loader_interface_get_internal_interface_fn_t">emf_cbase_library_loader_interface_get_internal_interface_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">FN_T(emf_cbase_library_loader_interface_get_internal_interface_fn_t,
       const void*,
@@ -2986,7 +2993,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_library_loader_interface_load_fn_t" id="emf_cbase_library_loader_interface_load_fn_t">emf_cbase_library_loader_interface_load_fn_t</a></h4>
+<h4 id="emf_cbase_library_loader_interface_load_fn_t"><a class="header" href="#emf_cbase_library_loader_interface_load_fn_t">emf_cbase_library_loader_interface_load_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">FN_T(emf_cbase_library_loader_interface_load_fn_t,
       emf_cbase_internal_library_handle_result_t,
@@ -2995,7 +3002,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_library_loader_interface_unload_fn_t" id="emf_cbase_library_loader_interface_unload_fn_t">emf_cbase_library_loader_interface_unload_fn_t</a></h4>
+<h4 id="emf_cbase_library_loader_interface_unload_fn_t"><a class="header" href="#emf_cbase_library_loader_interface_unload_fn_t">emf_cbase_library_loader_interface_unload_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">FN_T(emf_cbase_library_loader_interface_unload_fn_t, 
       emf_cbase_library_result_t,
@@ -3004,7 +3011,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_library_register_loader_fn_t" id="emf_cbase_library_register_loader_fn_t">emf_cbase_library_register_loader_fn_t</a></h4>
+<h4 id="emf_cbase_library_register_loader_fn_t"><a class="header" href="#emf_cbase_library_register_loader_fn_t">emf_cbase_library_register_loader_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_library_register_loader_fn_t,
       emf_cbase_library_loader_handle_result_t,
@@ -3013,7 +3020,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_library_remove_library_handle_fn_t" id="emf_cbase_library_remove_library_handle_fn_t">emf_cbase_library_remove_library_handle_fn_t</a></h4>
+<h4 id="emf_cbase_library_remove_library_handle_fn_t"><a class="header" href="#emf_cbase_library_remove_library_handle_fn_t">emf_cbase_library_remove_library_handle_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_library_remove_library_handle_fn_t,
       emf_cbase_library_result_t,
@@ -3021,7 +3028,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_library_type_exists_fn_t" id="emf_cbase_library_type_exists_fn_t">emf_cbase_library_type_exists_fn_t</a></h4>
+<h4 id="emf_cbase_library_type_exists_fn_t"><a class="header" href="#emf_cbase_library_type_exists_fn_t">emf_cbase_library_type_exists_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_library_type_exists_fn_t, 
       emf_cbase_bool_t,
@@ -3029,7 +3036,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_library_unload_fn_t" id="emf_cbase_library_unload_fn_t">emf_cbase_library_unload_fn_t</a></h4>
+<h4 id="emf_cbase_library_unload_fn_t"><a class="header" href="#emf_cbase_library_unload_fn_t">emf_cbase_library_unload_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_library_unload_fn_t,
       emf_cbase_library_result_t,
@@ -3037,7 +3044,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_library_unregister_loader_fn_t" id="emf_cbase_library_unregister_loader_fn_t">emf_cbase_library_unregister_loader_fn_t</a></h4>
+<h4 id="emf_cbase_library_unregister_loader_fn_t"><a class="header" href="#emf_cbase_library_unregister_loader_fn_t">emf_cbase_library_unregister_loader_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_library_unregister_loader_fn_t,
       emf_cbase_library_result_t,
@@ -3045,7 +3052,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_add_dependency_fn_t" id="emf_cbase_module_add_dependency_fn_t">emf_cbase_module_add_dependency_fn_t</a></h4>
+<h4 id="emf_cbase_module_add_dependency_fn_t"><a class="header" href="#emf_cbase_module_add_dependency_fn_t">emf_cbase_module_add_dependency_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_module_add_dependency_fn_t,
       emf_cbase_module_result_t,
@@ -3054,7 +3061,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_add_module_fn_t" id="emf_cbase_module_add_module_fn_t">emf_cbase_module_add_module_fn_t</a></h4>
+<h4 id="emf_cbase_module_add_module_fn_t"><a class="header" href="#emf_cbase_module_add_module_fn_t">emf_cbase_module_add_module_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_module_add_module_fn_t,
       emf_cbase_module_handle_result_t,
@@ -3063,7 +3070,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_create_module_handle_fn_t" id="emf_cbase_module_create_module_handle_fn_t">emf_cbase_module_create_module_handle_fn_t</a></h4>
+<h4 id="emf_cbase_module_create_module_handle_fn_t"><a class="header" href="#emf_cbase_module_create_module_handle_fn_t">emf_cbase_module_create_module_handle_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_module_create_module_handle_fn_t,
       emf_cbase_module_handle_t,
@@ -3071,7 +3078,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_export_interface_fn_t" id="emf_cbase_module_export_interface_fn_t">emf_cbase_module_export_interface_fn_t</a></h4>
+<h4 id="emf_cbase_module_export_interface_fn_t"><a class="header" href="#emf_cbase_module_export_interface_fn_t">emf_cbase_module_export_interface_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_module_export_interface_fn_t,
       emf_cbase_module_result_t,
@@ -3080,7 +3087,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_exported_interface_exists_fn_t" id="emf_cbase_module_exported_interface_exists_fn_t">emf_cbase_module_exported_interface_exists_fn_t</a></h4>
+<h4 id="emf_cbase_module_exported_interface_exists_fn_t"><a class="header" href="#emf_cbase_module_exported_interface_exists_fn_t">emf_cbase_module_exported_interface_exists_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_module_exported_interface_exists_fn_t,
       emf_cbase_bool_t,
@@ -3088,7 +3095,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_fetch_status_fn_t" id="emf_cbase_module_fetch_status_fn_t">emf_cbase_module_fetch_status_fn_t</a></h4>
+<h4 id="emf_cbase_module_fetch_status_fn_t"><a class="header" href="#emf_cbase_module_fetch_status_fn_t">emf_cbase_module_fetch_status_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_module_fetch_status_fn_t,
       emf_cbase_module_status_result_t,
@@ -3096,7 +3103,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_get_exportable_interfaces_fn_t" id="emf_cbase_module_get_exportable_interfaces_fn_t">emf_cbase_module_get_exportable_interfaces_fn_t</a></h4>
+<h4 id="emf_cbase_module_get_exportable_interfaces_fn_t"><a class="header" href="#emf_cbase_module_get_exportable_interfaces_fn_t">emf_cbase_module_get_exportable_interfaces_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_module_get_exportable_interfaces_fn_t,
       emf_cbase_interface_descriptor_const_span_result_t,
@@ -3104,7 +3111,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_get_exported_interface_handle_fn_t" id="emf_cbase_module_get_exported_interface_handle_fn_t">emf_cbase_module_get_exported_interface_handle_fn_t</a></h4>
+<h4 id="emf_cbase_module_get_exported_interface_handle_fn_t"><a class="header" href="#emf_cbase_module_get_exported_interface_handle_fn_t">emf_cbase_module_get_exported_interface_handle_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_module_get_exported_interface_handle_fn_t,
       emf_cbase_module_handle_result_t,
@@ -3112,7 +3119,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_get_exported_interfaces_fn_t" id="emf_cbase_module_get_exported_interfaces_fn_t">emf_cbase_module_get_exported_interfaces_fn_t</a></h4>
+<h4 id="emf_cbase_module_get_exported_interfaces_fn_t"><a class="header" href="#emf_cbase_module_get_exported_interfaces_fn_t">emf_cbase_module_get_exported_interfaces_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_module_get_exported_interfaces_fn_t,
       emf_cbase_module_size_result_t,
@@ -3120,7 +3127,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_get_interface_fn_t" id="emf_cbase_module_get_interface_fn_t">emf_cbase_module_get_interface_fn_t</a></h4>
+<h4 id="emf_cbase_module_get_interface_fn_t"><a class="header" href="#emf_cbase_module_get_interface_fn_t">emf_cbase_module_get_interface_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_module_get_interface_fn_t,
       emf_cbase_module_interface_result_t,
@@ -3129,7 +3136,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_get_internal_module_handle_fn_t" id="emf_cbase_module_get_internal_module_handle_fn_t">emf_cbase_module_get_internal_module_handle_fn_t</a></h4>
+<h4 id="emf_cbase_module_get_internal_module_handle_fn_t"><a class="header" href="#emf_cbase_module_get_internal_module_handle_fn_t">emf_cbase_module_get_internal_module_handle_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_module_get_internal_module_handle_fn_t,
       emf_cbase_internal_module_handle_result_t,
@@ -3137,7 +3144,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_get_load_dependencies_fn_t" id="emf_cbase_module_get_load_dependencies_fn_t">emf_cbase_module_get_load_dependencies_fn_t</a></h4>
+<h4 id="emf_cbase_module_get_load_dependencies_fn_t"><a class="header" href="#emf_cbase_module_get_load_dependencies_fn_t">emf_cbase_module_get_load_dependencies_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_module_get_load_dependencies_fn_t,
       emf_cbase_interface_descriptor_const_span_result_t,
@@ -3145,7 +3152,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_get_loader_handle_from_module_fn_t" id="emf_cbase_module_get_loader_handle_from_module_fn_t">emf_cbase_module_get_loader_handle_from_module_fn_t</a></h4>
+<h4 id="emf_cbase_module_get_loader_handle_from_module_fn_t"><a class="header" href="#emf_cbase_module_get_loader_handle_from_module_fn_t">emf_cbase_module_get_loader_handle_from_module_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_module_get_loader_handle_from_module_fn_t,
       emf_cbase_module_loader_handle_result_t,
@@ -3153,7 +3160,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_get_loader_handle_from_type_fn_t" id="emf_cbase_module_get_loader_handle_from_type_fn_t">emf_cbase_module_get_loader_handle_from_type_fn_t</a></h4>
+<h4 id="emf_cbase_module_get_loader_handle_from_type_fn_t"><a class="header" href="#emf_cbase_module_get_loader_handle_from_type_fn_t">emf_cbase_module_get_loader_handle_from_type_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_module_get_loader_handle_from_type_fn_t,
       emf_cbase_module_loader_handle_result_t,
@@ -3161,7 +3168,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_get_loader_interface_fn_t" id="emf_cbase_module_get_loader_interface_fn_t">emf_cbase_module_get_loader_interface_fn_t</a></h4>
+<h4 id="emf_cbase_module_get_loader_interface_fn_t"><a class="header" href="#emf_cbase_module_get_loader_interface_fn_t">emf_cbase_module_get_loader_interface_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_module_get_loader_interface_fn_t,
       emf_cbase_module_loader_interface_result_t,
@@ -3169,7 +3176,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_get_module_info_fn_t" id="emf_cbase_module_get_module_info_fn_t">emf_cbase_module_get_module_info_fn_t</a></h4>
+<h4 id="emf_cbase_module_get_module_info_fn_t"><a class="header" href="#emf_cbase_module_get_module_info_fn_t">emf_cbase_module_get_module_info_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_module_get_module_info_fn_t,
       emf_cbase_module_info_ptr_result_t,
@@ -3177,7 +3184,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_get_module_path_fn_t" id="emf_cbase_module_get_module_path_fn_t">emf_cbase_module_get_module_path_fn_t</a></h4>
+<h4 id="emf_cbase_module_get_module_path_fn_t"><a class="header" href="#emf_cbase_module_get_module_path_fn_t">emf_cbase_module_get_module_path_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_module_get_module_path_fn_t,
       emf_cbase_os_path_char_result_t,
@@ -3185,7 +3192,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_get_module_types_fn_t" id="emf_cbase_module_get_module_types_fn_t">emf_cbase_module_get_module_types_fn_t</a></h4>
+<h4 id="emf_cbase_module_get_module_types_fn_t"><a class="header" href="#emf_cbase_module_get_module_types_fn_t">emf_cbase_module_get_module_types_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_module_get_module_types_fn_t,
       emf_cbase_module_size_result_t,
@@ -3193,7 +3200,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_get_modules_fn_t" id="emf_cbase_module_get_modules_fn_t">emf_cbase_module_get_modules_fn_t</a></h4>
+<h4 id="emf_cbase_module_get_modules_fn_t"><a class="header" href="#emf_cbase_module_get_modules_fn_t">emf_cbase_module_get_modules_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_module_get_modules_fn_t,
       emf_cbase_module_size_result_t,
@@ -3201,25 +3208,25 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_get_num_exported_interfaces_fn_t" id="emf_cbase_module_get_num_exported_interfaces_fn_t">emf_cbase_module_get_num_exported_interfaces_fn_t</a></h4>
+<h4 id="emf_cbase_module_get_num_exported_interfaces_fn_t"><a class="header" href="#emf_cbase_module_get_num_exported_interfaces_fn_t">emf_cbase_module_get_num_exported_interfaces_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_module_get_num_exported_interfaces_fn_t, size_t, void)
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_get_num_loaders_fn_t" id="emf_cbase_module_get_num_loaders_fn_t">emf_cbase_module_get_num_loaders_fn_t</a></h4>
+<h4 id="emf_cbase_module_get_num_loaders_fn_t"><a class="header" href="#emf_cbase_module_get_num_loaders_fn_t">emf_cbase_module_get_num_loaders_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_module_get_num_loaders_fn_t, size_t, void)
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_get_num_modules_fn_t" id="emf_cbase_module_get_num_modules_fn_t">emf_cbase_module_get_num_modules_fn_t</a></h4>
+<h4 id="emf_cbase_module_get_num_modules_fn_t"><a class="header" href="#emf_cbase_module_get_num_modules_fn_t">emf_cbase_module_get_num_modules_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_module_get_num_modules_fn_t, size_t, void)
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_get_runtime_dependencies_fn_t" id="emf_cbase_module_get_runtime_dependencies_fn_t">emf_cbase_module_get_runtime_dependencies_fn_t</a></h4>
+<h4 id="emf_cbase_module_get_runtime_dependencies_fn_t"><a class="header" href="#emf_cbase_module_get_runtime_dependencies_fn_t">emf_cbase_module_get_runtime_dependencies_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_module_get_runtime_dependencies_fn_t,
       emf_cbase_interface_descriptor_const_span_result_t,
@@ -3227,7 +3234,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_initialize_fn_t" id="emf_cbase_module_initialize_fn_t">emf_cbase_module_initialize_fn_t</a></h4>
+<h4 id="emf_cbase_module_initialize_fn_t"><a class="header" href="#emf_cbase_module_initialize_fn_t">emf_cbase_module_initialize_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_module_initialize_fn_t,
       emf_cbase_module_result_t,
@@ -3235,7 +3242,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_link_module_fn_t" id="emf_cbase_module_link_module_fn_t">emf_cbase_module_link_module_fn_t</a></h4>
+<h4 id="emf_cbase_module_link_module_fn_t"><a class="header" href="#emf_cbase_module_link_module_fn_t">emf_cbase_module_link_module_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_module_link_module_fn_t,
       emf_cbase_module_result_t,
@@ -3245,7 +3252,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_load_fn_t" id="emf_cbase_module_load_fn_t">emf_cbase_module_load_fn_t</a></h4>
+<h4 id="emf_cbase_module_load_fn_t"><a class="header" href="#emf_cbase_module_load_fn_t">emf_cbase_module_load_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_module_load_fn_t,
       emf_cbase_module_result_t,
@@ -3253,7 +3260,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_loader_interface_add_module_fn_t" id="emf_cbase_module_loader_interface_add_module_fn_t">emf_cbase_module_loader_interface_add_module_fn_t</a></h4>
+<h4 id="emf_cbase_module_loader_interface_add_module_fn_t"><a class="header" href="#emf_cbase_module_loader_interface_add_module_fn_t">emf_cbase_module_loader_interface_add_module_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">FN_T(emf_cbase_module_loader_interface_add_module_fn_t,
       emf_cbase_internal_module_handle_result_t,
@@ -3262,7 +3269,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_loader_interface_fetch_status_fn_t" id="emf_cbase_module_loader_interface_fetch_status_fn_t">emf_cbase_module_loader_interface_fetch_status_fn_t</a></h4>
+<h4 id="emf_cbase_module_loader_interface_fetch_status_fn_t"><a class="header" href="#emf_cbase_module_loader_interface_fetch_status_fn_t">emf_cbase_module_loader_interface_fetch_status_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">FN_T(emf_cbase_module_loader_interface_fetch_status_fn_t,
       emf_cbase_module_status_result_t,
@@ -3271,7 +3278,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_loader_interface_get_exportable_interfaces_fn_t" id="emf_cbase_module_loader_interface_get_exportable_interfaces_fn_t">emf_cbase_module_loader_interface_get_exportable_interfaces_fn_t</a></h4>
+<h4 id="emf_cbase_module_loader_interface_get_exportable_interfaces_fn_t"><a class="header" href="#emf_cbase_module_loader_interface_get_exportable_interfaces_fn_t">emf_cbase_module_loader_interface_get_exportable_interfaces_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">FN_T(emf_cbase_module_loader_interface_get_exportable_interfaces_fn_t,
       emf_cbase_interface_descriptor_const_span_result_t,
@@ -3280,7 +3287,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_loader_interface_get_interface_fn_t" id="emf_cbase_module_loader_interface_get_interface_fn_t">emf_cbase_module_loader_interface_get_interface_fn_t</a></h4>
+<h4 id="emf_cbase_module_loader_interface_get_interface_fn_t"><a class="header" href="#emf_cbase_module_loader_interface_get_interface_fn_t">emf_cbase_module_loader_interface_get_interface_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">FN_T(emf_cbase_module_loader_interface_get_interface_fn_t,
       emf_cbase_module_interface_result_t,
@@ -3290,7 +3297,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_loader_interface_get_internal_interface_fn_t" id="emf_cbase_module_loader_interface_get_internal_interface_fn_t">emf_cbase_module_loader_interface_get_internal_interface_fn_t</a></h4>
+<h4 id="emf_cbase_module_loader_interface_get_internal_interface_fn_t"><a class="header" href="#emf_cbase_module_loader_interface_get_internal_interface_fn_t">emf_cbase_module_loader_interface_get_internal_interface_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">FN_T(emf_cbase_module_loader_interface_get_internal_interface_fn_t,
       const void*,
@@ -3298,7 +3305,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_loader_interface_get_load_dependencies_fn_t" id="emf_cbase_module_loader_interface_get_load_dependencies_fn_t">emf_cbase_module_loader_interface_get_load_dependencies_fn_t</a></h4>
+<h4 id="emf_cbase_module_loader_interface_get_load_dependencies_fn_t"><a class="header" href="#emf_cbase_module_loader_interface_get_load_dependencies_fn_t">emf_cbase_module_loader_interface_get_load_dependencies_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">FN_T(emf_cbase_module_loader_interface_get_load_dependencies_fn_t,
       emf_cbase_interface_descriptor_const_span_result_t,
@@ -3307,7 +3314,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_loader_interface_get_module_info_fn_t" id="emf_cbase_module_loader_interface_get_module_info_fn_t">emf_cbase_module_loader_interface_get_module_info_fn_t</a></h4>
+<h4 id="emf_cbase_module_loader_interface_get_module_info_fn_t"><a class="header" href="#emf_cbase_module_loader_interface_get_module_info_fn_t">emf_cbase_module_loader_interface_get_module_info_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">FN_T(emf_cbase_module_loader_interface_get_module_info_fn_t,
       emf_cbase_module_info_ptr_result_t,
@@ -3316,7 +3323,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_loader_interface_get_module_path_fn_t" id="emf_cbase_module_loader_interface_get_module_path_fn_t">emf_cbase_module_loader_interface_get_module_path_fn_t</a></h4>
+<h4 id="emf_cbase_module_loader_interface_get_module_path_fn_t"><a class="header" href="#emf_cbase_module_loader_interface_get_module_path_fn_t">emf_cbase_module_loader_interface_get_module_path_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">FN_T(emf_cbase_module_loader_interface_get_module_path_fn_t,
       emf_cbase_os_path_char_result_t,
@@ -3325,7 +3332,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_loader_interface_get_runtime_dependencies_fn_t" id="emf_cbase_module_loader_interface_get_runtime_dependencies_fn_t">emf_cbase_module_loader_interface_get_runtime_dependencies_fn_t</a></h4>
+<h4 id="emf_cbase_module_loader_interface_get_runtime_dependencies_fn_t"><a class="header" href="#emf_cbase_module_loader_interface_get_runtime_dependencies_fn_t">emf_cbase_module_loader_interface_get_runtime_dependencies_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">FN_T(emf_cbase_module_loader_interface_get_runtime_dependencies_fn_t,
       emf_cbase_interface_descriptor_const_span_result_t,
@@ -3334,7 +3341,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_loader_interface_initialize_fn_t" id="emf_cbase_module_loader_interface_initialize_fn_t">emf_cbase_module_loader_interface_initialize_fn_t</a></h4>
+<h4 id="emf_cbase_module_loader_interface_initialize_fn_t"><a class="header" href="#emf_cbase_module_loader_interface_initialize_fn_t">emf_cbase_module_loader_interface_initialize_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">FN_T(emf_cbase_module_loader_interface_initialize_fn_t,
       emf_cbase_module_result_t,
@@ -3343,7 +3350,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_loader_interface_load_fn_t" id="emf_cbase_module_loader_interface_load_fn_t">emf_cbase_module_loader_interface_load_fn_t</a></h4>
+<h4 id="emf_cbase_module_loader_interface_load_fn_t"><a class="header" href="#emf_cbase_module_loader_interface_load_fn_t">emf_cbase_module_loader_interface_load_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">FN_T(emf_cbase_module_loader_interface_load_fn_t,
       emf_cbase_module_result_t,
@@ -3352,7 +3359,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_loader_interface_remove_module_fn_t" id="emf_cbase_module_loader_interface_remove_module_fn_t">emf_cbase_module_loader_interface_remove_module_fn_t</a></h4>
+<h4 id="emf_cbase_module_loader_interface_remove_module_fn_t"><a class="header" href="#emf_cbase_module_loader_interface_remove_module_fn_t">emf_cbase_module_loader_interface_remove_module_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">FN_T(emf_cbase_module_loader_interface_remove_module_fn_t,
       emf_cbase_module_result_t,
@@ -3361,7 +3368,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_loader_interface_terminate_fn_t" id="emf_cbase_module_loader_interface_terminate_fn_t">emf_cbase_module_loader_interface_terminate_fn_t</a></h4>
+<h4 id="emf_cbase_module_loader_interface_terminate_fn_t"><a class="header" href="#emf_cbase_module_loader_interface_terminate_fn_t">emf_cbase_module_loader_interface_terminate_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">FN_T(emf_cbase_module_loader_interface_terminate_fn_t,
       emf_cbase_module_result_t,
@@ -3370,7 +3377,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_loader_interface_unload_fn_t" id="emf_cbase_module_loader_interface_unload_fn_t">emf_cbase_module_loader_interface_unload_fn_t</a></h4>
+<h4 id="emf_cbase_module_loader_interface_unload_fn_t"><a class="header" href="#emf_cbase_module_loader_interface_unload_fn_t">emf_cbase_module_loader_interface_unload_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">FN_T(emf_cbase_module_loader_interface_unload_fn_t,
       emf_cbase_module_result_t,
@@ -3379,7 +3386,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_module_exists_fn_t" id="emf_cbase_module_module_exists_fn_t">emf_cbase_module_module_exists_fn_t</a></h4>
+<h4 id="emf_cbase_module_module_exists_fn_t"><a class="header" href="#emf_cbase_module_module_exists_fn_t">emf_cbase_module_module_exists_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_module_module_exists_fn_t,
       emf_cbase_bool_t,
@@ -3387,7 +3394,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_register_loader_fn_t" id="emf_cbase_module_register_loader_fn_t">emf_cbase_module_register_loader_fn_t</a></h4>
+<h4 id="emf_cbase_module_register_loader_fn_t"><a class="header" href="#emf_cbase_module_register_loader_fn_t">emf_cbase_module_register_loader_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_module_register_loader_fn_t,
       emf_cbase_module_loader_handle_result_t,
@@ -3396,7 +3403,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_remove_dependency_fn_t" id="emf_cbase_module_remove_dependency_fn_t">emf_cbase_module_remove_dependency_fn_t</a></h4>
+<h4 id="emf_cbase_module_remove_dependency_fn_t"><a class="header" href="#emf_cbase_module_remove_dependency_fn_t">emf_cbase_module_remove_dependency_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_module_remove_dependency_fn_t,
       emf_cbase_module_result_t,
@@ -3405,7 +3412,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_remove_module_fn_t" id="emf_cbase_module_remove_module_fn_t">emf_cbase_module_remove_module_fn_t</a></h4>
+<h4 id="emf_cbase_module_remove_module_fn_t"><a class="header" href="#emf_cbase_module_remove_module_fn_t">emf_cbase_module_remove_module_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_module_remove_module_fn_t,
       emf_cbase_module_result_t,
@@ -3413,7 +3420,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_remove_module_handle_fn_t" id="emf_cbase_module_remove_module_handle_fn_t">emf_cbase_module_remove_module_handle_fn_t</a></h4>
+<h4 id="emf_cbase_module_remove_module_handle_fn_t"><a class="header" href="#emf_cbase_module_remove_module_handle_fn_t">emf_cbase_module_remove_module_handle_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_module_remove_module_handle_fn_t,
       emf_cbase_module_result_t,
@@ -3421,7 +3428,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_terminate_fn_t" id="emf_cbase_module_terminate_fn_t">emf_cbase_module_terminate_fn_t</a></h4>
+<h4 id="emf_cbase_module_terminate_fn_t"><a class="header" href="#emf_cbase_module_terminate_fn_t">emf_cbase_module_terminate_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_module_terminate_fn_t,
       emf_cbase_module_result_t,
@@ -3429,7 +3436,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_type_exists_fn_t" id="emf_cbase_module_type_exists_fn_t">emf_cbase_module_type_exists_fn_t</a></h4>
+<h4 id="emf_cbase_module_type_exists_fn_t"><a class="header" href="#emf_cbase_module_type_exists_fn_t">emf_cbase_module_type_exists_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_module_type_exists_fn_t,
       emf_cbase_bool_t,
@@ -3437,7 +3444,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_unload_fn_t" id="emf_cbase_module_unload_fn_t">emf_cbase_module_unload_fn_t</a></h4>
+<h4 id="emf_cbase_module_unload_fn_t"><a class="header" href="#emf_cbase_module_unload_fn_t">emf_cbase_module_unload_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_module_unload_fn_t,
       emf_cbase_module_result_t,
@@ -3445,7 +3452,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_module_unregister_loader_fn_t" id="emf_cbase_module_unregister_loader_fn_t">emf_cbase_module_unregister_loader_fn_t</a></h4>
+<h4 id="emf_cbase_module_unregister_loader_fn_t"><a class="header" href="#emf_cbase_module_unregister_loader_fn_t">emf_cbase_module_unregister_loader_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_module_unregister_loader_fn_t,
       emf_cbase_module_result_t,
@@ -3453,7 +3460,26 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_native_library_loader_interface_load_ext_fn_t" id="emf_cbase_native_library_loader_interface_load_ext_fn_t">emf_cbase_native_library_loader_interface_load_ext_fn_t</a></h4>
+<h4 id="emf_cbase_native_library_handle_fn_t"><a class="header" href="#emf_cbase_native_library_handle_fn_t">emf_cbase_native_library_handle_fn_t</a></h4>
+<blockquote>
+<pre><code class="language-c">#if defined(Win32) || defined(_WIN32)
+typedef void* emf_cbase_native_library_handle_fn_t;
+#else
+typedef void* emf_cbase_native_library_handle_fn_t;
+#endif // defined(Win32) || defined(_WIN32)
+</code></pre>
+</blockquote>
+<hr />
+<h4 id="emf_cbase_native_library_loader_get_native_handle_fn_t"><a class="header" href="#emf_cbase_native_library_loader_get_native_handle_fn_t">emf_cbase_native_library_loader_get_native_handle_fn_t</a></h4>
+<blockquote>
+<pre><code class="language-c">FN_T(emf_cbase_native_library_loader_get_native_handle_fn_t,
+      emf_cbase_native_library_handle_result_t,
+      emf_cbase_library_loader_t*, library_loader,
+      const emf_cbase_os_path_char_t* library_path)
+</code></pre>
+</blockquote>
+<hr />
+<h4 id="emf_cbase_native_library_loader_interface_load_ext_fn_t"><a class="header" href="#emf_cbase_native_library_loader_interface_load_ext_fn_t">emf_cbase_native_library_loader_interface_load_ext_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">#if defined(Win32) || defined(_WIN32)
 FN_T(emf_cbase_native_library_loader_interface_load_ext_fn_t,
@@ -3472,7 +3498,7 @@ FN_T(emf_cbase_native_library_loader_interface_load_ext_fn_t,
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_native_module_interface_get_exportable_interfaces_fn_t" id="emf_cbase_native_module_interface_get_exportable_interfaces_fn_t">emf_cbase_native_module_interface_get_exportable_interfaces_fn_t</a></h4>
+<h4 id="emf_cbase_native_module_interface_get_exportable_interfaces_fn_t"><a class="header" href="#emf_cbase_native_module_interface_get_exportable_interfaces_fn_t">emf_cbase_native_module_interface_get_exportable_interfaces_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">FN_T(emf_cbase_native_module_interface_get_exportable_interfaces_fn_t,
       emf_cbase_interface_descriptor_const_span_result_t,
@@ -3480,7 +3506,7 @@ FN_T(emf_cbase_native_library_loader_interface_load_ext_fn_t,
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_native_module_interface_get_interface_fn_t" id="emf_cbase_native_module_interface_get_interface_fn_t">emf_cbase_native_module_interface_get_interface_fn_t</a></h4>
+<h4 id="emf_cbase_native_module_interface_get_interface_fn_t"><a class="header" href="#emf_cbase_native_module_interface_get_interface_fn_t">emf_cbase_native_module_interface_get_interface_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">FN_T(emf_cbase_native_module_interface_get_interface_fn_t,
       emf_cbase_module_interface_result_t,
@@ -3489,14 +3515,14 @@ FN_T(emf_cbase_native_library_loader_interface_load_ext_fn_t,
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_native_module_interface_get_load_dependencies_fn_t" id="emf_cbase_native_module_interface_get_load_dependencies_fn_t">emf_cbase_native_module_interface_get_load_dependencies_fn_t</a></h4>
+<h4 id="emf_cbase_native_module_interface_get_load_dependencies_fn_t"><a class="header" href="#emf_cbase_native_module_interface_get_load_dependencies_fn_t">emf_cbase_native_module_interface_get_load_dependencies_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">FN_T(emf_cbase_native_module_interface_get_load_dependencies_fn_t,
       emf_cbase_interface_descriptor_const_span_t, void)
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_native_module_interface_get_module_info_fn_t" id="emf_cbase_native_module_interface_get_module_info_fn_t">emf_cbase_native_module_interface_get_module_info_fn_t</a></h4>
+<h4 id="emf_cbase_native_module_interface_get_module_info_fn_t"><a class="header" href="#emf_cbase_native_module_interface_get_module_info_fn_t">emf_cbase_native_module_interface_get_module_info_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">FN_T(emf_cbase_native_module_interface_get_module_info_fn_t,
       emf_cbase_module_info_ptr_result_t,
@@ -3504,7 +3530,7 @@ FN_T(emf_cbase_native_library_loader_interface_load_ext_fn_t,
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_native_module_interface_get_runtime_dependencies_fn_t" id="emf_cbase_native_module_interface_get_runtime_dependencies_fn_t">emf_cbase_native_module_interface_get_runtime_dependencies_fn_t</a></h4>
+<h4 id="emf_cbase_native_module_interface_get_runtime_dependencies_fn_t"><a class="header" href="#emf_cbase_native_module_interface_get_runtime_dependencies_fn_t">emf_cbase_native_module_interface_get_runtime_dependencies_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">FN_T(emf_cbase_native_module_interface_get_runtime_dependencies_fn_t,
       emf_cbase_interface_descriptor_const_span_result_t,
@@ -3512,7 +3538,7 @@ FN_T(emf_cbase_native_library_loader_interface_load_ext_fn_t,
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_native_module_interface_initialize_fn_t" id="emf_cbase_native_module_interface_initialize_fn_t">emf_cbase_native_module_interface_initialize_fn_t</a></h4>
+<h4 id="emf_cbase_native_module_interface_initialize_fn_t"><a class="header" href="#emf_cbase_native_module_interface_initialize_fn_t">emf_cbase_native_module_interface_initialize_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">FN_T(emf_cbase_native_module_interface_initialize_fn_t,
       emf_cbase_module_result_t,
@@ -3520,7 +3546,7 @@ FN_T(emf_cbase_native_library_loader_interface_load_ext_fn_t,
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_native_module_interface_load_fn_t" id="emf_cbase_native_module_interface_load_fn_t">emf_cbase_native_module_interface_load_fn_t</a></h4>
+<h4 id="emf_cbase_native_module_interface_load_fn_t"><a class="header" href="#emf_cbase_native_module_interface_load_fn_t">emf_cbase_native_module_interface_load_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">FN_T(emf_cbase_native_module_interface_load_fn_t,
       emf_cbase_native_module_ptr_result_t,
@@ -3531,7 +3557,7 @@ FN_T(emf_cbase_native_library_loader_interface_load_ext_fn_t,
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_native_module_interface_terminate_fn_t" id="emf_cbase_native_module_interface_terminate_fn_t">emf_cbase_native_module_interface_terminate_fn_t</a></h4>
+<h4 id="emf_cbase_native_module_interface_terminate_fn_t"><a class="header" href="#emf_cbase_native_module_interface_terminate_fn_t">emf_cbase_native_module_interface_terminate_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">FN_T(emf_cbase_native_module_interface_terminate_fn_t,
       emf_cbase_module_result_t,
@@ -3539,7 +3565,7 @@ FN_T(emf_cbase_native_library_loader_interface_load_ext_fn_t,
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_native_module_interface_unload_fn_t" id="emf_cbase_native_module_interface_unload_fn_t">emf_cbase_native_module_interface_unload_fn_t</a></h4>
+<h4 id="emf_cbase_native_module_interface_unload_fn_t"><a class="header" href="#emf_cbase_native_module_interface_unload_fn_t">emf_cbase_native_module_interface_unload_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">FN_T(emf_cbase_native_module_interface_unload_fn_t,
       emf_cbase_module_result_t,
@@ -3547,7 +3573,7 @@ FN_T(emf_cbase_native_library_loader_interface_load_ext_fn_t,
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_native_module_loader_interface_get_native_module_fn_t" id="emf_cbase_native_module_loader_interface_get_native_module_fn_t">emf_cbase_native_module_loader_interface_get_native_module_fn_t</a></h4>
+<h4 id="emf_cbase_native_module_loader_interface_get_native_module_fn_t"><a class="header" href="#emf_cbase_native_module_loader_interface_get_native_module_fn_t">emf_cbase_native_module_loader_interface_get_native_module_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">FN_T(emf_cbase_native_module_loader_interface_get_native_module_fn_t,
       emf_cbase_native_module_ptr_result_t,
@@ -3556,34 +3582,34 @@ FN_T(emf_cbase_native_library_loader_interface_load_ext_fn_t,
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_os_path_char_t" id="emf_cbase_os_path_char_t">emf_cbase_os_path_char_t</a></h4>
+<h4 id="emf_cbase_os_path_char_t"><a class="header" href="#emf_cbase_os_path_char_t">emf_cbase_os_path_char_t</a></h4>
 <blockquote>
 <pre><code class="language-c">typedef EMF_CBASE_OS_PATH_CHAR emf_cbase_os_path_char_t;
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_sync_handler_lock_fn_t" id="emf_cbase_sync_handler_lock_fn_t">emf_cbase_sync_handler_lock_fn_t</a></h4>
+<h4 id="emf_cbase_sync_handler_lock_fn_t"><a class="header" href="#emf_cbase_sync_handler_lock_fn_t">emf_cbase_sync_handler_lock_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">FN_T(emf_cbase_sync_handler_lock_fn_t, void, 
       emf_cbase_sync_handler_t* sync_handler)
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_sync_handler_try_lock_fn_t" id="emf_cbase_sync_handler_try_lock_fn_t">emf_cbase_sync_handler_try_lock_fn_t</a></h4>
+<h4 id="emf_cbase_sync_handler_try_lock_fn_t"><a class="header" href="#emf_cbase_sync_handler_try_lock_fn_t">emf_cbase_sync_handler_try_lock_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">FN_T(emf_cbase_sync_handler_try_lock_fn_t, emf_cbase_bool_t, 
       emf_cbase_sync_handler_t* sync_handler)
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_sync_handler_unlock_fn_t" id="emf_cbase_sync_handler_unlock_fn_t">emf_cbase_sync_handler_unlock_fn_t</a></h4>
+<h4 id="emf_cbase_sync_handler_unlock_fn_t"><a class="header" href="#emf_cbase_sync_handler_unlock_fn_t">emf_cbase_sync_handler_unlock_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">FN_T(emf_cbase_sync_handler_unlock_fn_t, void, 
       emf_cbase_sync_handler_t* sync_handler)
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_sys_get_function_fn_t" id="emf_cbase_sys_get_function_fn_t">emf_cbase_sys_get_function_fn_t</a></h4>
+<h4 id="emf_cbase_sys_get_function_fn_t"><a class="header" href="#emf_cbase_sys_get_function_fn_t">emf_cbase_sys_get_function_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_sys_get_function_fn_t,
       emf_cbase_fn_optional_t,
@@ -3591,7 +3617,7 @@ FN_T(emf_cbase_native_library_loader_interface_load_ext_fn_t,
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_sys_get_sync_handler_fn_t" id="emf_cbase_sys_get_sync_handler_fn_t">emf_cbase_sys_get_sync_handler_fn_t</a></h4>
+<h4 id="emf_cbase_sys_get_sync_handler_fn_t"><a class="header" href="#emf_cbase_sys_get_sync_handler_fn_t">emf_cbase_sys_get_sync_handler_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_sys_get_sync_handler_fn_t,
       const emf_cbase_sync_handler_interface_t*,
@@ -3599,7 +3625,7 @@ FN_T(emf_cbase_native_library_loader_interface_load_ext_fn_t,
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_sys_has_function_fn_t" id="emf_cbase_sys_has_function_fn_t">emf_cbase_sys_has_function_fn_t</a></h4>
+<h4 id="emf_cbase_sys_has_function_fn_t"><a class="header" href="#emf_cbase_sys_has_function_fn_t">emf_cbase_sys_has_function_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_sys_has_function_fn_t, 
       emf_cbase_bool_t,
@@ -3607,44 +3633,44 @@ FN_T(emf_cbase_native_library_loader_interface_load_ext_fn_t,
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_sys_lock_fn_t" id="emf_cbase_sys_lock_fn_t">emf_cbase_sys_lock_fn_t</a></h4>
+<h4 id="emf_cbase_sys_lock_fn_t"><a class="header" href="#emf_cbase_sys_lock_fn_t">emf_cbase_sys_lock_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_sys_lock_fn_t, void, void)
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_sys_panic_fn_t" id="emf_cbase_sys_panic_fn_t">emf_cbase_sys_panic_fn_t</a></h4>
+<h4 id="emf_cbase_sys_panic_fn_t"><a class="header" href="#emf_cbase_sys_panic_fn_t">emf_cbase_sys_panic_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_sys_panic_fn_t, void, void)
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_sys_set_sync_handler_fn_t" id="emf_cbase_sys_set_sync_handler_fn_t">emf_cbase_sys_set_sync_handler_fn_t</a></h4>
+<h4 id="emf_cbase_sys_set_sync_handler_fn_t"><a class="header" href="#emf_cbase_sys_set_sync_handler_fn_t">emf_cbase_sys_set_sync_handler_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_sys_set_sync_handler_fn_t, void, 
       const emf_cbase_sync_handler_interface_t* sync_handler)
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_sys_shutdown_fn_t" id="emf_cbase_sys_shutdown_fn_t">emf_cbase_sys_shutdown_fn_t</a></h4>
+<h4 id="emf_cbase_sys_shutdown_fn_t"><a class="header" href="#emf_cbase_sys_shutdown_fn_t">emf_cbase_sys_shutdown_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_sys_shutdown_fn_t, void, void)
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_sys_try_lock_fn_t" id="emf_cbase_sys_try_lock_fn_t">emf_cbase_sys_try_lock_fn_t</a></h4>
+<h4 id="emf_cbase_sys_try_lock_fn_t"><a class="header" href="#emf_cbase_sys_try_lock_fn_t">emf_cbase_sys_try_lock_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_sys_try_lock_fn_t, emf_cbase_bool_t, void)
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_sys_unlock_fn_t" id="emf_cbase_sys_unlock_fn_t">emf_cbase_sys_unlock_fn_t</a></h4>
+<h4 id="emf_cbase_sys_unlock_fn_t"><a class="header" href="#emf_cbase_sys_unlock_fn_t">emf_cbase_sys_unlock_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_sys_unlock_fn_t, void, void)
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_version_as_string_full_fn_t" id="emf_cbase_version_as_string_full_fn_t">emf_cbase_version_as_string_full_fn_t</a></h4>
+<h4 id="emf_cbase_version_as_string_full_fn_t"><a class="header" href="#emf_cbase_version_as_string_full_fn_t">emf_cbase_version_as_string_full_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_version_as_string_full_fn_t,
       emf_cbase_version_size_result_t,
@@ -3653,7 +3679,7 @@ FN_T(emf_cbase_native_library_loader_interface_load_ext_fn_t,
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_version_as_string_long_fn_t" id="emf_cbase_version_as_string_long_fn_t">emf_cbase_version_as_string_long_fn_t</a></h4>
+<h4 id="emf_cbase_version_as_string_long_fn_t"><a class="header" href="#emf_cbase_version_as_string_long_fn_t">emf_cbase_version_as_string_long_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_version_as_string_long_fn_t,
       emf_cbase_version_size_result_t,
@@ -3662,7 +3688,7 @@ FN_T(emf_cbase_native_library_loader_interface_load_ext_fn_t,
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_version_as_string_short_fn_t" id="emf_cbase_version_as_string_short_fn_t">emf_cbase_version_as_string_short_fn_t</a></h4>
+<h4 id="emf_cbase_version_as_string_short_fn_t"><a class="header" href="#emf_cbase_version_as_string_short_fn_t">emf_cbase_version_as_string_short_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_version_as_string_short_fn_t,
       emf_cbase_version_size_result_t,
@@ -3671,7 +3697,7 @@ FN_T(emf_cbase_native_library_loader_interface_load_ext_fn_t,
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_version_compare_fn_t" id="emf_cbase_version_compare_fn_t">emf_cbase_version_compare_fn_t</a></h4>
+<h4 id="emf_cbase_version_compare_fn_t"><a class="header" href="#emf_cbase_version_compare_fn_t">emf_cbase_version_compare_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_version_compare_fn_t,
       int32_t,
@@ -3680,7 +3706,7 @@ FN_T(emf_cbase_native_library_loader_interface_load_ext_fn_t,
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_version_compare_strong_fn_t" id="emf_cbase_version_compare_strong_fn_t">emf_cbase_version_compare_strong_fn_t</a></h4>
+<h4 id="emf_cbase_version_compare_strong_fn_t"><a class="header" href="#emf_cbase_version_compare_strong_fn_t">emf_cbase_version_compare_strong_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_version_compare_strong_fn_t,
       int32_t,
@@ -3689,7 +3715,7 @@ FN_T(emf_cbase_native_library_loader_interface_load_ext_fn_t,
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_version_compare_weak_fn_t" id="emf_cbase_version_compare_weak_fn_t">emf_cbase_version_compare_weak_fn_t</a></h4>
+<h4 id="emf_cbase_version_compare_weak_fn_t"><a class="header" href="#emf_cbase_version_compare_weak_fn_t">emf_cbase_version_compare_weak_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_version_compare_weak_fn_t,
       int32_t,
@@ -3698,7 +3724,7 @@ FN_T(emf_cbase_native_library_loader_interface_load_ext_fn_t,
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_version_from_string_fn_t" id="emf_cbase_version_from_string_fn_t">emf_cbase_version_from_string_fn_t</a></h4>
+<h4 id="emf_cbase_version_from_string_fn_t"><a class="header" href="#emf_cbase_version_from_string_fn_t">emf_cbase_version_from_string_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_version_from_string_fn_t,
       emf_cbase_version_result_t,
@@ -3706,7 +3732,7 @@ FN_T(emf_cbase_native_library_loader_interface_load_ext_fn_t,
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_version_is_compatible_fn_t" id="emf_cbase_version_is_compatible_fn_t">emf_cbase_version_is_compatible_fn_t</a></h4>
+<h4 id="emf_cbase_version_is_compatible_fn_t"><a class="header" href="#emf_cbase_version_is_compatible_fn_t">emf_cbase_version_is_compatible_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_version_is_compatible_fn_t,
       emf_cbase_bool_t,
@@ -3715,7 +3741,7 @@ FN_T(emf_cbase_native_library_loader_interface_load_ext_fn_t,
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_version_new_full_fn_t" id="emf_cbase_version_new_full_fn_t">emf_cbase_version_new_full_fn_t</a></h4>
+<h4 id="emf_cbase_version_new_full_fn_t"><a class="header" href="#emf_cbase_version_new_full_fn_t">emf_cbase_version_new_full_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_version_new_full_fn_t,
       emf_cbase_version_t,
@@ -3728,7 +3754,7 @@ FN_T(emf_cbase_native_library_loader_interface_load_ext_fn_t,
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_version_new_long_fn_t" id="emf_cbase_version_new_long_fn_t">emf_cbase_version_new_long_fn_t</a></h4>
+<h4 id="emf_cbase_version_new_long_fn_t"><a class="header" href="#emf_cbase_version_new_long_fn_t">emf_cbase_version_new_long_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_version_new_long_fn_t,
       emf_cbase_version_t,
@@ -3740,7 +3766,7 @@ FN_T(emf_cbase_native_library_loader_interface_load_ext_fn_t,
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_version_new_short_fn_t" id="emf_cbase_version_new_short_fn_t">emf_cbase_version_new_short_fn_t</a></h4>
+<h4 id="emf_cbase_version_new_short_fn_t"><a class="header" href="#emf_cbase_version_new_short_fn_t">emf_cbase_version_new_short_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_version_new_short_fn_t,
       emf_cbase_version_t,
@@ -3750,7 +3776,7 @@ FN_T(emf_cbase_native_library_loader_interface_load_ext_fn_t,
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_version_string_is_valid_fn_t" id="emf_cbase_version_string_is_valid_fn_t">emf_cbase_version_string_is_valid_fn_t</a></h4>
+<h4 id="emf_cbase_version_string_is_valid_fn_t"><a class="header" href="#emf_cbase_version_string_is_valid_fn_t">emf_cbase_version_string_is_valid_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_version_string_is_valid_fn_t,
       emf_cbase_bool_t,
@@ -3758,7 +3784,7 @@ FN_T(emf_cbase_native_library_loader_interface_load_ext_fn_t,
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_version_string_length_full_fn_t" id="emf_cbase_version_string_length_full_fn_t">emf_cbase_version_string_length_full_fn_t</a></h4>
+<h4 id="emf_cbase_version_string_length_full_fn_t"><a class="header" href="#emf_cbase_version_string_length_full_fn_t">emf_cbase_version_string_length_full_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_version_string_length_full_fn_t,
       size_t,
@@ -3766,7 +3792,7 @@ FN_T(emf_cbase_native_library_loader_interface_load_ext_fn_t,
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_version_string_length_long_fn_t" id="emf_cbase_version_string_length_long_fn_t">emf_cbase_version_string_length_long_fn_t</a></h4>
+<h4 id="emf_cbase_version_string_length_long_fn_t"><a class="header" href="#emf_cbase_version_string_length_long_fn_t">emf_cbase_version_string_length_long_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_version_string_length_long_fn_t,
       size_t,
@@ -3774,14 +3800,14 @@ FN_T(emf_cbase_native_library_loader_interface_load_ext_fn_t,
 </code></pre>
 </blockquote>
 <hr />
-<h4><a class="header" href="#emf_cbase_version_string_length_short_fn_t" id="emf_cbase_version_string_length_short_fn_t">emf_cbase_version_string_length_short_fn_t</a></h4>
+<h4 id="emf_cbase_version_string_length_short_fn_t"><a class="header" href="#emf_cbase_version_string_length_short_fn_t">emf_cbase_version_string_length_short_fn_t</a></h4>
 <blockquote>
 <pre><code class="language-c">BASE_FN_T(emf_cbase_version_string_length_short_fn_t,
       size_t,
       const emf_cbase_version_t* version)
 </code></pre>
 </blockquote>
-<h2><a class="header" href="#headers" id="headers">Headers</a></h2>
+<h2 id="headers"><a class="header" href="#headers">Headers</a></h2>
 <p>The interface is split up in multiple header files:</p>
 <pre><code class="language-text">emf_core_base/
 └── include/
@@ -3795,7 +3821,7 @@ FN_T(emf_cbase_native_library_loader_interface_load_ext_fn_t,
         ├── emf_cbase_version_t.h
         └── emf_cbase_version.h
 </code></pre>
-<h3><a class="header" href="#synopsis-emf_cbase_bool_th" id="synopsis-emf_cbase_bool_th">Synopsis <code>emf_cbase_bool_t.h</code></a></h3>
+<h3 id="synopsis-emf_cbase_bool_th"><a class="header" href="#synopsis-emf_cbase_bool_th">Synopsis <code>emf_cbase_bool_t.h</code></a></h3>
 <pre><code class="language-c">#include &lt;stdint.h&gt;
 
 typedef enum emf_cbase_bool_t : int8_t {
@@ -3803,7 +3829,7 @@ typedef enum emf_cbase_bool_t : int8_t {
     emf_cbase_bool_true = 1,
 } emf_cbase_bool_t;
 </code></pre>
-<h3><a class="header" href="#synopsis-emf_cbase_fn_ptr_id_th" id="synopsis-emf_cbase_fn_ptr_id_th">Synopsis <code>emf_cbase_fn_ptr_id_t.h</code></a></h3>
+<h3 id="synopsis-emf_cbase_fn_ptr_id_th"><a class="header" href="#synopsis-emf_cbase_fn_ptr_id_th">Synopsis <code>emf_cbase_fn_ptr_id_t.h</code></a></h3>
 <pre><code class="language-c">#include &lt;stdint.h&gt;
 
 typedef enum emf_cbase_fn_ptr_id_t : int32_t {
@@ -3888,10 +3914,10 @@ typedef enum emf_cbase_fn_ptr_id_t : int32_t {
     emf_cbase_fn_ptr_id_module_get_interface = 335,
 } emf_cbase_fn_ptr_id;
 </code></pre>
-<h3><a class="header" href="#synopsis-emf_cbase_interface_th" id="synopsis-emf_cbase_interface_th">Synopsis <code>emf_cbase_interface_t.h</code></a></h3>
-<pre><code class="language-c">#include &lt;emf_core_base/emf_cbase_library_t.h&gt;
-#include &lt;emf_core_base/emf_cbase_module_t.h&gt;
-#include &lt;emf_core_base/emf_cbase_sys_t.h&gt;
+<h3 id="synopsis-emf_cbase_interface_th"><a class="header" href="#synopsis-emf_cbase_interface_th">Synopsis <code>emf_cbase_interface_t.h</code></a></h3>
+<pre><code class="language-c">#include &lt;emf_core_base/emf_cbase_library.h&gt;
+#include &lt;emf_core_base/emf_cbase_module.h&gt;
+#include &lt;emf_core_base/emf_cbase_sys.h&gt;
 #include &lt;emf_core_base/emf_cbase_version_t.h&gt;
 
 #define EMF_CBASE_INTERFACE_NAME &quot;emf:core_base&quot;
@@ -3981,7 +4007,7 @@ typedef struct emf_cbase_interface_t {
     emf_cbase_module_get_interface_fn_t module_get_interface_fn;
 } emf_cbase_interface_t;
 </code></pre>
-<h3><a class="header" href="#synopsis-emf_cbase_libraryh" id="synopsis-emf_cbase_libraryh">Synopsis <code>emf_cbase_library.h</code></a></h3>
+<h3 id="synopsis-emf_cbase_libraryh"><a class="header" href="#synopsis-emf_cbase_libraryh">Synopsis <code>emf_cbase_library.h</code></a></h3>
 <pre><code class="language-c">#include &lt;stddef.h&gt;
 #include &lt;stdint.h&gt;
 
@@ -4012,7 +4038,7 @@ typedef enum emf_cbase_library_error_t : int32_t {
     emf_cbase_library_error_library_path_not_found = 0,
     emf_cbase_library_error_library_handle_invalid = 1,
     emf_cbase_library_error_loader_handle_invalid = 2,
-    emf_cbase_library_error_loader_library_handle_invalid = 3,
+    emf_cbase_library_error_internal_handle_invalid = 3,
     emf_cbase_library_error_library_type_invalid = 4,
     emf_cbase_library_error_library_type_not_found = 5,
     emf_cbase_library_error_duplicate_library_type = 6,
@@ -4082,18 +4108,30 @@ RESULT_T(emf_cbase_library_loader_interface_result_t,
 
 // native library loader interface
 #if defined(Win32) || defined(_WIN32)
+typedef void* emf_cbase_native_library_handle_fn_t;
+
 FN_T(emf_cbase_native_library_loader_interface_load_ext_fn_t, emf_cbase_internal_library_handle_result_t,
         emf_cbase_library_loader_t*, library_loader, const emf_cbase_os_path_char_t* library_path,
         void* h_file, uint32_t flags)
 #else
+typedef void* emf_cbase_native_library_handle_fn_t;
+
 FN_T(emf_cbase_native_library_loader_interface_load_ext_fn_t, emf_cbase_internal_library_handle_result_t,
         emf_cbase_library_loader_t*, library_loader, const emf_cbase_os_path_char_t* library_path,
         int flags)
 #endif // defined(Win32) || defined(_WIN32)
 
+RESULT_T(emf_cbase_native_library_handle_result_t, emf_cbase_native_library_handle_fn_t, emf_cbase_library_error_t)
+
+FN_T(emf_cbase_native_library_loader_get_native_handle_fn_t,
+        emf_cbase_native_library_handle_result_t,
+        emf_cbase_library_loader_t*, library_loader,
+        const emf_cbase_os_path_char_t* library_path)
+
 typedef struct emf_cbase_native_library_loader_interface_t {
     const emf_cbase_library_loader_interface_t* library_loader_interface;
     emf_cbase_native_library_loader_interface_load_ext_fn_t load_ext_fn;
+    emf_cbase_native_library_loader_get_native_handle_fn_t get_native_handle_fn;
 } emf_cbase_native_library_loader_interface_t;
 
 // library api
@@ -4137,7 +4175,7 @@ BASE_FN_T(emf_cbase_library_get_data_symbol_fn_t, emf_cbase_library_data_symbol_
 BASE_FN_T(emf_cbase_library_get_function_symbol_fn_t, emf_cbase_library_fn_symbol_result_t, 
         emf_cbase_library_handle_t library_handle, const char* symbol_name)
 </code></pre>
-<h3><a class="header" href="#synopsis-emf_cbase_moduleh" id="synopsis-emf_cbase_moduleh">Synopsis <code>emf_cbase_module.h</code></a></h3>
+<h3 id="synopsis-emf_cbase_moduleh"><a class="header" href="#synopsis-emf_cbase_moduleh">Synopsis <code>emf_cbase_module.h</code></a></h3>
 <pre><code class="language-c">#include &lt;stddef.h&gt;
 #include &lt;stdint.h&gt;
 
@@ -4168,7 +4206,7 @@ typedef enum emf_cbase_module_error_t : int32_t {
     emf_cbase_module_error_module_state_invalid = 1,
     emf_cbase_module_error_module_handle_invalid = 2,
     emf_cbase_module_error_loader_handle_invalid = 3,
-    emf_cbase_module_error_loader_module_handle_invalid = 4,
+    emf_cbase_module_error_internal_handle_invalid = 4,
     emf_cbase_module_error_module_type_invalid = 5,
     emf_cbase_module_error_module_type_not_found = 6,
     emf_cbase_module_error_duplicate_module_type = 7,
@@ -4366,7 +4404,7 @@ BASE_FN_T(emf_cbase_module_remove_module_handle_fn_t, emf_cbase_module_result_t,
         emf_cbase_module_handle_t module_handle)
 BASE_FN_T(emf_cbase_module_link_module_fn_t, emf_cbase_module_result_t, 
         emf_cbase_module_handle_t module_handle, emf_cbase_module_loader_handle_t loader_handle, 
-        emf_cbase_internal_module_handle_t loader_module_handle)
+        emf_cbase_internal_module_handle_t internal_handle)
 BASE_FN_T(emf_cbase_module_get_internal_module_handle_fn_t, emf_cbase_internal_module_handle_result_t, 
         emf_cbase_module_handle_t module_handle)
 
@@ -4400,7 +4438,7 @@ BASE_FN_T(emf_cbase_module_get_module_info_fn_t, emf_cbase_module_info_ptr_resul
 BASE_FN_T(emf_cbase_module_get_interface_fn_t, emf_cbase_module_interface_result_t, 
         emf_cbase_module_handle_t module_handle, const emf_cbase_interface_descriptor_t* interface_descriptor)
 </code></pre>
-<h3><a class="header" href="#synopsis-emf_cbase_sysh" id="synopsis-emf_cbase_sysh">Synopsis <code>emf_cbase_sys.h</code></a></h3>
+<h3 id="synopsis-emf_cbase_sysh"><a class="header" href="#synopsis-emf_cbase_sysh">Synopsis <code>emf_cbase_sys.h</code></a></h3>
 <pre><code class="language-c">#include &lt;stdint.h&gt;
 
 #include &lt;emf_core_base/emf_cbase_bool_t.h&gt;
@@ -4444,7 +4482,7 @@ BASE_FN_T(emf_cbase_sys_get_sync_handler_fn_t, const emf_cbase_sync_handler_inte
 BASE_FN_T(emf_cbase_sys_set_sync_handler_fn_t, void, 
         const emf_cbase_sync_handler_interface_t* sync_handler)
 </code></pre>
-<h3><a class="header" href="#synopsis-emf_cbase_version_th" id="synopsis-emf_cbase_version_th">Synopsis <code>emf_cbase_version_t.h</code></a></h3>
+<h3 id="synopsis-emf_cbase_version_th"><a class="header" href="#synopsis-emf_cbase_version_th">Synopsis <code>emf_cbase_version_t.h</code></a></h3>
 <pre><code class="language-c">#include &lt;stddef.h&gt;
 #include &lt;stdint.h&gt;
 
@@ -4518,7 +4556,7 @@ BASE_FN_T(emf_cbase_version_compare_strong_fn_t, int32_t,
 BASE_FN_T(emf_cbase_version_is_compatible_fn_t, emf_cbase_bool_t,
         const emf_cbase_version_t* lhs, const emf_cbase_version_t* rhs)
 </code></pre>
-<h3><a class="header" href="#synopsis-emf_cbase_versionh" id="synopsis-emf_cbase_versionh">Synopsis <code>emf_cbase_version.h</code></a></h3>
+<h3 id="synopsis-emf_cbase_versionh"><a class="header" href="#synopsis-emf_cbase_versionh">Synopsis <code>emf_cbase_version.h</code></a></h3>
 <pre><code class="language-c">#define EMF_CBASE_VERSION_MAJOR 0
 #define EMF_CBASE_VERSION_MINOR 1
 #define EMF_CBASE_VERSION_PATCH 0
@@ -4528,7 +4566,7 @@ BASE_FN_T(emf_cbase_version_is_compatible_fn_t, emf_cbase_bool_t,
 
 #define EMF_CBASE_VERSION_STRING &quot;0.1.0&quot;
 </code></pre>
-<h1><a class="header" href="#drawbacks" id="drawbacks">Drawbacks</a></h1>
+<h1 id="drawbacks"><a class="header" href="#drawbacks">Drawbacks</a></h1>
 <p>The current design has several drawbacks:</p>
 <ul>
 <li>Verbosity: This design serves only as a thin abstraction over the OS's dynamic linking functionality, which by itself
@@ -4536,18 +4574,18 @@ is a fairly low-level operation. Because of that, it can become quite cumbersome
 <li>Ownership: The design lacks any concept of resource (eg. library, module, etc.) ownership, allowing anyone to freely
 modify those resources.</li>
 </ul>
-<h1><a class="header" href="#rationale-and-alternatives" id="rationale-and-alternatives">Rationale and alternatives</a></h1>
+<h1 id="rationale-and-alternatives"><a class="header" href="#rationale-and-alternatives">Rationale and alternatives</a></h1>
 <p>The verbosity stems from the fact, that the C language itself is actually quite limiting with its lack of generics and
 strong type safety guarantees. This design, which might deviate from an idiomatic C design, will allow us to more easily
 wrap the interface in other languages like C++ or Rust. The lack of ownership semantics can also be mitigated by those
 languages with clever use of generics and type wrapping.</p>
-<h1><a class="header" href="#prior-art" id="prior-art">Prior art</a></h1>
+<h1 id="prior-art"><a class="header" href="#prior-art">Prior art</a></h1>
 <p>Many engines implement a plugin system, but I am currently not aware of any implementation that seeks to implement a
 fully modular engine, instead of only extending the &quot;core&quot; engine.</p>
-<h1><a class="header" href="#unresolved-questions" id="unresolved-questions">Unresolved questions</a></h1>
+<h1 id="unresolved-questions"><a class="header" href="#unresolved-questions">Unresolved questions</a></h1>
 <p>The current design makes heavy use of error constants, but it is difficult to actually specify a set of errors that
 encapsulate every possible error condition.</p>
-<h1><a class="header" href="#future-possibilities" id="future-possibilities">Future possibilities</a></h1>
+<h1 id="future-possibilities"><a class="header" href="#future-possibilities">Future possibilities</a></h1>
 <p>As already mentioned in the <a href="#implementation">implementation</a> section, we may extend the interface through extensions.</p>
 
                     </main>
