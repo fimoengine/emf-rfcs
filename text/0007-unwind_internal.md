@@ -252,12 +252,12 @@ typedef enum emf_cbase_fn_ptr_id_t : int32_t {
 
 > ```c
 > typedef struct emf_cbase_ext_unw_int_interface_t {
->     emf_cbase_ext_unw_int_set_context_fn_t EMF_CBASE_NOT_NULL set_context_fn;
->     emf_cbase_ext_unw_int_get_context_fn_t EMF_CBASE_NOT_NULL get_context_fn;
->     emf_cbase_ext_unw_int_set_shutdown_fn_fn_t EMF_CBASE_NOT_NULL set_shutdown_fn_fn;
->     emf_cbase_ext_unw_int_get_shutdown_fn_fn_t EMF_CBASE_NOT_NULL get_shutdown_fn_fn;
->     emf_cbase_ext_unw_int_set_panic_fn_fn_t EMF_CBASE_NOT_NULL set_panic_fn_fn;
->     emf_cbase_ext_unw_int_get_panic_fn_fn_t EMF_CBASE_NOT_NULL get_panic_fn_fn;
+>     emf_cbase_ext_unw_int_set_context_fn_t set_context_fn;
+>     emf_cbase_ext_unw_int_get_context_fn_t get_context_fn;
+>     emf_cbase_ext_unw_int_set_shutdown_fn_fn_t set_shutdown_fn_fn;
+>     emf_cbase_ext_unw_int_get_shutdown_fn_fn_t get_shutdown_fn_fn;
+>     emf_cbase_ext_unw_int_set_panic_fn_fn_t set_panic_fn_fn;
+>     emf_cbase_ext_unw_int_get_panic_fn_fn_t get_panic_fn_fn;
 > } emf_cbase_ext_unw_int_interface_t;
 > ```
 
