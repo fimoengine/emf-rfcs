@@ -176,7 +176,7 @@
 <p>This RFC proposes a new interface to be added to the EMF project. This proposed interface will serve as a foundation for
 all future interfaces.</p>
 <h1 id="motivation"><a class="header" href="#motivation">Motivation</a></h1>
-<p>As software grows in complexity, it tends to become more tightly integrated and their subsystems more tightly coupled.
+<p>As software grows in complexity, it tends to become more tightly integrated, and their subsystems more tightly coupled.
 Such a tight coupling reduces flexibility and re-usability, and modifying it becomes a hassle. Because of that, many
 developers are forced to constantly reinvent the wheel, which takes time and manpower. This becomes apparent, when we
 look at the plethora of existing game engines.</p>
@@ -519,7 +519,7 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 <pre><code class="language-c">emf_cbase_bool_t library_library_exists(emf_cbase_library_handle_t library_handle)
 </code></pre>
 <ul>
-<li>Effects: Checks if a the library handle is valid.</li>
+<li>Effects: Checks if the library handle is valid.</li>
 <li>Returns: <code>emf_cbase_bool_true</code> if the handle is valid, <code>emf_cbase_bool_false</code> otherwise.</li>
 </ul>
 </blockquote>
@@ -607,7 +607,7 @@ Overrides the internal link of the library handle by setting it to the new libra
 <ul>
 <li>Effects: Loads a library. The resulting handle is unique.</li>
 <li>Mandates: <code>library_path != NULL</code>.</li>
-<li>Failure: The function fails if <code>loader_handle</code> or <code>library_path</code> is invalid
+<li>Failure: The function fails if <code>loader_handle</code> or <code>library_path</code> is invalid,
 or the type of the library can not be loaded with the loader.</li>
 <li>Returns: Handle on success, error otherwise.</li>
 </ul>
@@ -663,7 +663,7 @@ and unloading of modules is implemented by module loaders, which are associated 
 <p>Module loaders implement the actual loading and unloading of modules. Custom module loaders can be added by constructing
 an <code>emf_cbase_module_loader_interface_t</code> and calling the <code>module_register_loader()</code> function.</p>
 <h4 id="module-types"><a class="header" href="#module-types">Module types</a></h4>
-<p>The type of a module identifies a module loader capable of loading a specific module. A module type is represented by
+<p>The type of module identifies a module loader capable of loading a specific module. A module type is represented by
 an <code>emf_cbase_module_type_t</code>.</p>
 <h4 id="module-filesystem-structure"><a class="header" href="#module-filesystem-structure">Module filesystem structure</a></h4>
 <pre><code class="language-text">module/
@@ -1107,7 +1107,7 @@ Unregistering a module loader also unloads the modules it loaded.</li>
 </code></pre>
 <ul>
 <li>Effects: Adds a new module.</li>
-<li>Failure: Fails if <code>loader_handle</code> or <code>module_path</code> is invalid or
+<li>Failure: Fails if <code>loader_handle</code> or <code>module_path</code> is invalid, or
 the type of the module can not be loaded with the loader.</li>
 <li>Returns: Module handle on success, error otherwise.</li>
 </ul>
@@ -1119,7 +1119,7 @@ the type of the module can not be loaded with the loader.</li>
 </code></pre>
 <ul>
 <li>Effects: Removes a module.</li>
-<li>Failure: Fails if <code>module_handle</code> is invalid or the module is not in an unloaded state.</li>
+<li>Failure: Fails if <code>module_handle</code> is invalid, or the module is not in an unloaded state.</li>
 <li>Returns: Error on failure.</li>
 </ul>
 </blockquote>
@@ -1131,7 +1131,7 @@ the type of the module can not be loaded with the loader.</li>
 <ul>
 <li>Effects: Loads a module.</li>
 <li>Failure: Fails if <code>module_handle</code> is invalid, the load dependencies of the
-module are not exported or the module is not in an unloaded state.</li>
+module are not exported, or the module is not in an unloaded state.</li>
 <li>Returns: Error on failure.</li>
 </ul>
 </blockquote>
@@ -1142,7 +1142,7 @@ module are not exported or the module is not in an unloaded state.</li>
 </code></pre>
 <ul>
 <li>Effects: Unloads a module.</li>
-<li>Failure: Fails if <code>module_handle</code> is invalid or the module is in an unloaded or ready state.</li>
+<li>Failure: Fails if <code>module_handle</code> is invalid, or the module is in an unloaded or ready state.</li>
 <li>Returns: Error on failure.</li>
 </ul>
 </blockquote>
@@ -1154,7 +1154,7 @@ module are not exported or the module is not in an unloaded state.</li>
 <ul>
 <li>Effects: Initializes a module.</li>
 <li>Failure: Fails if <code>module_handle</code> is invalid, the runtime dependencies of the module are not
-exported or the module is not in a loaded state.</li>
+exported, or the module is not in a loaded state.</li>
 <li>Returns: Error on failure.</li>
 </ul>
 </blockquote>
@@ -1167,7 +1167,7 @@ exported or the module is not in a loaded state.</li>
 <li>Effects: Terminates a module. Terminating a module also removes the interfaces it exported.
 The modules that depend on the module are terminated. If they list the module as a load dependency,
 they are also unloaded.</li>
-<li>Failure: Fails if <code>module_handle</code> is invalid or the module is not in a ready state.</li>
+<li>Failure: Fails if <code>module_handle</code> is invalid, or the module is not in a ready state.</li>
 <li>Returns: Error on failure.</li>
 </ul>
 </blockquote>
@@ -1209,7 +1209,7 @@ they are also unloaded.</li>
 <ul>
 <li>Effects: Exports an interface of a module.</li>
 <li>Failure: Fails if <code>module_handle</code> is invalid, <code>interface_descriptor</code> is already exported,
-<code>interface_descriptor</code> is not contained in the module or the module is not yet initialized.</li>
+<code>interface_descriptor</code> is not contained in the module, or the module is not yet initialized.</li>
 <li>Mandates: <code>interface_descriptor != NULL</code>.</li>
 <li>Returns: Error on failure.</li>
 </ul>
@@ -1234,7 +1234,7 @@ they are also unloaded.</li>
 </code></pre>
 <ul>
 <li>Effects: Fetches the runtime dependencies of a module.</li>
-<li>Failure: Fails if <code>module_handle</code> is invalid or the module is not yet loaded.</li>
+<li>Failure: Fails if <code>module_handle</code> is invalid, or the module is not yet loaded.</li>
 <li>Returns: Runtime dependencies on success, error otherwise.</li>
 </ul>
 </blockquote>
@@ -1246,7 +1246,7 @@ they are also unloaded.</li>
 </code></pre>
 <ul>
 <li>Effects: Fetches the exportable interfaces of a module.</li>
-<li>Failure: Fails if <code>module_handle</code> is invalid or the module is not yet loaded.</li>
+<li>Failure: Fails if <code>module_handle</code> is invalid, or the module is not yet loaded.</li>
 <li>Returns: Exportable interfaces on success, error otherwise.</li>
 </ul>
 </blockquote>
@@ -1268,7 +1268,7 @@ they are also unloaded.</li>
 </code></pre>
 <ul>
 <li>Effects: Fetches the path a module was loaded from.</li>
-<li>Failure: Fails if <code>module_handle</code> is invalid or the module is not yet loaded.</li>
+<li>Failure: Fails if <code>module_handle</code> is invalid, or the module is not yet loaded.</li>
 <li>Returns: Module path on success, error otherwise.</li>
 </ul>
 </blockquote>
@@ -1279,7 +1279,7 @@ they are also unloaded.</li>
 </code></pre>
 <ul>
 <li>Effects: Fetches the module info from a module.</li>
-<li>Failure: Fails if <code>module_handle</code> is invalid or the module is not yet loaded.</li>
+<li>Failure: Fails if <code>module_handle</code> is invalid, or the module is not yet loaded.</li>
 <li>Returns: Module info on success, error otherwise.</li>
 </ul>
 </blockquote>
@@ -1292,7 +1292,7 @@ they are also unloaded.</li>
 </code></pre>
 <ul>
 <li>Effects: Fetches an interface from a module.</li>
-<li>Failure: Fails if <code>module_handle</code> is invalid, the module is not in a ready state
+<li>Failure: Fails if <code>module_handle</code> is invalid, the module is not in a ready state,
 or the interface is not contained in the module.</li>
 <li>Mandates: <code>interface_descriptor != NULL</code>.</li>
 <li>Returns: Interface on success, error otherwise.</li>
@@ -2129,7 +2129,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 } emf_cbase_version_release_t;
 </code></pre>
 <ul>
-<li>Description: An enum describing the release type of a version.</li>
+<li>Description: An enum describing the release type of version.</li>
 </ul>
 <table><thead><tr><th>Name</th><th>Value</th><th>Description</th></tr></thead><tbody>
 <tr><td><strong>emf_cbase_version_release_stable</strong></td><td><code>0</code></td><td>A stable release.</td></tr>
@@ -2469,7 +2469,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 <pre><code class="language-c">BUFFER_T(emf_cbase_library_type_t, char, EMF_CBASE_LIBRARY_LOADER_TYPE_MAX_LENGTH)
 </code></pre>
 <ul>
-<li>Description: Type of a library.</li>
+<li>Description: Type of library.</li>
 </ul>
 </blockquote>
 <hr />
@@ -2681,7 +2681,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 <pre><code class="language-c">BUFFER_T(emf_cbase_module_type_t, char, EMF_CBASE_MODULE_LOADER_TYPE_MAX_LENGTH)
 </code></pre>
 <ul>
-<li>Description: Type of a module</li>
+<li>Description: Type of module</li>
 <li>Remarks: A module name is modelled as an <code>UTF-8</code> encoded string, without a <code>\0</code> terminator.</li>
 </ul>
 </blockquote>
@@ -2740,6 +2740,7 @@ The values <code>0-99</code> are reserved for future use.</li>
 <pre><code class="language-c">typedef struct emf_cbase_native_module_loader_interface_t {
     const emf_cbase_module_loader_interface_t* module_loader_interface;
     emf_cbase_native_module_loader_interface_get_native_module_fn_t get_native_module_fn;
+    emf_cbase_native_module_loader_interface_get_native_module_interface_fn_t get_native_module_interface_fn;
 } emf_cbase_native_module_loader_interface_t;
 </code></pre>
 <ul>
@@ -2754,6 +2755,16 @@ The values <code>0-99</code> are reserved for future use.</li>
 </code></pre>
 <ul>
 <li>Description: A struct containing either an <code>emf_cbase_native_module_t*</code> or an <code>emf_cbase_module_error_t</code>.</li>
+</ul>
+</blockquote>
+<hr />
+<h4 id="emf_cbase_native_module_interface_ptr_result_t"><a class="header" href="#emf_cbase_native_module_interface_ptr_result_t">emf_cbase_native_module_interface_ptr_result_t</a></h4>
+<blockquote>
+<pre><code class="language-c">RESULT_T(emf_cbase_native_module_interface_ptr_result_t, const emf_cbase_native_module_interface_t*, emf_cbase_module_error_t)
+</code></pre>
+<ul>
+<li>Description: A struct containing either a <code>const emf_cbase_native_module_interface_t*</code> or an <code>emf_cbase_module_error_t</code>.</li>
+<li>Remarks. If it contains a <code>const emf_cbase_native_module_interface_t*</code>, it may never be <code>NULL</code>.</li>
 </ul>
 </blockquote>
 <hr />
@@ -3582,6 +3593,15 @@ FN_T(emf_cbase_native_library_loader_interface_load_ext_fn_t,
 </code></pre>
 </blockquote>
 <hr />
+<h4 id="emf_cbase_native_module_loader_interface_get_native_module_interface_fn_t"><a class="header" href="#emf_cbase_native_module_loader_interface_get_native_module_interface_fn_t">emf_cbase_native_module_loader_interface_get_native_module_interface_fn_t</a></h4>
+<blockquote>
+<pre><code class="language-c">FN_T(emf_cbase_native_module_loader_interface_get_native_module_interface_fn_t,
+      emf_cbase_native_module_interface_ptr_result_t,
+      emf_cbase_module_loader_t* module_loader,
+      emf_cbase_internal_module_handle_t module_handle)
+</code></pre>
+</blockquote>
+<hr />
 <h4 id="emf_cbase_os_path_char_t"><a class="header" href="#emf_cbase_os_path_char_t">emf_cbase_os_path_char_t</a></h4>
 <blockquote>
 <pre><code class="language-c">typedef EMF_CBASE_OS_PATH_CHAR emf_cbase_os_path_char_t;
@@ -4360,12 +4380,18 @@ typedef struct emf_cbase_native_module_interface_t {
 } emf_cbase_native_module_interface_t;
 
 // native module loader interface
+RESULT_T(emf_cbase_native_module_interface_ptr_result_t, const emf_cbase_native_module_interface_t*, 
+        emf_cbase_module_error_t)
 FN_T(emf_cbase_native_module_loader_interface_get_native_module_fn_t, emf_cbase_native_module_ptr_result_t,
         emf_cbase_module_loader_t* module_loader, emf_cbase_internal_module_handle_t module_handle)
+FN_T(emf_cbase_native_module_loader_interface_get_native_module_interface_fn_t, 
+        emf_cbase_native_module_interface_ptr_result_t, emf_cbase_module_loader_t* module_loader, 
+        emf_cbase_internal_module_handle_t module_handle)
 
 typedef struct emf_cbase_native_module_loader_interface_t {
     const emf_cbase_module_loader_interface_t* module_loader_interface;
     emf_cbase_native_module_loader_interface_get_native_module_fn_t get_native_module_fn;
+    emf_cbase_native_module_loader_interface_get_native_module_interface_fn_t get_native_module_interface_fn;
 } emf_cbase_native_module_loader_interface_t;
 
 // module api
@@ -4571,7 +4597,7 @@ BASE_FN_T(emf_cbase_version_is_compatible_fn_t, emf_cbase_bool_t,
 <ul>
 <li>Verbosity: This design serves only as a thin abstraction over the OS's dynamic linking functionality, which by itself
 is a fairly low-level operation. Because of that, it can become quite cumbersome to use the interface.</li>
-<li>Ownership: The design lacks any concept of resource (eg. library, module, etc.) ownership, allowing anyone to freely
+<li>Ownership: The design lacks any concept of resource (e.g. library, module, etc.) ownership, allowing anyone to freely
 modify those resources.</li>
 </ul>
 <h1 id="rationale-and-alternatives"><a class="header" href="#rationale-and-alternatives">Rationale and alternatives</a></h1>
