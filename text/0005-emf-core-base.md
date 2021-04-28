@@ -13,7 +13,7 @@ all future interfaces.
 
 [motivation]: #motivation
 
-As software grows in complexity, it tends to become more tightly integrated and their subsystems more tightly coupled.
+As software grows in complexity, it tends to become more tightly integrated, and their subsystems more tightly coupled.
 Such a tight coupling reduces flexibility and re-usability, and modifying it becomes a hassle. Because of that, many
 developers are forced to constantly reinvent the wheel, which takes time and manpower. This becomes apparent, when we
 look at the plethora of existing game engines.
@@ -409,7 +409,7 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 > emf_cbase_bool_t library_library_exists(emf_cbase_library_handle_t library_handle)
 > ```
 >
-> - Effects: Checks if a the library handle is valid.
+> - Effects: Checks if the library handle is valid.
 > - Returns: `emf_cbase_bool_true` if the handle is valid, `emf_cbase_bool_false` otherwise.
 
 ---
@@ -504,7 +504,7 @@ emf_cbase_library_fn_symbol_result_t library_get_function_symbol(
 >
 > - Effects: Loads a library. The resulting handle is unique.
 > - Mandates: `library_path != NULL`.
-> - Failure: The function fails if `loader_handle` or `library_path` is invalid
+> - Failure: The function fails if `loader_handle` or `library_path` is invalid,
     or the type of the library can not be loaded with the loader.
 > - Returns: Handle on success, error otherwise.
 
@@ -569,7 +569,7 @@ an `emf_cbase_module_loader_interface_t` and calling the `module_register_loader
 
 #### Module types
 
-The type of a module identifies a module loader capable of loading a specific module. A module type is represented by
+The type of module identifies a module loader capable of loading a specific module. A module type is represented by
 an `emf_cbase_module_type_t`.
 
 #### Module filesystem structure
@@ -1059,7 +1059,7 @@ emf_cbase_module_interface_result_t module_get_interface(
 > ```
 >
 > - Effects: Adds a new module.
-> - Failure: Fails if `loader_handle` or `module_path` is invalid or
+> - Failure: Fails if `loader_handle` or `module_path` is invalid, or
     the type of the module can not be loaded with the loader.
 > - Returns: Module handle on success, error otherwise.
 
@@ -1072,7 +1072,7 @@ emf_cbase_module_interface_result_t module_get_interface(
 > ```
 >
 > - Effects: Removes a module.
-> - Failure: Fails if `module_handle` is invalid or the module is not in an unloaded state.
+> - Failure: Fails if `module_handle` is invalid, or the module is not in an unloaded state.
 > - Returns: Error on failure.
 
 ---
@@ -1085,7 +1085,7 @@ emf_cbase_module_interface_result_t module_get_interface(
 >
 > - Effects: Loads a module.
 > - Failure: Fails if `module_handle` is invalid, the load dependencies of the
-    module are not exported or the module is not in an unloaded state.
+    module are not exported, or the module is not in an unloaded state.
 > - Returns: Error on failure.
 
 ---
@@ -1097,7 +1097,7 @@ emf_cbase_module_interface_result_t module_get_interface(
 > ```
 >
 > - Effects: Unloads a module.
-> - Failure: Fails if `module_handle` is invalid or the module is in an unloaded or ready state.
+> - Failure: Fails if `module_handle` is invalid, or the module is in an unloaded or ready state.
 > - Returns: Error on failure.
 
 ---
@@ -1110,7 +1110,7 @@ emf_cbase_module_interface_result_t module_get_interface(
 >
 > - Effects: Initializes a module.
 > - Failure: Fails if `module_handle` is invalid, the runtime dependencies of the module are not
-    exported or the module is not in a loaded state.
+    exported, or the module is not in a loaded state.
 > - Returns: Error on failure.
 
 ---
@@ -1124,7 +1124,7 @@ emf_cbase_module_interface_result_t module_get_interface(
 > - Effects: Terminates a module. Terminating a module also removes the interfaces it exported.
     The modules that depend on the module are terminated. If they list the module as a load dependency,
     they are also unloaded.
-> - Failure: Fails if `module_handle` is invalid or the module is not in a ready state.
+> - Failure: Fails if `module_handle` is invalid, or the module is not in a ready state.
 > - Returns: Error on failure.
 
 ---
@@ -1169,7 +1169,7 @@ emf_cbase_module_interface_result_t module_get_interface(
 >
 > - Effects: Exports an interface of a module.
 > - Failure: Fails if `module_handle` is invalid, `interface_descriptor` is already exported,
-    `interface_descriptor` is not contained in the module or the module is not yet initialized.
+    `interface_descriptor` is not contained in the module, or the module is not yet initialized.
 > - Mandates: `interface_descriptor != NULL`.
 > - Returns: Error on failure.
 
@@ -1196,7 +1196,7 @@ emf_cbase_module_interface_result_t module_get_interface(
 > ```
 >
 > - Effects: Fetches the runtime dependencies of a module.
-> - Failure: Fails if `module_handle` is invalid or the module is not yet loaded.
+> - Failure: Fails if `module_handle` is invalid, or the module is not yet loaded.
 > - Returns: Runtime dependencies on success, error otherwise.
 
 ---
@@ -1209,7 +1209,7 @@ emf_cbase_module_interface_result_t module_get_interface(
 > ```
 >
 > - Effects: Fetches the exportable interfaces of a module.
-> - Failure: Fails if `module_handle` is invalid or the module is not yet loaded.
+> - Failure: Fails if `module_handle` is invalid, or the module is not yet loaded.
 > - Returns: Exportable interfaces on success, error otherwise.
 
 ---
@@ -1233,7 +1233,7 @@ emf_cbase_module_interface_result_t module_get_interface(
 > ```
 >
 > - Effects: Fetches the path a module was loaded from.
-> - Failure: Fails if `module_handle` is invalid or the module is not yet loaded.
+> - Failure: Fails if `module_handle` is invalid, or the module is not yet loaded.
 > - Returns: Module path on success, error otherwise.
 
 ---
@@ -1245,7 +1245,7 @@ emf_cbase_module_interface_result_t module_get_interface(
 > ```
 >
 > - Effects: Fetches the module info from a module.
-> - Failure: Fails if `module_handle` is invalid or the module is not yet loaded.
+> - Failure: Fails if `module_handle` is invalid, or the module is not yet loaded.
 > - Returns: Module info on success, error otherwise.
 
 ---
@@ -1259,7 +1259,7 @@ emf_cbase_module_interface_result_t module_get_interface(
 > ```
 >
 > - Effects: Fetches an interface from a module.
-> - Failure: Fails if `module_handle` is invalid, the module is not in a ready state
+> - Failure: Fails if `module_handle` is invalid, the module is not in a ready state,
     or the interface is not contained in the module.
 > - Mandates: `interface_descriptor != NULL`.
 > - Returns: Interface on success, error otherwise.
@@ -2178,7 +2178,7 @@ For the sake of brevity, we will introduce the following macros:
 > } emf_cbase_version_release_t;
 > ```
 >
-> - Description: An enum describing the release type of a version.
+> - Description: An enum describing the release type of version.
 >
 > | Name                                    | Value | Description            |
 > | --------------------------------------- | ----- | ---------------------- |
@@ -2546,7 +2546,7 @@ For the sake of brevity, we will introduce the following macros:
 > BUFFER_T(emf_cbase_library_type_t, char, EMF_CBASE_LIBRARY_LOADER_TYPE_MAX_LENGTH)
 > ```
 >
-> - Description: Type of a library.
+> - Description: Type of library.
 
 ---
 
@@ -2778,7 +2778,7 @@ For the sake of brevity, we will introduce the following macros:
 > BUFFER_T(emf_cbase_module_type_t, char, EMF_CBASE_MODULE_LOADER_TYPE_MAX_LENGTH)
 > ```
 >
-> - Description: Type of a module
+> - Description: Type of module
 > - Remarks: A module name is modelled as an `UTF-8` encoded string, without a `\0` terminator.
 
 ---
@@ -2843,6 +2843,7 @@ For the sake of brevity, we will introduce the following macros:
 > typedef struct emf_cbase_native_module_loader_interface_t {
 >     const emf_cbase_module_loader_interface_t* module_loader_interface;
 >     emf_cbase_native_module_loader_interface_get_native_module_fn_t get_native_module_fn;
+>     emf_cbase_native_module_loader_interface_get_native_module_interface_fn_t get_native_module_interface_fn;
 > } emf_cbase_native_module_loader_interface_t;
 > ```
 >
@@ -2858,6 +2859,17 @@ For the sake of brevity, we will introduce the following macros:
 > ```
 >
 > - Description: A struct containing either an `emf_cbase_native_module_t*` or an `emf_cbase_module_error_t`.
+
+---
+
+#### emf_cbase_native_module_interface_ptr_result_t
+
+> ```c
+> RESULT_T(emf_cbase_native_module_interface_ptr_result_t, const emf_cbase_native_module_interface_t*, emf_cbase_module_error_t)
+> ```
+>
+> - Description: A struct containing either a `const emf_cbase_native_module_interface_t*` or an `emf_cbase_module_error_t`.
+> - Remarks. If it contains a `const emf_cbase_native_module_interface_t*`, it may never be `NULL`.
 
 ---
 
@@ -3869,6 +3881,17 @@ For the sake of brevity, we will introduce the following macros:
 
 ---
 
+#### emf_cbase_native_module_loader_interface_get_native_module_interface_fn_t
+
+> ```c
+> FN_T(emf_cbase_native_module_loader_interface_get_native_module_interface_fn_t,
+>       emf_cbase_native_module_interface_ptr_result_t,
+>       emf_cbase_module_loader_t* module_loader,
+>       emf_cbase_internal_module_handle_t module_handle)
+> ```
+
+---
+
 #### emf_cbase_os_path_char_t
 
 > ```c
@@ -4722,12 +4745,18 @@ typedef struct emf_cbase_native_module_interface_t {
 } emf_cbase_native_module_interface_t;
 
 // native module loader interface
+RESULT_T(emf_cbase_native_module_interface_ptr_result_t, const emf_cbase_native_module_interface_t*, 
+        emf_cbase_module_error_t)
 FN_T(emf_cbase_native_module_loader_interface_get_native_module_fn_t, emf_cbase_native_module_ptr_result_t,
         emf_cbase_module_loader_t* module_loader, emf_cbase_internal_module_handle_t module_handle)
+FN_T(emf_cbase_native_module_loader_interface_get_native_module_interface_fn_t, 
+        emf_cbase_native_module_interface_ptr_result_t, emf_cbase_module_loader_t* module_loader, 
+        emf_cbase_internal_module_handle_t module_handle)
 
 typedef struct emf_cbase_native_module_loader_interface_t {
     const emf_cbase_module_loader_interface_t* module_loader_interface;
     emf_cbase_native_module_loader_interface_get_native_module_fn_t get_native_module_fn;
+    emf_cbase_native_module_loader_interface_get_native_module_interface_fn_t get_native_module_interface_fn;
 } emf_cbase_native_module_loader_interface_t;
 
 // module api
@@ -4946,7 +4975,7 @@ The current design has several drawbacks:
 
 - Verbosity: This design serves only as a thin abstraction over the OS's dynamic linking functionality, which by itself
   is a fairly low-level operation. Because of that, it can become quite cumbersome to use the interface.
-- Ownership: The design lacks any concept of resource (eg. library, module, etc.) ownership, allowing anyone to freely
+- Ownership: The design lacks any concept of resource (e.g. library, module, etc.) ownership, allowing anyone to freely
   modify those resources.
 
 # Rationale and alternatives
