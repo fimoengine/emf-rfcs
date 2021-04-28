@@ -2843,6 +2843,7 @@ For the sake of brevity, we will introduce the following macros:
 > typedef struct emf_cbase_native_module_loader_interface_t {
 >     const emf_cbase_module_loader_interface_t* module_loader_interface;
 >     emf_cbase_native_module_loader_interface_get_native_module_fn_t get_native_module_fn;
+>     emf_cbase_native_module_loader_interface_get_native_module_interface_fn_t get_native_module_interface_fn;
 > } emf_cbase_native_module_loader_interface_t;
 > ```
 >
@@ -2858,6 +2859,17 @@ For the sake of brevity, we will introduce the following macros:
 > ```
 >
 > - Description: A struct containing either an `emf_cbase_native_module_t*` or an `emf_cbase_module_error_t`.
+
+---
+
+#### emf_cbase_native_module_interface_ptr_result_t
+
+> ```c
+> RESULT_T(emf_cbase_native_module_interface_ptr_result_t, const emf_cbase_native_module_interface_t*, emf_cbase_module_error_t)
+> ```
+>
+> - Description: A struct containing either a `const emf_cbase_native_module_interface_t*` or an `emf_cbase_module_error_t`.
+> - Remarks. If it contains a `const emf_cbase_native_module_interface_t*`, it may never be `NULL`.
 
 ---
 
@@ -3869,6 +3881,17 @@ For the sake of brevity, we will introduce the following macros:
 
 ---
 
+#### emf_cbase_native_module_loader_interface_get_native_module_interface_fn_t
+
+> ```c
+> FN_T(emf_cbase_native_module_loader_interface_get_native_module_interface_fn_t,
+>       emf_cbase_native_module_interface_ptr_result_t,
+>       emf_cbase_module_loader_t* module_loader,
+>       emf_cbase_internal_module_handle_t module_handle)
+> ```
+
+---
+
 #### emf_cbase_os_path_char_t
 
 > ```c
@@ -4722,12 +4745,18 @@ typedef struct emf_cbase_native_module_interface_t {
 } emf_cbase_native_module_interface_t;
 
 // native module loader interface
+RESULT_T(emf_cbase_native_module_interface_ptr_result_t, const emf_cbase_native_module_interface_t*, 
+        emf_cbase_module_error_t)
 FN_T(emf_cbase_native_module_loader_interface_get_native_module_fn_t, emf_cbase_native_module_ptr_result_t,
         emf_cbase_module_loader_t* module_loader, emf_cbase_internal_module_handle_t module_handle)
+FN_T(emf_cbase_native_module_loader_interface_get_native_module_interface_fn_t, 
+        emf_cbase_native_module_interface_ptr_result_t, emf_cbase_module_loader_t* module_loader, 
+        emf_cbase_internal_module_handle_t module_handle)
 
 typedef struct emf_cbase_native_module_loader_interface_t {
     const emf_cbase_module_loader_interface_t* module_loader_interface;
     emf_cbase_native_module_loader_interface_get_native_module_fn_t get_native_module_fn;
+    emf_cbase_native_module_loader_interface_get_native_module_interface_fn_t get_native_module_interface_fn;
 } emf_cbase_native_module_loader_interface_t;
 
 // module api
