@@ -208,6 +208,30 @@ typedef struct emf_cbase_error_info_t {
 
 The new types are defined in the `emf_cbase_error_t.h` header.
 
+## Usage
+
+The following shows a simple example of the resulting api:
+
+```c
+// Construct an error.
+emf_cbase_error_t error = // ...
+
+// Fetch the debug info.
+emf_cbase_error_info_t error_info = error.vtable->debug_info_fn(error.data);
+
+// Cleanup the error.
+error.vtable->cleanup_fn(error.data);
+
+// Fetch the resulting error string.
+emf_cbase_error_string_t error_str = error_info.vtable->as_str_fn(error_info.data);
+
+// Print the error.
+printf("%.*s", error_str.length, error_str.data);
+
+// Cleanup the error info.
+error_info.vtable->cleanup_fn(error_info.data);
+```
+
 # Reference-level explanation
 
 [reference-level-explanation]: #reference-level-explanation
@@ -227,8 +251,9 @@ void (*emf_cbase_ext_unw_int_panic_fn_t)(emf_cbase_ext_unw_int_context_t* contex
 [drawbacks]: #drawbacks
 
 This is a breaking change to the interface api.
-Another drawback is the increased difficulty when implementing a new error,
-compared to a simple enum constant.
+Another drawback is the increased difficulty when implementing a new error, compared to a
+simple enum constant. The resulting error instances must be manually disposed of, as they
+may be dynamically allocated.
 
 # Rationale and alternatives
 
