@@ -1,6 +1,6 @@
 - Feature Name: `dynamic_errors`
 - Start Date: 2021-05-16
-- RFC PR: [fimoengine/emf-rfcs#0000](https://github.com/fimoengine/emf-rfcs/pull/0000)
+- RFC PR: [fimoengine/emf-rfcs#0010](https://github.com/fimoengine/emf-rfcs/pull/0010)
 
 # Summary
 
