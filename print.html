@@ -97,7 +97,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="0004-versioning-specification.html">0004-versioning-specification</a></li><li class="chapter-item expanded "><a href="0005-emf-core-base.html">0005-emf-core-base</a></li><li class="chapter-item expanded "><a href="0007-unwind_internal.html">0007-unwind_internal</a></li><li class="chapter-item expanded "><a href="0010-dynamic_errors.html">0010-dynamic_errors</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="0004-versioning-specification.html">0004-versioning-specification</a></li><li class="chapter-item expanded "><a href="0005-emf-core-base.html">0005-emf-core-base</a></li><li class="chapter-item expanded "><a href="0007-unwind_internal.html">0007-unwind_internal</a></li><li class="chapter-item expanded "><a href="0010-dynamic_errors.html">0010-dynamic_errors</a></li><li class="chapter-item expanded "><a href="0011-better_discriminants.html">0011-better_discriminants</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -5332,6 +5332,83 @@ may be dynamically allocated.</p>
 and the, much improved, flexibility when implementing custom error values.</p>
 <h1 id="prior-art-3"><a class="header" href="#prior-art-3">Prior art</a></h1>
 <p>This proposal is inspired by the <code>Error</code> trait of the Rust language.</p>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><ul>
+<li>Feature Name: <code>better_discriminants</code></li>
+<li>Start Date: 2021-05-17</li>
+<li>RFC PR: <a href="https://github.com/fimoengine/emf-rfcs/pull/0011">fimoengine/emf-rfcs#0011</a></li>
+</ul>
+<h1 id="summary-4"><a class="header" href="#summary-4">Summary</a></h1>
+<p>Swaps the order of the discriminant and the union, for the specified option and result types. 
+This allows for an easier implementation in languages which natively support tagged unions like Rust.</p>
+<h1 id="motivation-4"><a class="header" href="#motivation-4">Motivation</a></h1>
+<p>Algebraic data types like sum types are very useful. The <code>emf-core-base</code> interface specifies optional and result types.
+Unfortunately, the layout of those types is incompatible with languages like Rust, which natively support tagged unions.</p>
+<h1 id="guide-level-explanation-4"><a class="header" href="#guide-level-explanation-4">Guide-level explanation</a></h1>
+<h2 id="rust-enum"><a class="header" href="#rust-enum">Rust enum</a></h2>
+<p>Consider the following Rust enum:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[repr(C, u8)]
+enum OptionalI32 {
+    None,
+    Some(i32)
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Rust allows us to specify the layout of the union, and the data type of the discriminant.
+The enum is equivalent to the following C type:</p>
+<pre><code class="language-c">union optional_i32_payload {
+  int32_t some;
+};
+
+struct optional_i32 {
+  uint8_t tag;
+  optional_i32_payload payload;
+};
+</code></pre>
+<h2 id="new-layout"><a class="header" href="#new-layout">New layout</a></h2>
+<p>The optional and result types are currently specifies as follows:</p>
+<pre><code class="language-c">struct optional_T {
+  union {
+    T value;
+    int8_t _dummy;
+  };
+  emf_cbase_bool_t has_value;
+};
+
+struct result_R_E {
+  union {
+    R result;
+    E error;
+  };
+  emf_cbase_bool_t has_error;
+};
+</code></pre>
+<p>Simple changes to the union and the discriminant makes it compatible with the Rust enums:</p>
+<pre><code class="language-c">struct optional_T {
+  int8_t tag;
+  union {
+    int8_t _none;
+    T some;
+  };
+};
+
+struct result_R_E {
+  int8_t tag;
+  union {
+    R ok;
+    E err;
+  };
+};
+</code></pre>
+<p>While not strictly necessary, the <code>_none</code> member allows for easier initialisation
+in languages with non-trivial constructors.</p>
+<h1 id="reference-level-explanation-4"><a class="header" href="#reference-level-explanation-4">Reference-level explanation</a></h1>
+<h2 id="required-work"><a class="header" href="#required-work">Required work</a></h2>
+<p>Since all optional and result types are defined via macros, the required work should be minimal.</p>
+<h1 id="drawbacks-4"><a class="header" href="#drawbacks-4">Drawbacks</a></h1>
+<p>This is a breaking change to the interface api.</p>
 
                     </main>
 

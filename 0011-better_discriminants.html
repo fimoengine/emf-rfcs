@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Introduction - The EMF RFC Book</title>
+        <title>0011-better_discriminants - The EMF RFC Book</title>
         
         
 
@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html" class="active">Introduction</a></li><li class="chapter-item expanded "><a href="0004-versioning-specification.html">0004-versioning-specification</a></li><li class="chapter-item expanded "><a href="0005-emf-core-base.html">0005-emf-core-base</a></li><li class="chapter-item expanded "><a href="0007-unwind_internal.html">0007-unwind_internal</a></li><li class="chapter-item expanded "><a href="0010-dynamic_errors.html">0010-dynamic_errors</a></li><li class="chapter-item expanded "><a href="0011-better_discriminants.html">0011-better_discriminants</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="0004-versioning-specification.html">0004-versioning-specification</a></li><li class="chapter-item expanded "><a href="0005-emf-core-base.html">0005-emf-core-base</a></li><li class="chapter-item expanded "><a href="0007-unwind_internal.html">0007-unwind_internal</a></li><li class="chapter-item expanded "><a href="0010-dynamic_errors.html">0010-dynamic_errors</a></li><li class="chapter-item expanded "><a href="0011-better_discriminants.html" class="active">0011-better_discriminants</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -169,43 +169,94 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="emf-rfcs"><a class="header" href="#emf-rfcs">EMF RFCs</a></h1>
-<p>TBA</p>
-<h2 id="table-of-contents"><a class="header" href="#table-of-contents">Table of Contents</a></h2>
-<ul>
-<li><a href="#emf-rfcs">EMF RFCs</a>
-<ul>
-<li><a href="#table-of-contents">Table of Contents</a></li>
-<li><a href="#process">Process</a></li>
-<li><a href="#license">License</a>
-<ul>
-<li><a href="#contributions">Contributions</a></li>
+                        <ul>
+<li>Feature Name: <code>better_discriminants</code></li>
+<li>Start Date: 2021-05-17</li>
+<li>RFC PR: <a href="https://github.com/fimoengine/emf-rfcs/pull/0011">fimoengine/emf-rfcs#0011</a></li>
 </ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="process"><a class="header" href="#process">Process</a></h2>
-<p>TBA</p>
-<h2 id="license"><a class="header" href="#license">License</a></h2>
-<p>The repository is currently licensed under either of:</p>
-<ul>
-<li>Apache License, Version 2.0, (<a href="LICENSE-APACHE">LICENSE-APACHE</a> or <a href="https://www.apache.org/licenses/LICENSE-2.0">https://www.apache.org/licenses/LICENSE-2.0</a>)</li>
-<li>MIT license (<a href="LICENSE-MIT">LICENSE-MIT</a> or <a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>)</li>
-</ul>
-<h3 id="contributions"><a class="header" href="#contributions">Contributions</a></h3>
-<p>Any work intentionally submitted for inclusion into the repository shall be dual licensed as above, without any additional terms or conditions.</p>
+<h1 id="summary"><a class="header" href="#summary">Summary</a></h1>
+<p>Swaps the order of the discriminant and the union, for the specified option and result types. 
+This allows for an easier implementation in languages which natively support tagged unions like Rust.</p>
+<h1 id="motivation"><a class="header" href="#motivation">Motivation</a></h1>
+<p>Algebraic data types like sum types are very useful. The <code>emf-core-base</code> interface specifies optional and result types.
+Unfortunately, the layout of those types is incompatible with languages like Rust, which natively support tagged unions.</p>
+<h1 id="guide-level-explanation"><a class="header" href="#guide-level-explanation">Guide-level explanation</a></h1>
+<h2 id="rust-enum"><a class="header" href="#rust-enum">Rust enum</a></h2>
+<p>Consider the following Rust enum:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[repr(C, u8)]
+enum OptionalI32 {
+    None,
+    Some(i32)
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Rust allows us to specify the layout of the union, and the data type of the discriminant.
+The enum is equivalent to the following C type:</p>
+<pre><code class="language-c">union optional_i32_payload {
+  int32_t some;
+};
+
+struct optional_i32 {
+  uint8_t tag;
+  optional_i32_payload payload;
+};
+</code></pre>
+<h2 id="new-layout"><a class="header" href="#new-layout">New layout</a></h2>
+<p>The optional and result types are currently specifies as follows:</p>
+<pre><code class="language-c">struct optional_T {
+  union {
+    T value;
+    int8_t _dummy;
+  };
+  emf_cbase_bool_t has_value;
+};
+
+struct result_R_E {
+  union {
+    R result;
+    E error;
+  };
+  emf_cbase_bool_t has_error;
+};
+</code></pre>
+<p>Simple changes to the union and the discriminant makes it compatible with the Rust enums:</p>
+<pre><code class="language-c">struct optional_T {
+  int8_t tag;
+  union {
+    int8_t _none;
+    T some;
+  };
+};
+
+struct result_R_E {
+  int8_t tag;
+  union {
+    R ok;
+    E err;
+  };
+};
+</code></pre>
+<p>While not strictly necessary, the <code>_none</code> member allows for easier initialisation
+in languages with non-trivial constructors.</p>
+<h1 id="reference-level-explanation"><a class="header" href="#reference-level-explanation">Reference-level explanation</a></h1>
+<h2 id="required-work"><a class="header" href="#required-work">Required work</a></h2>
+<p>Since all optional and result types are defined via macros, the required work should be minimal.</p>
+<h1 id="drawbacks"><a class="header" href="#drawbacks">Drawbacks</a></h1>
+<p>This is a breaking change to the interface api.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-
-                        
-                            <a rel="next" href="0004-versioning-specification.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
+                            <a rel="prev" href="0010-dynamic_errors.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
                             </a>
+                        
+
                         
 
                         <div style="clear: both"></div>
@@ -215,11 +266,11 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-
-                
-                    <a rel="next" href="0004-versioning-specification.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
+                    <a rel="prev" href="0010-dynamic_errors.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
                     </a>
+                
+
                 
             </nav>
 
