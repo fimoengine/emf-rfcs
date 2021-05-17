@@ -1,6 +1,6 @@
 - Feature Name: `better_discriminants`
 - Start Date: 2021-05-17
-- RFC PR: [fimoengine/emf-rfcs#0000](https://github.com/fimoengine/emf-rfcs/pull/0000)
+- RFC PR: [fimoengine/emf-rfcs#0011](https://github.com/fimoengine/emf-rfcs/pull/0011)
 
 # Summary
 
