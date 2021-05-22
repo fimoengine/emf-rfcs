@@ -97,7 +97,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="0004-versioning-specification.html">0004-versioning-specification</a></li><li class="chapter-item expanded "><a href="0005-emf-core-base.html">0005-emf-core-base</a></li><li class="chapter-item expanded "><a href="0007-unwind_internal.html">0007-unwind_internal</a></li><li class="chapter-item expanded "><a href="0010-dynamic_errors.html">0010-dynamic_errors</a></li><li class="chapter-item expanded "><a href="0011-better_discriminants.html">0011-better_discriminants</a></li><li class="chapter-item expanded "><a href="0012-fat_ptrs.html">0012-fat_ptrs</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="0004-versioning-specification.html">0004-versioning-specification</a></li><li class="chapter-item expanded "><a href="0005-emf-core-base.html">0005-emf-core-base</a></li><li class="chapter-item expanded "><a href="0007-unwind_internal.html">0007-unwind_internal</a></li><li class="chapter-item expanded "><a href="0010-dynamic_errors.html">0010-dynamic_errors</a></li><li class="chapter-item expanded "><a href="0011-better_discriminants.html">0011-better_discriminants</a></li><li class="chapter-item expanded "><a href="0012-fat_ptrs.html">0012-fat_ptrs</a></li><li class="chapter-item expanded "><a href="0013-no_span_ptrs.html">0013-no_span_ptrs</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -5502,6 +5502,20 @@ of the trait object <code>&amp;dyn SomeTrait</code> is as follows:</p>
 <span class="boring">}
 </span></code></pre></pre>
 <p>The approach was modified to allow for constant data pointers.</p>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><ul>
+<li>Feature Name: <code>no_span_ptrs</code></li>
+<li>Start Date: 2021-05-22</li>
+<li>RFC PR: <a href="https://github.com/fimoengine/emf-rfcs/pull/0013">fimoengine/emf-rfcs#0013</a></li>
+</ul>
+<h1 id="summary-6"><a class="header" href="#summary-6">Summary</a></h1>
+<p>Change function definitions to pass span types by value.</p>
+<h1 id="motivation-6"><a class="header" href="#motivation-6">Motivation</a></h1>
+<p>Spans are fat pointers to a contiguous sequence of elements, with a known length. They consist of a pointer to the start
+of the sequence, and the number of elements in the sequence. Because of their small size, it is more efficient to pass
+them by value, instead of by reference.</p>
+<h1 id="guide-level-explanation-6"><a class="header" href="#guide-level-explanation-6">Guide-level explanation</a></h1>
+<p>Given a span type, any function definition which operates on the elements inside the span, instead of the span itself,
+is modified to accept and return the span by value.</p>
 
                     </main>
 
