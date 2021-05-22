@@ -1,6 +1,6 @@
 - Feature Name: `fat_ptrs`
 - Start Date: 2021-05-22
-- RFC PR: [fimoengine/emf-rfcs#0000](https://github.com/fimoengine/emf-rfcs/pull/0000)
+- RFC PR: [fimoengine/emf-rfcs#0012](https://github.com/fimoengine/emf-rfcs/pull/0012)
 
 # Summary
 
