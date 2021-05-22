@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Introduction - The EMF RFC Book</title>
+        <title>0014-os_path_string - The EMF RFC Book</title>
         
         
 
@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html" class="active">Introduction</a></li><li class="chapter-item expanded "><a href="0004-versioning-specification.html">0004-versioning-specification</a></li><li class="chapter-item expanded "><a href="0005-emf-core-base.html">0005-emf-core-base</a></li><li class="chapter-item expanded "><a href="0007-unwind_internal.html">0007-unwind_internal</a></li><li class="chapter-item expanded "><a href="0010-dynamic_errors.html">0010-dynamic_errors</a></li><li class="chapter-item expanded "><a href="0011-better_discriminants.html">0011-better_discriminants</a></li><li class="chapter-item expanded "><a href="0012-fat_ptrs.html">0012-fat_ptrs</a></li><li class="chapter-item expanded "><a href="0013-no_span_ptrs.html">0013-no_span_ptrs</a></li><li class="chapter-item expanded "><a href="0014-os_path_string.html">0014-os_path_string</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="0004-versioning-specification.html">0004-versioning-specification</a></li><li class="chapter-item expanded "><a href="0005-emf-core-base.html">0005-emf-core-base</a></li><li class="chapter-item expanded "><a href="0007-unwind_internal.html">0007-unwind_internal</a></li><li class="chapter-item expanded "><a href="0010-dynamic_errors.html">0010-dynamic_errors</a></li><li class="chapter-item expanded "><a href="0011-better_discriminants.html">0011-better_discriminants</a></li><li class="chapter-item expanded "><a href="0012-fat_ptrs.html">0012-fat_ptrs</a></li><li class="chapter-item expanded "><a href="0013-no_span_ptrs.html">0013-no_span_ptrs</a></li><li class="chapter-item expanded "><a href="0014-os_path_string.html" class="active">0014-os_path_string</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -169,43 +169,42 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="emf-rfcs"><a class="header" href="#emf-rfcs">EMF RFCs</a></h1>
-<p>TBA</p>
-<h2 id="table-of-contents"><a class="header" href="#table-of-contents">Table of Contents</a></h2>
-<ul>
-<li><a href="#emf-rfcs">EMF RFCs</a>
-<ul>
-<li><a href="#table-of-contents">Table of Contents</a></li>
-<li><a href="#process">Process</a></li>
-<li><a href="#license">License</a>
-<ul>
-<li><a href="#contributions">Contributions</a></li>
+                        <ul>
+<li>Feature Name: <code>os_path_string</code></li>
+<li>Start Date: 2021-05-22</li>
+<li>RFC PR: <a href="https://github.com/fimoengine/emf-rfcs/pull/0014">fimoengine/emf-rfcs#0014</a></li>
 </ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="process"><a class="header" href="#process">Process</a></h2>
-<p>TBA</p>
-<h2 id="license"><a class="header" href="#license">License</a></h2>
-<p>The repository is currently licensed under either of:</p>
-<ul>
-<li>Apache License, Version 2.0, (<a href="LICENSE-APACHE">LICENSE-APACHE</a> or <a href="https://www.apache.org/licenses/LICENSE-2.0">https://www.apache.org/licenses/LICENSE-2.0</a>)</li>
-<li>MIT license (<a href="LICENSE-MIT">LICENSE-MIT</a> or <a href="https://opensource.org/licenses/MIT">https://opensource.org/licenses/MIT</a>)</li>
-</ul>
-<h3 id="contributions"><a class="header" href="#contributions">Contributions</a></h3>
-<p>Any work intentionally submitted for inclusion into the repository shall be dual licensed as above, without any additional terms or conditions.</p>
+<h1 id="summary"><a class="header" href="#summary">Summary</a></h1>
+<p>Introduces the <code>emf_cbase_os_path_string_t</code> type for representing path strings.</p>
+<h1 id="motivation"><a class="header" href="#motivation">Motivation</a></h1>
+<p>Currently, there are two types of strings used in the project. Most of the strings are represented as fat pointers,
+which contain a pointer to the start and its length. The second type are classic null-terminated strings. While compact,
+a downside of C strings is, that counting the length of a string necessitates an iteration of the entire string. Because
+of that, changing from a C string representation to a fat pointer representation is always an operation of linear time
+complexity. Going from a fat pointer to a C string may be more efficient, if the last character is already a null byte.
+Currently, the only type of strings implemented as C strings are paths. This RFC introduces a new fat pointer path
+string, which replaces the old null-terminated string.</p>
+<h1 id="guide-level-explanation"><a class="header" href="#guide-level-explanation">Guide-level explanation</a></h1>
+<p>The project already defines the <code>emf_cbase_os_path_char_t</code>, which accounts for different path representations of
+operating systems. This type can be used as a building block for the new <code>emf_cbase_os_path_string_t</code> type:</p>
+<pre><code class="language-c">typedef struct emf_cbase_os_path_string_t {
+  const emf_cbase_os_path_char_t* data;
+  size_t length;
+} emf_cbase_os_path_string_t;
+</code></pre>
+<p>This new type is a pointer to the start of a string, which may be null-terminated, paired with the length of the string.
+Functions and types, which use the old type are replaced with this new type.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-
-                        
-                            <a rel="next" href="0004-versioning-specification.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
+                            <a rel="prev" href="0013-no_span_ptrs.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
                             </a>
+                        
+
                         
 
                         <div style="clear: both"></div>
@@ -215,11 +214,11 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-
-                
-                    <a rel="next" href="0004-versioning-specification.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
+                    <a rel="prev" href="0013-no_span_ptrs.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
                     </a>
+                
+
                 
             </nav>
 

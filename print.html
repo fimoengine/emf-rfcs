@@ -97,7 +97,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="0004-versioning-specification.html">0004-versioning-specification</a></li><li class="chapter-item expanded "><a href="0005-emf-core-base.html">0005-emf-core-base</a></li><li class="chapter-item expanded "><a href="0007-unwind_internal.html">0007-unwind_internal</a></li><li class="chapter-item expanded "><a href="0010-dynamic_errors.html">0010-dynamic_errors</a></li><li class="chapter-item expanded "><a href="0011-better_discriminants.html">0011-better_discriminants</a></li><li class="chapter-item expanded "><a href="0012-fat_ptrs.html">0012-fat_ptrs</a></li><li class="chapter-item expanded "><a href="0013-no_span_ptrs.html">0013-no_span_ptrs</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="0004-versioning-specification.html">0004-versioning-specification</a></li><li class="chapter-item expanded "><a href="0005-emf-core-base.html">0005-emf-core-base</a></li><li class="chapter-item expanded "><a href="0007-unwind_internal.html">0007-unwind_internal</a></li><li class="chapter-item expanded "><a href="0010-dynamic_errors.html">0010-dynamic_errors</a></li><li class="chapter-item expanded "><a href="0011-better_discriminants.html">0011-better_discriminants</a></li><li class="chapter-item expanded "><a href="0012-fat_ptrs.html">0012-fat_ptrs</a></li><li class="chapter-item expanded "><a href="0013-no_span_ptrs.html">0013-no_span_ptrs</a></li><li class="chapter-item expanded "><a href="0014-os_path_string.html">0014-os_path_string</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -5516,6 +5516,31 @@ them by value, instead of by reference.</p>
 <h1 id="guide-level-explanation-6"><a class="header" href="#guide-level-explanation-6">Guide-level explanation</a></h1>
 <p>Given a span type, any function definition which operates on the elements inside the span, instead of the span itself,
 is modified to accept and return the span by value.</p>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><ul>
+<li>Feature Name: <code>os_path_string</code></li>
+<li>Start Date: 2021-05-22</li>
+<li>RFC PR: <a href="https://github.com/fimoengine/emf-rfcs/pull/0014">fimoengine/emf-rfcs#0014</a></li>
+</ul>
+<h1 id="summary-7"><a class="header" href="#summary-7">Summary</a></h1>
+<p>Introduces the <code>emf_cbase_os_path_string_t</code> type for representing path strings.</p>
+<h1 id="motivation-7"><a class="header" href="#motivation-7">Motivation</a></h1>
+<p>Currently, there are two types of strings used in the project. Most of the strings are represented as fat pointers,
+which contain a pointer to the start and its length. The second type are classic null-terminated strings. While compact,
+a downside of C strings is, that counting the length of a string necessitates an iteration of the entire string. Because
+of that, changing from a C string representation to a fat pointer representation is always an operation of linear time
+complexity. Going from a fat pointer to a C string may be more efficient, if the last character is already a null byte.
+Currently, the only type of strings implemented as C strings are paths. This RFC introduces a new fat pointer path
+string, which replaces the old null-terminated string.</p>
+<h1 id="guide-level-explanation-7"><a class="header" href="#guide-level-explanation-7">Guide-level explanation</a></h1>
+<p>The project already defines the <code>emf_cbase_os_path_char_t</code>, which accounts for different path representations of
+operating systems. This type can be used as a building block for the new <code>emf_cbase_os_path_string_t</code> type:</p>
+<pre><code class="language-c">typedef struct emf_cbase_os_path_string_t {
+  const emf_cbase_os_path_char_t* data;
+  size_t length;
+} emf_cbase_os_path_string_t;
+</code></pre>
+<p>This new type is a pointer to the start of a string, which may be null-terminated, paired with the length of the string.
+Functions and types, which use the old type are replaced with this new type.</p>
 
                     </main>
 
