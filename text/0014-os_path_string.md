@@ -1,6 +1,6 @@
 - Feature Name: `os_path_string`
 - Start Date: 2021-05-22
-- RFC PR: [fimoengine/emf-rfcs#0000](https://github.com/fimoengine/emf-rfcs/pull/0000)
+- RFC PR: [fimoengine/emf-rfcs#0014](https://github.com/fimoengine/emf-rfcs/pull/0014)
 
 # Summary
 
