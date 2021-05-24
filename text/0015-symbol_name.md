@@ -1,6 +1,6 @@
 - Feature Name: `symbol_name`
 - Start Date: 2021-05-24
-- RFC PR: [fimoengine/emf-rfcs#0000](https://github.com/fimoengine/emf-rfcs/pull/0000)
+- RFC PR: [fimoengine/emf-rfcs#0015](https://github.com/fimoengine/emf-rfcs/pull/0015)
 
 # Summary
 
