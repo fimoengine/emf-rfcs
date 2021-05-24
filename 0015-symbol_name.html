@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>0014-os_path_string - The EMF RFC Book</title>
+        <title>0015-symbol_name - The EMF RFC Book</title>
         
         
 
@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="0004-versioning-specification.html">0004-versioning-specification</a></li><li class="chapter-item expanded "><a href="0005-emf-core-base.html">0005-emf-core-base</a></li><li class="chapter-item expanded "><a href="0007-unwind_internal.html">0007-unwind_internal</a></li><li class="chapter-item expanded "><a href="0010-dynamic_errors.html">0010-dynamic_errors</a></li><li class="chapter-item expanded "><a href="0011-better_discriminants.html">0011-better_discriminants</a></li><li class="chapter-item expanded "><a href="0012-fat_ptrs.html">0012-fat_ptrs</a></li><li class="chapter-item expanded "><a href="0013-no_span_ptrs.html">0013-no_span_ptrs</a></li><li class="chapter-item expanded "><a href="0014-os_path_string.html" class="active">0014-os_path_string</a></li><li class="chapter-item expanded "><a href="0015-symbol_name.html">0015-symbol_name</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="0004-versioning-specification.html">0004-versioning-specification</a></li><li class="chapter-item expanded "><a href="0005-emf-core-base.html">0005-emf-core-base</a></li><li class="chapter-item expanded "><a href="0007-unwind_internal.html">0007-unwind_internal</a></li><li class="chapter-item expanded "><a href="0010-dynamic_errors.html">0010-dynamic_errors</a></li><li class="chapter-item expanded "><a href="0011-better_discriminants.html">0011-better_discriminants</a></li><li class="chapter-item expanded "><a href="0012-fat_ptrs.html">0012-fat_ptrs</a></li><li class="chapter-item expanded "><a href="0013-no_span_ptrs.html">0013-no_span_ptrs</a></li><li class="chapter-item expanded "><a href="0014-os_path_string.html">0014-os_path_string</a></li><li class="chapter-item expanded "><a href="0015-symbol_name.html" class="active">0015-symbol_name</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -170,45 +170,59 @@
                 <div id="content" class="content">
                     <main>
                         <ul>
-<li>Feature Name: <code>os_path_string</code></li>
-<li>Start Date: 2021-05-22</li>
-<li>RFC PR: <a href="https://github.com/fimoengine/emf-rfcs/pull/0014">fimoengine/emf-rfcs#0014</a></li>
+<li>Feature Name: <code>symbol_name</code></li>
+<li>Start Date: 2021-05-24</li>
+<li>RFC PR: <a href="https://github.com/fimoengine/emf-rfcs/pull/0015">fimoengine/emf-rfcs#0015</a></li>
 </ul>
 <h1 id="summary"><a class="header" href="#summary">Summary</a></h1>
-<p>Introduces the <code>emf_cbase_os_path_string_t</code> type for representing path strings.</p>
+<p>Introduces the <code>emf_cbase_symbol_name_t</code> type, which represents symbol names.</p>
 <h1 id="motivation"><a class="header" href="#motivation">Motivation</a></h1>
-<p>Currently, there are two types of strings used in the project. Most of the strings are represented as fat pointers,
-which contain a pointer to the start and its length. The second type are classic null-terminated strings. While compact,
-a downside of C strings is, that counting the length of a string necessitates an iteration of the entire string. Because
-of that, changing from a C string representation to a fat pointer representation is always an operation of linear time
-complexity. Going from a fat pointer to a C string may be more efficient, if the last character is already a null byte.
-Currently, the only type of strings implemented as C strings are paths. This RFC introduces a new fat pointer path
-string, which replaces the old null-terminated string.</p>
+<p><a href="https://github.com/fimoengine/emf-rfcs/pull/0014">RFC 14</a> motivated the usefulness of sized string types. A hole that
+was overlooked by the RFC was symbol strings, which are used by the library api.</p>
 <h1 id="guide-level-explanation"><a class="header" href="#guide-level-explanation">Guide-level explanation</a></h1>
-<p>The project already defines the <code>emf_cbase_os_path_char_t</code>, which accounts for different path representations of
-operating systems. This type can be used as a building block for the new <code>emf_cbase_os_path_string_t</code> type:</p>
-<pre><code class="language-c">typedef struct emf_cbase_os_path_string_t {
-  const emf_cbase_os_path_char_t* data;
+<p>The type is defined as follows:</p>
+<pre><code class="language-c">typedef struct emf_cbase_symbol_name_t {
+  const char* data;
   size_t length;
-} emf_cbase_os_path_string_t;
+} emf_cbase_symbol_name_t;
 </code></pre>
-<p>This new type is a pointer to the start of a string, which may be null-terminated, paired with the length of the string.
-Functions and types, which use the old type are replaced with this new type.</p>
+<p>Example usage:</p>
+<pre><code class="language-c">emf_cbase_symbol_name_t empty = { .data = NULL, .length = 0 };
+emf_cbase_symbol_name_t symbol_name = { .data = &quot;symbol&quot;, .length = strlen(&quot;symbol&quot;) };
+</code></pre>
+<p>Functions which required a symbol name (formerly of the type <code>const char*</code>) will now require
+an <code>emf_cbase_symbol_name_t</code> instance.</p>
+<h1 id="reference-level-explanation"><a class="header" href="#reference-level-explanation">Reference-level explanation</a></h1>
+<p>The new type, as defined above, is added to the <code>emf_cbase_library.h</code> header.</p>
+<p>The following function pointer types are modified to use the newly added type:</p>
+<ul>
+<li>emf_cbase_library_get_data_symbol_fn_t</li>
+<li>emf_cbase_library_get_function_symbol_fn_t</li>
+<li>emf_cbase_library_loader_interface_get_data_symbol_fn_t</li>
+<li>emf_cbase_library_loader_interface_get_function_symbol_fn_t</li>
+</ul>
+<h1 id="drawbacks"><a class="header" href="#drawbacks">Drawbacks</a></h1>
+<p>The length of the string must still be computed, this time in advance.</p>
+<h1 id="rationale-and-alternatives"><a class="header" href="#rationale-and-alternatives">Rationale and alternatives</a></h1>
+<p>See &quot;Motivation&quot; for the rationale.<br />
+The status quo is an alternative.</p>
+<h1 id="prior-art"><a class="header" href="#prior-art">Prior art</a></h1>
+<p>This RFC is a follow up to https://github.com/fimoengine/emf-rfcs/pull/0014.</p>
+<h1 id="unresolved-questions"><a class="header" href="#unresolved-questions">Unresolved questions</a></h1>
+<p>None so far.</p>
+<h1 id="future-possibilities"><a class="header" href="#future-possibilities">Future possibilities</a></h1>
+<p>Allow platform-dependent types.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="0013-no_span_ptrs.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="0014-os_path_string.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
-                        
-                            <a rel="next" href="0015-symbol_name.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
-                            </a>
                         
 
                         <div style="clear: both"></div>
@@ -218,15 +232,11 @@ Functions and types, which use the old type are replaced with this new type.</p>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a rel="prev" href="0013-no_span_ptrs.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="0014-os_path_string.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
-                
-                    <a rel="next" href="0015-symbol_name.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
                 
             </nav>
 

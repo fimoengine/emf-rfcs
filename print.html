@@ -97,7 +97,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="0004-versioning-specification.html">0004-versioning-specification</a></li><li class="chapter-item expanded "><a href="0005-emf-core-base.html">0005-emf-core-base</a></li><li class="chapter-item expanded "><a href="0007-unwind_internal.html">0007-unwind_internal</a></li><li class="chapter-item expanded "><a href="0010-dynamic_errors.html">0010-dynamic_errors</a></li><li class="chapter-item expanded "><a href="0011-better_discriminants.html">0011-better_discriminants</a></li><li class="chapter-item expanded "><a href="0012-fat_ptrs.html">0012-fat_ptrs</a></li><li class="chapter-item expanded "><a href="0013-no_span_ptrs.html">0013-no_span_ptrs</a></li><li class="chapter-item expanded "><a href="0014-os_path_string.html">0014-os_path_string</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="0004-versioning-specification.html">0004-versioning-specification</a></li><li class="chapter-item expanded "><a href="0005-emf-core-base.html">0005-emf-core-base</a></li><li class="chapter-item expanded "><a href="0007-unwind_internal.html">0007-unwind_internal</a></li><li class="chapter-item expanded "><a href="0010-dynamic_errors.html">0010-dynamic_errors</a></li><li class="chapter-item expanded "><a href="0011-better_discriminants.html">0011-better_discriminants</a></li><li class="chapter-item expanded "><a href="0012-fat_ptrs.html">0012-fat_ptrs</a></li><li class="chapter-item expanded "><a href="0013-no_span_ptrs.html">0013-no_span_ptrs</a></li><li class="chapter-item expanded "><a href="0014-os_path_string.html">0014-os_path_string</a></li><li class="chapter-item expanded "><a href="0015-symbol_name.html">0015-symbol_name</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -5541,6 +5541,49 @@ operating systems. This type can be used as a building block for the new <code>e
 </code></pre>
 <p>This new type is a pointer to the start of a string, which may be null-terminated, paired with the length of the string.
 Functions and types, which use the old type are replaced with this new type.</p>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><ul>
+<li>Feature Name: <code>symbol_name</code></li>
+<li>Start Date: 2021-05-24</li>
+<li>RFC PR: <a href="https://github.com/fimoengine/emf-rfcs/pull/0015">fimoengine/emf-rfcs#0015</a></li>
+</ul>
+<h1 id="summary-8"><a class="header" href="#summary-8">Summary</a></h1>
+<p>Introduces the <code>emf_cbase_symbol_name_t</code> type, which represents symbol names.</p>
+<h1 id="motivation-8"><a class="header" href="#motivation-8">Motivation</a></h1>
+<p><a href="https://github.com/fimoengine/emf-rfcs/pull/0014">RFC 14</a> motivated the usefulness of sized string types. A hole that
+was overlooked by the RFC was symbol strings, which are used by the library api.</p>
+<h1 id="guide-level-explanation-8"><a class="header" href="#guide-level-explanation-8">Guide-level explanation</a></h1>
+<p>The type is defined as follows:</p>
+<pre><code class="language-c">typedef struct emf_cbase_symbol_name_t {
+  const char* data;
+  size_t length;
+} emf_cbase_symbol_name_t;
+</code></pre>
+<p>Example usage:</p>
+<pre><code class="language-c">emf_cbase_symbol_name_t empty = { .data = NULL, .length = 0 };
+emf_cbase_symbol_name_t symbol_name = { .data = &quot;symbol&quot;, .length = strlen(&quot;symbol&quot;) };
+</code></pre>
+<p>Functions which required a symbol name (formerly of the type <code>const char*</code>) will now require
+an <code>emf_cbase_symbol_name_t</code> instance.</p>
+<h1 id="reference-level-explanation-6"><a class="header" href="#reference-level-explanation-6">Reference-level explanation</a></h1>
+<p>The new type, as defined above, is added to the <code>emf_cbase_library.h</code> header.</p>
+<p>The following function pointer types are modified to use the newly added type:</p>
+<ul>
+<li>emf_cbase_library_get_data_symbol_fn_t</li>
+<li>emf_cbase_library_get_function_symbol_fn_t</li>
+<li>emf_cbase_library_loader_interface_get_data_symbol_fn_t</li>
+<li>emf_cbase_library_loader_interface_get_function_symbol_fn_t</li>
+</ul>
+<h1 id="drawbacks-6"><a class="header" href="#drawbacks-6">Drawbacks</a></h1>
+<p>The length of the string must still be computed, this time in advance.</p>
+<h1 id="rationale-and-alternatives-5"><a class="header" href="#rationale-and-alternatives-5">Rationale and alternatives</a></h1>
+<p>See &quot;Motivation&quot; for the rationale.<br />
+The status quo is an alternative.</p>
+<h1 id="prior-art-5"><a class="header" href="#prior-art-5">Prior art</a></h1>
+<p>This RFC is a follow up to https://github.com/fimoengine/emf-rfcs/pull/0014.</p>
+<h1 id="unresolved-questions-3"><a class="header" href="#unresolved-questions-3">Unresolved questions</a></h1>
+<p>None so far.</p>
+<h1 id="future-possibilities-3"><a class="header" href="#future-possibilities-3">Future possibilities</a></h1>
+<p>Allow platform-dependent types.</p>
 
                     </main>
 
